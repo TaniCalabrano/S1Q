@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo se mueve la astenósfera bajo P, Q y R</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #101a26;
+    --bg-deep: #0a121c;
+    --panel: #17232f;
+    --rock: #d9cfb8;
+    --rock-line: #3a3226;
+    --hot: #e8823f;
+    --hot-dim: #6b4a2e;
+    --cool: #4fa8a3;
+    --cool-dim: #33534f;
+    --converge: #e2574c;
+    --diverge: #6fbf73;
+    --mixed: #d9b25c;
+    --text: #f2eee2;
+    --text-dim: #9aa7b4;
+    --mono: 'JetBrains Mono', monospace;
+    --serif: 'Spectral', Georgia, serif;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--bg-deep);
+    color: var(--text);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    min-height:100vh;
+  }
+
+  .wrap{
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 28px 24px 80px;
+  }
+
+  header.top{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #263140;
+    padding-bottom: 20px;
+  }
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--hot);
+  }
+  h1{
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(22px, 4vw, 32px);
+    margin: 0;
+    line-height: 1.25;
+  }
+  .subhead{
+    color: var(--text-dim);
+    font-size: 15px;
+    max-width: 640px;
+    line-height: 1.5;
+  }
+
+  /* progress rail */
+  .rail{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    margin: 22px 0 8px;
+  }
+  .rail .seg{
+    flex:1;
+    height: 3px;
+    background: #263140;
+    border-radius: 2px;
+    overflow:hidden;
+    position:relative;
+  }
+  .rail .seg .fill{
+    position:absolute; inset:0;
+    background: var(--hot);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .35s ease;
+  }
+  .rail .seg.done .fill{ transform: scaleX(1); }
+  .rail .seg.active .fill{ transform: scaleX(1); background: var(--hot); }
+
+  .step-label{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+  .step-label b{ color: var(--text); }
+
+  /* main stage */
+  .stage{
+    background: var(--panel);
+    border: 1px solid #263140;
+    border-radius: 14px;
+    padding: 28px;
+    display:grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 28px;
+    align-items:center;
+    min-height: 420px;
+  }
+  @media (max-width: 780px){
+    .stage{ grid-template-columns: 1fr; }
+  }
+
+  .panel-text h2{
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    line-height:1.3;
+  }
+  .panel-text p{
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-dim);
+    margin: 0 0 12px;
+  }
+  .panel-text p b{ color: var(--text); font-weight: 600; }
+  .tag-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+  .tag{
+    font-family: var(--mono);
+    font-size: 11.5px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+  }
+  .tag.hot{ color: var(--hot); }
+  .tag.cool{ color: var(--cool); }
+  .tag.converge{ color: var(--converge); }
+  .tag.diverge{ color: var(--diverge); }
+
+  .stage-svg{ width:100%; height:auto; overflow: visible; }
+
+  /* controls */
+  .controls{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    margin-top: 22px;
+  }
+  .dots{ display:flex; gap:8px; }
+  .dot{
+    width:8px; height:8px; border-radius:50%;
+    background:#2c3a49;
+    border:none;
+    cursor:pointer;
+    padding:0;
+  }
+  .dot.active{ background: var(--hot); }
+
+  button.nav{
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 14px;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid #33455a;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor:pointer;
+    transition: border-color .15s, background .15s;
+  }
+  button.nav:hover{ border-color: var(--hot); }
+  button.nav:disabled{ opacity: .35; cursor:not-allowed; }
+  button.nav:focus-visible{ outline: 2px solid var(--hot); outline-offset: 2px; }
+  button.nav.primary{ background: var(--hot); border-color: var(--hot); color: #201005; }
+
+  /* answer grid (final step) */
+  .answers{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 520px){ .answers{ grid-template-columns: 1fr; } }
+  .ans-card{
+    border: 1px solid #263140;
+    border-radius: 10px;
+    padding: 12px;
+    text-align:center;
+  }
+  .ans-card.correct{ border-color: var(--diverge); background: rgba(111,191,115,0.08); }
+  .ans-card .letter{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .ans-card.correct .letter{ color: var(--diverge); }
+  .ans-card .verdict{
+    font-size: 12px;
+    margin-top: 8px;
+    color: var(--text-dim);
+  }
+  .ans-card.correct .verdict{ color: var(--diverge); font-weight: 600; }
+
+  @media (prefers-reduced-motion: reduce){
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+  }
+
+  /* svg text labels */
+  .stage-svg text, .mini-svg text{
+    font-family: var(--sans);
+  }
+  .plate-label{
+    font-family: var(--mono);
+    font-size: 16px;
+    fill: #241d10;
+    dominant-baseline: central;
+  }
+  .glyph-label{
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+  .astheno-label{
+    font-family: var(--mono);
+    font-size: 11px;
+    fill: var(--text-dim);
+    letter-spacing: 0.06em;
+  }
+  .mini-label{
+    font-family: var(--mono);
+    font-size: 11px;
+    fill: var(--text-dim);
+  }
+
+  .stage-svg [data-role="cell"]{
+    transition: opacity .4s ease;
+  }
+
+  @keyframes spinCW{ to{ transform: rotate(360deg); } }
+  @keyframes spinCCW{ to{ transform: rotate(-360deg); } }
+  .spin-cw{ animation: spinCW 3.4s linear infinite; }
+  .spin-ccw{ animation: spinCCW 3.4s linear infinite; }
+
+  .mini-svg{ width: 200px; max-width: 100%; height: auto; margin: 8px 0; }
+
+  /* ---- reference section ---- */
+  .reference{
+    margin-top: 56px;
+    padding-top: 36px;
+    border-top: 1px solid #263140;
+  }
+  .ref-heading h2{
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 22px;
+    margin: 4px 0 8px;
+  }
+  .ref-heading .subhead{ margin-bottom: 22px; }
+
+  .ref-table-wrap{
+    overflow-x: auto;
+    border: 1px solid #263140;
+    border-radius: 12px;
+  }
+  table.ref-table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 640px;
+  }
+  table.ref-table th{
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    background: var(--panel);
+    padding: 12px 16px;
+    border-bottom: 1px solid #263140;
+  }
+  table.ref-table td{
+    padding: 14px 16px;
+    vertical-align: top;
+    border-bottom: 1px solid #1b2531;
+    line-height: 1.5;
+    color: var(--text-dim);
+  }
+  table.ref-table tr:last-child td{ border-bottom: none; }
+  table.ref-table td.type-cell{
+    color: var(--text);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .type-dot{
+    display:inline-block;
+    width:9px; height:9px;
+    border-radius:50%;
+    margin-right: 8px;
+  }
+  .type-dot.converge{ background: var(--converge); }
+  .type-dot.diverge{ background: var(--diverge); }
+  .type-dot.mixed{ background: var(--mixed); }
+  table.ref-table td b{ color: var(--text); }
+
+  .ref-diagrams{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+  }
+  @media (max-width: 780px){
+    .ref-diagrams{ grid-template-columns: 1fr; }
+  }
+  .ref-card{
+    background: var(--panel);
+    border: 1px solid #263140;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .ref-card .ref-card-title{
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 8px;
+  }
+  .ref-card .ref-card-sub{
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+  .ref-card .ref-svg{ width: 100%; max-width: 220px; height: auto; }
+
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow">Pregunta N°37 · Placas tectónicas</div>
+    <h1>¿Qué modelo de la astenósfera explica el movimiento de P, Q y R?</h1>
+    <div class="subhead">Recorre los pasos para ver por qué cada celda de convección gira en un sentido específico, y por qué solo una alternativa es coherente con las flechas del enunciado.</div>
+  </header>
+
+  <div class="rail" id="rail"></div>
+  <div class="step-label"><b id="stepNum">1</b> / <span id="stepTotal"></span> — <span id="stepTitle"></span></div>
+
+  <div class="stage">
+    <div class="panel-text">
+      <h2 id="txtHeading"></h2>
+      <div id="txtBody"></div>
+      <div class="tag-row" id="tagRow"></div>
+    </div>
+    <div class="panel-visual" id="visualHost"></div>
+  </div>
+
+  <div class="controls">
+    <button class="nav" id="btnBack">← Atrás</button>
+    <div class="dots" id="dots"></div>
+    <button class="nav primary" id="btnNext">Siguiente →</button>
+  </div>
+
+  <section class="reference">
+    <div class="ref-heading">
+      <div class="eyebrow">Referencia</div>
+      <h2>Propiedades de cada tipo de límite</h2>
+      <p class="subhead">Más allá de este problema: así se comparan los tres patrones de giro que puede tener una cadena de celdas de convección.</p>
+    </div>
+
+    <div class="ref-table-wrap">
+      <table class="ref-table" id="refTable"></table>
+    </div>
+
+    <div class="ref-diagrams" id="refDiagrams"></div>
+  </section>
+
+</div>
+
+<script>
+/* content and behavior in app.js */
+</script>
+<script>
+// ---------- SVG scene builder ----------
+// Builds the shared "cross-section" scene: three plates on top,
+// three convection cells below, with configurable state per step.
+
+const COLORS = {
+  hot: '#e8823f',
+  hotDim: '#5a4130',
+  cool: '#4fa8a3',
+  coolDim: '#374d4b',
+  converge: '#e2574c',
+  diverge: '#6fbf73',
+  mixed: '#d9b25c',
+  rock: '#d9cfb8',
+  rockLine: '#3a3226',
+  text: '#f2eee2',
+  textDim: '#7f8b98'
+};
+
+// direction: 'cw' | 'ccw' | null (no motion drawn)
+// state: 'active' | 'dim'
+function cellSVG(cx, cy, R, direction, state, colorKey) {
+  const active = state === 'active';
+  const opacity = active ? 1 : 0.22;
+  const color = colorKey === 'cool' ? COLORS.cool : COLORS.hot;
+  const spinClass = direction === 'cw' ? 'spin-cw' : (direction === 'ccw' ? 'spin-ccw' : '');
+  const animClass = active && direction ? spinClass : '';
+
+  // two arcs forming a loop, each ending in an arrowhead, matching the
+  // "double C" convention used in the original exam graphics.
+  const top = `M ${cx - R} ${cy} A ${R} ${R} 0 0 1 ${cx + R} ${cy}`;
+  const bottom = `M ${cx + R} ${cy} A ${R} ${R} 0 0 1 ${cx - R} ${cy}`;
+
+  return `
+  <g class="${animClass}" style="transform-origin:${cx}px ${cy}px; opacity:${opacity};" data-role="cell">
+    <path d="${top}" fill="none" stroke="${color}" stroke-width="4" stroke-linecap="round" marker-end="url(#head)"/>
+    <path d="${bottom}" fill="none" stroke="${color}" stroke-width="4" stroke-linecap="round" marker-end="url(#head)"/>
+  </g>`;
+}
+
+function plateArrow(x, y, dir, active) {
+  // dir: 'right' | 'left'
+  const len = 34;
+  const x2 = dir === 'right' ? x + len : x - len;
+  const stroke = active ? COLORS.text : COLORS.textDim;
+  return `<line x1="${x}" y1="${y}" x2="${x2}" y2="${y}" stroke="${stroke}" stroke-width="3.5" marker-end="url(#headPlate)"/>`;
+}
+
+function boundaryGlyph(x, yTop, yBottom, type, show) {
+  if (!show) return '';
+  // type: 'converge' (arrows pointing down/in) or 'diverge' (arrows pointing up/out)
+  const color = type === 'converge' ? COLORS.converge : COLORS.diverge;
+  const midY = (yTop + yBottom) / 2;
+  if (type === 'converge') {
+    return `
+    <line x1="${x - 22}" y1="${midY - 16}" x2="${x - 4}" y2="${midY}" stroke="${color}" stroke-width="3" marker-end="url(#headSmall)"/>
+    <line x1="${x + 22}" y1="${midY - 16}" x2="${x + 4}" y2="${midY}" stroke="${color}" stroke-width="3" marker-end="url(#headSmall)"/>
+    <text x="${x}" y="${midY + 28}" text-anchor="middle" class="glyph-label" fill="${color}">colisión</text>`;
+  }
+  return `
+    <line x1="${x - 4}" y1="${midY}" x2="${x - 22}" y2="${midY - 16}" stroke="${color}" stroke-width="3" marker-end="url(#headSmall)"/>
+    <line x1="${x + 4}" y1="${midY}" x2="${x + 22}" y2="${midY - 16}" stroke="${color}" stroke-width="3" marker-end="url(#headSmall)"/>
+    <text x="${x}" y="${midY + 28}" text-anchor="middle" class="glyph-label" fill="${color}">separación</text>`;
+}
+
+// cfg = { plates: {P:{dir,active}, Q:{dirLeft,dirRight,active}, R:{dir,active}},
+//         cells: {P:{dir,state}, Q:{...}, R:{...}},
+//         boundaries: {pq: bool, qr: bool} }
+function sceneSVG(cfg) {
+  const plateY = 60;
+  const cellY = 230;
+  const R = 46;
+  const xP = 90, xQ = 230, xR = 370;
+  const boundaryPQ = 160, boundaryQR = 300;
+
+  const platesHTML = `
+    <rect x="20" y="34" width="140" height="52" rx="6" fill="${COLORS.rock}" stroke="${COLORS.rockLine}" stroke-width="1.5"/>
+    <rect x="160" y="34" width="140" height="52" rx="6" fill="${COLORS.rock}" stroke="${COLORS.rockLine}" stroke-width="1.5"/>
+    <rect x="300" y="34" width="140" height="52" rx="6" fill="${COLORS.rock}" stroke="${COLORS.rockLine}" stroke-width="1.5"/>
+    <text x="90" y="64" text-anchor="middle" class="plate-label">P</text>
+    <text x="230" y="64" text-anchor="middle" class="plate-label">Q</text>
+    <text x="370" y="64" text-anchor="middle" class="plate-label">R</text>
+  `;
+
+  const arrowsHTML = `
+    ${plateArrow(xP - 15, plateY + 34, 'right', cfg.plates.P.active)}
+    ${plateArrow(xQ - 14, plateY + 34, 'left', cfg.plates.Q.active)}
+    ${plateArrow(xQ + 14, plateY + 34, 'left', cfg.plates.Q.active)}
+    ${plateArrow(xR + 15, plateY + 34, 'right', cfg.plates.R.active)}
+  `;
+
+  const cellsHTML = `
+    ${cellSVG(xP, cellY, R, cfg.cells.P.dir, cfg.cells.P.state, 'hot')}
+    ${cellSVG(xQ, cellY, R, cfg.cells.Q.dir, cfg.cells.Q.state, 'cool')}
+    ${cellSVG(xR, cellY, R, cfg.cells.R.dir, cfg.cells.R.state, 'hot')}
+  `;
+
+  const boundariesHTML = `
+    ${boundaryGlyph(boundaryPQ, plateY + 60, cellY, 'converge', cfg.boundaries.pq)}
+    ${boundaryGlyph(boundaryQR, plateY + 60, cellY, 'diverge', cfg.boundaries.qr)}
+  `;
+
+  const dividerLines = `
+    <line x1="${boundaryPQ}" y1="90" x2="${boundaryPQ}" y2="300" stroke="#263140" stroke-width="1.5"/>
+    <line x1="${boundaryQR}" y1="90" x2="${boundaryQR}" y2="300" stroke="#263140" stroke-width="1.5"/>
+  `;
+
+  const asthenLabel = `<text x="230" y="330" text-anchor="middle" class="astheno-label">astenósfera</text>`;
+
+  return `
+  <svg viewBox="0 0 460 350" class="stage-svg" role="img" aria-label="Esquema de placas P, Q, R y celdas de convección de la astenósfera">
+    <defs>
+      <marker id="head" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="headPlate" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="headSmall" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    ${dividerLines}
+    ${platesHTML}
+    ${arrowsHTML}
+    ${cellsHTML}
+    ${boundariesHTML}
+    ${asthenLabel}
+  </svg>`;
+}
+
+// ---------- Step definitions ----------
+
+const dimAll = { P:{dir:null,state:'dim'}, Q:{dir:null,state:'dim'}, R:{dir:null,state:'dim'} };
+
+const steps = [
+  {
+    title: 'El punto de partida',
+    heading: 'Así se ven P, Q y R desde arriba',
+    body: `<p>El enunciado muestra tres placas vistas desde arriba, con flechas que indican hacia dónde se mueve cada una.</p>
+           <p><b>P</b> se mueve hacia la derecha. <b>R</b> se mueve hacia la derecha. <b>Q</b> se mueve hacia la izquierda en <b>ambos</b> bordes, porque es una sola placa rígida: se mueve entera en una sola dirección.</p>`,
+    tags: [],
+    scene: {
+      plates: { P:{dir:'right',active:true}, Q:{dir:'left',active:true}, R:{dir:'right',active:true} },
+      cells: dimAll,
+      boundaries: { pq:false, qr:false }
+    }
+  },
+  {
+    title: 'La regla de oro',
+    heading: 'La astenósfera "arrastra" a la placa',
+    body: `<p>Bajo cada placa hay una celda de convección: material que gira como un engranaje. La parte de <b>arriba</b> de esa celda está en contacto con la placa, así que la placa se mueve <b>en la misma dirección</b> en que se mueve la parte superior de su celda.</p>
+           <p>Por eso el sentido de giro (horario o antihorario) de cada celda no es libre: queda determinado por hacia dónde apunta la flecha de su placa.</p>`,
+    tags: ['<span class="tag hot">arriba = misma dirección que la placa</span>'],
+    scene: {
+      plates: { P:{dir:'right',active:true}, Q:{dir:'left',active:false}, R:{dir:'right',active:false} },
+      cells: dimAll,
+      boundaries: { pq:false, qr:false }
+    }
+  },
+  {
+    title: 'Celda bajo P',
+    heading: 'P se mueve a la derecha → giro horario',
+    body: `<p>Como P avanza hacia la derecha, la parte superior de su celda debe moverse hacia la derecha. Eso solo ocurre si la celda gira en <b>sentido horario</b>: arriba va a la derecha, baja por el lado derecho, abajo va a la izquierda y sube por el lado izquierdo.</p>`,
+    tags: ['<span class="tag hot">horario</span>'],
+    scene: {
+      plates: { P:{dir:'right',active:true}, Q:{dir:'left',active:false}, R:{dir:'right',active:false} },
+      cells: { P:{dir:'cw',state:'active'}, Q:{dir:null,state:'dim'}, R:{dir:null,state:'dim'} },
+      boundaries: { pq:false, qr:false }
+    }
+  },
+  {
+    title: 'Celda bajo Q',
+    heading: 'Q se mueve a la izquierda → giro antihorario',
+    body: `<p>Q se mueve hacia la izquierda en toda su extensión, así que la parte superior de su celda debe moverse hacia la izquierda. Eso exige el giro contrario al de P: <b>sentido antihorario</b>.</p>`,
+    tags: ['<span class="tag cool">antihorario</span>'],
+    scene: {
+      plates: { P:{dir:'right',active:false}, Q:{dir:'left',active:true}, R:{dir:'right',active:false} },
+      cells: { P:{dir:null,state:'dim'}, Q:{dir:'ccw',state:'active'}, R:{dir:null,state:'dim'} },
+      boundaries: { pq:false, qr:false }
+    }
+  },
+  {
+    title: 'Celda bajo R',
+    heading: 'R se mueve a la derecha → giro horario',
+    body: `<p>R se mueve hacia la derecha, igual que P, así que su celda también gira en <b>sentido horario</b>.</p>
+           <p>Fíjate en el patrón que se está formando: <b>horario — antihorario — horario</b>.</p>`,
+    tags: ['<span class="tag hot">horario</span>'],
+    scene: {
+      plates: { P:{dir:'right',active:false}, Q:{dir:'left',active:false}, R:{dir:'right',active:true} },
+      cells: { P:{dir:null,state:'dim'}, Q:{dir:null,state:'dim'}, R:{dir:'cw',state:'active'} },
+      boundaries: { pq:false, qr:false }
+    }
+  },
+  {
+    title: 'Uniendo todo',
+    heading: 'Por qué un límite choca y el otro se separa',
+    body: `<p>Con P y Q girando en sentidos opuestos, ambas celdas <b>bajan</b> justo en el límite que comparten: el material se hunde ahí, lo que produce la <b>colisión</b> que muestra el enunciado entre P y Q.</p>
+           <p>Con Q y R también en sentidos opuestos, ambas celdas <b>suben</b> en su límite común: el material asciende, produciendo la <b>separación</b> entre Q y R.</p>`,
+    tags: [
+      '<span class="tag converge">P–Q: convergente</span>',
+      '<span class="tag diverge">Q–R: divergente</span>'
+    ],
+    scene: {
+      plates: { P:{dir:'right',active:true}, Q:{dir:'left',active:true}, R:{dir:'right',active:true} },
+      cells: { P:{dir:'cw',state:'active'}, Q:{dir:'ccw',state:'active'}, R:{dir:'cw',state:'active'} },
+      boundaries: { pq:true, qr:true }
+    }
+  }
+];
+
+// Final step (answer comparison) is rendered separately, not with sceneSVG.
+const TOTAL_STEPS = steps.length + 1;
+
+// ---------- Answer comparison (last step) ----------
+
+function miniCell(cx, cy, r, dir, color) {
+  const spin = dir === 'cw' ? 'spin-cw' : 'spin-ccw';
+  const top = `M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`;
+  const bottom = `M ${cx + r} ${cy} A ${r} ${r} 0 0 1 ${cx - r} ${cy}`;
+  return `
+  <g class="${spin}" style="transform-origin:${cx}px ${cy}px;">
+    <path d="${top}" fill="none" stroke="${color}" stroke-width="4" stroke-linecap="round" marker-end="url(#mhead)"/>
+    <path d="${bottom}" fill="none" stroke="${color}" stroke-width="4" stroke-linecap="round" marker-end="url(#mhead)"/>
+  </g>`;
+}
+
+function miniScene(dirs) {
+  // dirs: [P,Q,R] each 'cw' or 'ccw'
+  const xs = [40, 100, 160];
+  const colors = [COLORS.hot, COLORS.cool, COLORS.hot];
+  let cells = '';
+  xs.forEach((x, i) => {
+    cells += miniCell(x, 40, 20, dirs[i], colors[i]);
+  });
+  return `
+  <svg viewBox="0 0 200 70" class="mini-svg" role="img" aria-label="Sentidos de giro P Q R">
+    <defs>
+      <marker id="mhead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    ${cells}
+    <text x="40" y="66" text-anchor="middle" class="mini-label">P</text>
+    <text x="100" y="66" text-anchor="middle" class="mini-label">Q</text>
+    <text x="160" y="66" text-anchor="middle" class="mini-label">R</text>
+  </svg>`;
+}
+
+const finalAnswers = [
+  { letter: 'A', dirs: ['cw','ccw','cw'], correct: true,  verdict: 'coincide con P→, Q← y R→' },
+  { letter: 'B', dirs: ['cw','cw','ccw'], correct: false, verdict: 'Q gira mal: no coincide con Q←' },
+  { letter: 'C', dirs: ['ccw','cw','cw'], correct: false, verdict: 'P gira mal: no coincide con P→' },
+  { letter: 'D', dirs: ['ccw','cw','ccw'], correct: false, verdict: 'las tres celdas giran al revés' }
+];
+
+function finalStepHTML() {
+  const cards = finalAnswers.map(a => `
+    <div class="ans-card ${a.correct ? 'correct' : ''}">
+      <div class="letter">Alternativa ${a.letter}</div>
+      ${miniScene(a.dirs)}
+      <div class="verdict">${a.correct ? '✓ correcta — ' + a.verdict : '✗ ' + a.verdict}</div>
+    </div>
+  `).join('');
+  return `<div class="answers">${cards}</div>`;
+}
+
+// ---------- Reference section: convergente / divergente / mixta ----------
+
+// A compact 2-plate version of the same visual language, used for the
+// "pure" convergent and divergent cases in the reference table.
+function twoPlateScene(dirLeft, dirRight, cellDirLeft, cellDirRight, boundaryType) {
+  const plateY = 26;
+  const cellY = 118;
+  const R = 30;
+  const xL = 55, xR = 165;
+  const boundaryX = 110;
+  const colorL = COLORS.hot, colorR = COLORS.cool;
+
+  const arrowLeft = plateArrow(xL - 12, plateY + 26, dirLeft, true);
+  const arrowRight = plateArrow(xR + 12, plateY + 26, dirRight, true);
+
+  const glyph = boundaryGlyph(boundaryX, plateY + 40, cellY, boundaryType, true);
+
+  return `
+  <svg viewBox="0 0 220 190" class="ref-svg" role="img" aria-label="Celdas de convección ${boundaryType === 'converge' ? 'convergentes' : 'divergentes'}">
+    <defs>
+      <marker id="rhead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    <line x1="${boundaryX}" y1="16" x2="${boundaryX}" y2="150" stroke="#263140" stroke-width="1.5"/>
+    <rect x="10" y="10" width="90" height="34" rx="6" fill="${COLORS.rock}" stroke="${COLORS.rockLine}" stroke-width="1.2"/>
+    <rect x="120" y="10" width="90" height="34" rx="6" fill="${COLORS.rock}" stroke="${COLORS.rockLine}" stroke-width="1.2"/>
+    ${arrowLeft.replace('marker-end="url(#headPlate)"', 'marker-end="url(#rhead)"')}
+    ${arrowRight.replace('marker-end="url(#headPlate)"', 'marker-end="url(#rhead)"')}
+    ${cellSVG(xL, cellY, R, cellDirLeft, 'active', 'hot').replace(/url\(#head\)/g, 'url(#rhead)')}
+    ${cellSVG(xR, cellY, R, cellDirRight, 'active', 'cool').replace(/url\(#head\)/g, 'url(#rhead)')}
+    ${glyph.replace(/url\(#headSmall\)/g, 'url(#rhead)')}
+  </svg>`;
+}
+
+const refRows = [
+  {
+    key: 'converge',
+    dotClass: 'converge',
+    tipo: 'Convergente',
+    movimiento: 'Ambas placas avanzan una hacia la otra, cerrando el límite común.',
+    giro: 'Celdas vecinas giran en <b>sentidos opuestos</b>, de modo que las dos bajan justo en el límite.',
+    ocurre: 'El material se hunde (subducción) o las placas se comprimen entre sí; se pueden formar fosas oceánicas o cordilleras.',
+    ejemplo: 'Placa de Nazca hundiéndose bajo Sudamérica → Cordillera de los Andes.'
+  },
+  {
+    key: 'diverge',
+    dotClass: 'diverge',
+    tipo: 'Divergente',
+    movimiento: 'Ambas placas se alejan una de la otra, abriendo el límite común.',
+    giro: 'Celdas vecinas giran en <b>sentidos opuestos</b>, de modo que las dos suben justo en el límite.',
+    ocurre: 'El material asciende y se forma nueva corteza; el límite se convierte en una zona de rift o dorsal.',
+    ejemplo: 'Dorsal Mesoatlántica, separando la placa Sudamericana de la Africana.'
+  },
+  {
+    key: 'mixed',
+    dotClass: 'mixed',
+    tipo: 'Mixta',
+    movimiento: 'Una placa central avanza hacia un vecino y se aleja del otro al mismo tiempo (como Q en este problema).',
+    giro: 'El patrón de giro se <b>alterna</b> a lo largo de la cadena: horario–antihorario–horario (o viceversa).',
+    ocurre: 'Un límite de la cadena es convergente y el vecino es divergente, ocurriendo ambos al mismo tiempo.',
+    ejemplo: 'El caso de P, Q y R: colisión entre P–Q y separación entre Q–R.'
+  }
+];
+
+function renderReferenceTable() {
+  const table = document.getElementById('refTable');
+  const head = `
+    <tr>
+      <th>Tipo</th>
+      <th>Movimiento relativo</th>
+      <th>Giro de las celdas</th>
+      <th>Qué ocurre en el límite</th>
+      <th>Ejemplo real</th>
+    </tr>`;
+  const rows = refRows.map(r => `
+    <tr>
+      <td class="type-cell"><span class="type-dot ${r.dotClass}"></span>${r.tipo}</td>
+      <td>${r.movimiento}</td>
+      <td>${r.giro}</td>
+      <td>${r.ocurre}</td>
+      <td>${r.ejemplo}</td>
+    </tr>`).join('');
+  table.innerHTML = head + rows;
+}
+
+function renderReferenceDiagrams() {
+  const host = document.getElementById('refDiagrams');
+
+  const convergeSVG = twoPlateScene('right', 'left', 'cw', 'ccw', 'converge');
+  const divergeSVG = twoPlateScene('left', 'right', 'ccw', 'cw', 'diverge');
+  const mixedSVG = sceneSVG({
+    plates: { P:{dir:'right',active:true}, Q:{dir:'left',active:true}, R:{dir:'right',active:true} },
+    cells: { P:{dir:'cw',state:'active'}, Q:{dir:'ccw',state:'active'}, R:{dir:'cw',state:'active'} },
+    boundaries: { pq:true, qr:true }
+  });
+
+  host.innerHTML = `
+    <div class="ref-card">
+      <div class="ref-card-title"><span class="type-dot converge"></span>Convergente</div>
+      <div class="ref-card-sub">giro opuesto · ambas bajan</div>
+      ${convergeSVG}
+    </div>
+    <div class="ref-card">
+      <div class="ref-card-title"><span class="type-dot diverge"></span>Divergente</div>
+      <div class="ref-card-sub">giro opuesto · ambas suben</div>
+      ${divergeSVG}
+    </div>
+    <div class="ref-card">
+      <div class="ref-card-title"><span class="type-dot mixed"></span>Mixta (este problema)</div>
+      <div class="ref-card-sub">giro alternado · P–Q baja, Q–R sube</div>
+      ${mixedSVG}
+    </div>
+  `;
+}
+
+// ---------- Render / navigation ----------
+
+let current = 0;
+
+const railEl = document.getElementById('rail');
+const dotsEl = document.getElementById('dots');
+const stepNumEl = document.getElementById('stepNum');
+const stepTotalEl = document.getElementById('stepTotal');
+const stepTitleEl = document.getElementById('stepTitle');
+const headingEl = document.getElementById('txtHeading');
+const bodyEl = document.getElementById('txtBody');
+const tagRowEl = document.getElementById('tagRow');
+const visualHost = document.getElementById('visualHost');
+const btnBack = document.getElementById('btnBack');
+const btnNext = document.getElementById('btnNext');
+
+stepTotalEl.textContent = TOTAL_STEPS;
+
+for (let i = 0; i < TOTAL_STEPS; i++) {
+  const seg = document.createElement('div');
+  seg.className = 'seg';
+  seg.innerHTML = '<div class="fill"></div>';
+  railEl.appendChild(seg);
+
+  const dot = document.createElement('button');
+  dot.className = 'dot';
+  dot.setAttribute('aria-label', 'Ir al paso ' + (i + 1));
+  dot.addEventListener('click', () => { current = i; render(); });
+  dotsEl.appendChild(dot);
+}
+
+function render() {
+  const isFinal = current === steps.length;
+  const data = isFinal ? null : steps[current];
+
+  stepNumEl.textContent = current + 1;
+  stepTitleEl.textContent = isFinal ? 'Comparando las alternativas' : data.title;
+  headingEl.textContent = isFinal ? '¿Cuál alternativa gira como debe?' : data.heading;
+
+  if (isFinal) {
+    bodyEl.innerHTML = `<p>Cada alternativa propone un sentido de giro distinto para las tres celdas. Solo una reproduce exactamente <b>horario — antihorario — horario</b>, el patrón que dedujimos a partir de las flechas de P, Q y R.</p>`;
+    tagRowEl.innerHTML = '';
+    visualHost.innerHTML = finalStepHTML();
+  } else {
+    bodyEl.innerHTML = data.body;
+    tagRowEl.innerHTML = data.tags.join('');
+    visualHost.innerHTML = sceneSVG(data.scene);
+  }
+
+  // progress rail
+  [...railEl.children].forEach((seg, i) => {
+    seg.classList.toggle('done', i < current);
+    seg.classList.toggle('active', i === current);
+  });
+  // dots
+  [...dotsEl.children].forEach((dot, i) => {
+    dot.classList.toggle('active', i === current);
+  });
+
+  btnBack.disabled = current === 0;
+  btnNext.textContent = current === TOTAL_STEPS - 1 ? 'Volver al inicio ↺' : 'Siguiente →';
+}
+
+btnBack.addEventListener('click', () => {
+  if (current > 0) { current--; render(); }
+});
+btnNext.addEventListener('click', () => {
+  if (current < TOTAL_STEPS - 1) { current++; } else { current = 0; }
+  render();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') btnNext.click();
+  if (e.key === 'ArrowLeft') btnBack.click();
+});
+
+render();
+renderReferenceTable();
+renderReferenceDiagrams();
+
+</script>
+</body>
+</html>
