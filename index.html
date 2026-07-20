@@ -1,0 +1,3062 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sesión 01 de Química · PAES Ciencias · Complemento Matemático</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;family=Dancing+Script:wght@700&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --uow:#001641;
+  --uow-soft:#13306b;
+  --uow-pale:#5b7099;
+  --grey:#e4e4e4;
+  --grey-dark:#9aa0a8;
+  --ink:#1c1f24;
+  --paper:#ffffff;
+  --scale:1;             /* master zoom: controls ALL slide text + image sizes at once */
+  --img-h:340px;          /* base height for full-width figures, scales with --scale */
+  --subimg-h:240px;       /* base height for side-by-side sub-figures, scales with --scale */
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;height:100%;background:#1b1f27;font-family:'Source Serif 4',Georgia,'Times New Roman',serif;}
+.viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(circle at 50% 30%,#262c38,#14171d 75%);}
+.stage{position:relative;width:1280px;height:720px;background:#fff;box-shadow:0 25px 70px rgba(0,0,0,.5);border-radius:6px;overflow:hidden;transform-origin:center center;flex:0 0 auto;}
+
+.slide{position:absolute;top:0;left:0;right:0;bottom:40px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .3s ease;}
+.slide.active{opacity:1;visibility:visible;z-index:2;}
+
+.topbar{
+  flex:0 0 26px;height:26px;background:var(--grey);border-bottom:2px solid var(--uow);
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:14px;
+  padding:0 26px;
+  font-size:calc(11px*var(--scale));letter-spacing:.05em;text-transform:uppercase;color:var(--uow-soft);font-weight:600;
+}
+.topbar .mark{width:9px;height:9px;border-radius:50%;background:var(--uow);display:inline-block;margin-right:9px;flex:0 0 auto;}
+.topbar-left{display:flex;align-items:center;justify-self:start;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.topbar-center{display:flex;align-items:center;justify-self:center;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.topbar-right{display:flex;align-items:center;justify-self:end;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+.frametitle{flex:0 0 auto;background:var(--uow);color:#fff;padding:15px 56px;font-size:calc(25px*var(--scale));font-weight:700;line-height:1.25;box-shadow:0 3px 6px rgba(0,0,0,.22);}
+
+.content{flex:1 1 auto;overflow-y:auto;padding:26px 60px 14px;font-size:calc(17px*var(--scale));line-height:1.5;color:var(--ink);}
+.content.center{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.content.dense{font-size:calc(15px*var(--scale));line-height:1.42;padding-top:18px;}
+.content p{margin:10px 0;}
+.content > p:first-child{margin-top:0;}
+
+.content ul{list-style:none;margin:8px 0;padding-left:0;}
+.content ul:not(.toc-list) li{position:relative;padding-left:26px;margin:8px 0;}
+.content ul:not(.toc-list) li::before{content:"";position:absolute;left:0;top:9px;width:9px;height:9px;border-radius:50%;background:var(--uow);}
+.content ul ul{margin:6px 0 6px 2px;}
+.content ul ul li{margin:6px 0;}
+.content ul ul li::before{width:7px;height:7px;background:transparent;border:2px solid var(--uow);top:7px;}
+.content li.check{padding-left:30px;}
+.content li.check::before{content:"\2713";background:none;width:auto;height:auto;border:none;color:var(--uow);font-weight:700;font-size:calc(15px*var(--scale));top:0px;left:0;}
+.dense li{margin:6px 0;}
+
+.tcb{border:2px solid var(--uow);border-radius:8px;margin:16px 0;background:#fff;overflow:hidden;box-shadow:0 2px 10px rgba(0,22,65,.10);}
+.tcb-title{background:var(--uow);color:#fff;padding:8px 18px;font-weight:700;font-size:calc(15px*var(--scale));}
+.tcb-body{padding:14px 22px 18px;}
+.dense .tcb-body{padding:12px 20px 16px;}
+
+.eqtable{display:grid;grid-template-columns:max-content 1fr max-content;gap:9px 24px;align-items:center;margin:4px 0 10px;}
+.eqtable .lbl{font-weight:700;color:var(--uow);font-size:calc(15px*var(--scale));}
+.eqtable .dom{color:#555;font-size:calc(14.5px*var(--scale));white-space:nowrap;font-style:italic;}
+
+table.data{border-collapse:collapse;width:100%;margin:12px 0;font-size:calc(14.5px*var(--scale));}
+table.data th,table.data td{border:1px solid var(--uow);padding:5px 9px;text-align:center;}
+table.data thead th{background:var(--uow);color:#fff;font-weight:700;}
+.tabcap,.figcap{font-size:calc(13.5px*var(--scale));color:#444;text-align:center;margin:6px 0 14px;font-style:italic;}
+
+figure.fig{margin:10px 0;text-align:center;}
+figure.fig img{max-width:100%;max-height:calc(var(--img-h)*var(--scale));object-fit:contain;display:block;margin:0 auto;}
+.subfigs{display:flex;gap:30px;justify-content:center;margin-top:4px;}
+.subfig{flex:1;text-align:center;}
+.subfig img{max-width:100%;max-height:calc(var(--subimg-h)*var(--scale));object-fit:contain;display:block;margin:0 auto;}
+.subfig figcaption{font-size:calc(13px*var(--scale));margin-top:6px;color:#444;}
+
+.toc-list{list-style:none;padding:0;margin:14px 0;}
+.toc-list li{display:flex;align-items:center;gap:16px;padding:13px 6px;font-size:calc(19px*var(--scale));border-bottom:1px solid #eee;color:var(--ink);transition:color .2s;}
+.toc-list li:last-child{border-bottom:none;}
+.toc-list .dot{width:13px;height:13px;border-radius:50%;background:var(--uow);flex:0 0 auto;}
+.toc-list li.shaded{color:#aab0b8;}
+.toc-list li.shaded .dot{background:#d7d9dd;}
+.toc-list li.current{color:var(--uow);font-weight:700;font-size:calc(21px*var(--scale));}
+
+.title-slide .content{justify-content:center;padding-top:0;}
+.title-box{background:var(--uow);color:#fff;padding:24px 54px;border-radius:6px;max-width:1000px;}
+.title-box h1{margin:0;font-size:calc(26px*var(--scale));font-weight:700;line-height:1.32;}
+.title-box .subtitle{margin-top:12px;font-size:calc(15px*var(--scale));font-weight:400;opacity:.92;line-height:1.4;}
+.t-author{margin-top:22px;font-size:calc(18px*var(--scale));font-weight:700;color:var(--ink);}
+.t-institute{margin-top:6px;font-size:calc(13.5px*var(--scale));color:#444;line-height:1.4;}
+.t-date{margin-top:10px;font-size:calc(12.5px*var(--scale));color:#666;}
+.t-logos{display:flex;align-items:center;justify-content:center;gap:clamp(14px,3vw,40px);margin-top:20px;width:100%;max-width:1080px;flex-wrap:nowrap;}
+.t-logos img{flex:0 0 auto;min-width:0;width:auto;height:auto;max-width:170px;max-height:calc(70px*var(--scale));object-fit:contain;}
+
+.final-slide .content{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;}
+.final-slide .calligra{font-family:'Dancing Script',cursive;font-size:calc(44px*var(--scale));color:var(--uow);font-weight:700;}
+
+.bib-list{list-style:none;padding:0;margin:6px 0;}
+.bib-list li{padding-left:34px;position:relative;margin:13px 0;font-size:calc(14.5px*var(--scale));line-height:1.45;}
+.bib-list li .num{position:absolute;left:0;top:0;color:var(--uow);font-weight:700;}
+.bib-list .eyebrow{display:block;color:var(--uow-pale);font-size:calc(12px*var(--scale));text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;font-weight:600;}
+
+/* ── Sistema gen&eacute;rico de fragmentos: marca cualquier elemento con
+   class="fragment" para que se revele uno por click del control/teclado, o
+   class="fragment-auto" (+ opcional data-delay="600" en ms) para que se
+   revele solo, con tiempo, apenas entras a la diapositiva. Mismo look en
+   ambos casos, solo cambia qui&eacute;n dispara el cambio de clase .visible. ── */
+.fragment, .fragment-auto{opacity:0;transform:translateY(18px);transition:opacity .42s ease,transform .42s ease;}
+.fragment.visible, .fragment-auto.visible{opacity:1;transform:translateY(0);}
+.farr.fragment, .farr.fragment-auto{transform:none;}
+
+.footbar{flex:0 0 30px;height:40px;display:flex;font-size:calc(13px*var(--scale));font-weight:600;}
+.footbar.global{position:absolute;left:0;right:0;bottom:0;z-index:5;}
+.footbar > div{display:flex;align-items:center;overflow:hidden;}
+.fb-author{flex:0 0 35%;background:var(--uow);color:#fff;justify-content:center;padding:0 10px;white-space:nowrap;}
+.fb-title{flex:0 0 34%;background:var(--grey);color:var(--uow);justify-content:center;padding:0 10px;text-align:center;white-space:nowrap;text-overflow:ellipsis;font-weight:600;font-size:calc(15px*var(--scale));}
+.fb-date{flex:1 1 31%;background:var(--uow);color:#fff;justify-content:flex-end;padding:0 16px;gap:14px;white-space:nowrap;}
+
+.fb-controls{display:flex;align-items:center;gap:6px;flex:0 0 auto;height:100%;}
+.fb-controls button{
+  width:24px;height:24px;flex:0 0 auto;border-radius:50%;border:none;
+  background:rgba(255,255,255,.16);color:#fff;font-size:12px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.fb-controls button:hover{background:rgba(255,255,255,.34);}
+.fb-controls button:disabled{opacity:.35;cursor:default;}
+
+.progress{position:fixed;top:0;left:0;height:4px;background:var(--uow);z-index:60;width:0;transition:width .25s ease;}
+.hint{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:rgba(0,22,65,.88);color:#fff;font-size:13px;padding:9px 18px;border-radius:20px;z-index:50;opacity:0;transition:opacity .5s;pointer-events:none;font-family:'Source Serif 4',serif;}
+.hint.show{opacity:1;}
+
+
+/* ════════════════════════════════
+   S6 — FLUJO
+════════════════════════════════ */
+.s6-wrap { position:relative; z-index:2; width:min(1000px,94%); }
+.flow-row {
+  display:flex; align-items:stretch; justify-content:center;
+  margin-top:clamp(.8rem,2vh,1.4rem); gap:0;
+}
+.fnode {
+  background:var(--card); border:1.5px solid var(--border);
+  border-radius:clamp(.6rem,1.4vw,1.2rem);
+  padding:clamp(.7rem,1.8vw,1.3rem) clamp(.5rem,1.2vw,1rem);
+  text-align:center; width:clamp(110px,21%,200px); flex-shrink:0;
+  box-shadow:var(--sh);
+}
+.fn-ico { font-size:var(--t-icon); display:block; margin-bottom:.4rem; }
+.fn-ttl {
+  font-family:'JetBrains Mono',monospace;
+  font-size:var(--t-label); font-weight:700; color:var(--ink); margin-bottom:.25rem;
+}
+.fn-dsc { font-size:var(--t-label); color:var(--muted); line-height:1.45; }
+
+.farr {
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  padding:0 clamp(.1rem,.5vw,.4rem); flex-shrink:0;
+}
+.arr-line {
+  width:clamp(16px,2.5vw,38px); height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--acc3)); position:relative;
+}
+.arr-line::after {
+  content:'▶'; position:absolute; right:-9px; top:-7px;
+  font-size:.68rem; color:var(--acc3);
+}
+.arr-lbl { font-size:var(--t-label); font-family:'JetBrains Mono',monospace; color:var(--muted); margin-top:.28rem; white-space:nowrap; }
+
+.code-mini {
+  background:#1e1e2e; border-radius:.45rem;
+  padding:.35rem .5rem; margin-top:.45rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:var(--t-code); line-height:1.7; color:#cdd6f4; text-align:left;
+}
+.cm{color:#89b4fa;} .ca{color:#a6e3a1;}
+.qr-mini { width:clamp(46px,7vw,68px); height:clamp(46px,7vw,68px); margin:.45rem auto 0; display:block; }
+.pl-list { margin:.4rem 0 0; }
+.pl { height:5px; border-radius:3px; background:rgba(0,59,126,.2); margin:3px 0; }
+.pl:nth-child(2){width:62%;background:rgba(0,38,79,.2);}
+.pl:nth-child(3){background:rgba(31,95,168,.2);}
+.pl:nth-child(4){width:76%;background:rgba(47,72,88,.2);}
+
+.flow-note {
+  margin-top:var(--gap); background:rgba(255,255,255,.75);
+  border:1px solid var(--border);
+  border-radius:clamp(.5rem,1.2vw,.9rem);
+  padding:.6rem clamp(.8rem,2vw,1.3rem);
+  font-size:var(--t-body); color:var(--ink2); line-height:1.65;
+}
+.flow-note strong { color:var(--accent); }
+
+/* ════════════════════════════════
+   QA SLIDE — pregunta → respuesta → siguiente pregunta
+════════════════════════════════ */
+.qa-col {
+  flex: 1 1 55%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Cada panel ocupa exactamente el mismo espacio y se superpone */
+.qa-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: calc(14px*var(--scale));
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+/* El panel 0 arranca visible */
+.qa-panel[data-qa="0"] { opacity: 1; pointer-events: auto; }
+
+/* Anular el translateY del sistema .fragment para estos paneles */
+.qa-panel.fragment,
+.qa-panel.fragment.visible {
+  transform: none !important;
+}
+/* La visibilidad la maneja syncQAPanels, no la clase .visible */
+.qa-panel.fragment.visible { opacity: 0; } /* sobreescrito por syncQAPanels */
+
+.qa-question {
+  font-size: calc(19px*var(--scale));
+  font-weight: 700;
+  color: var(--uow);
+  line-height: 1.3;
+  border-left: 4px solid var(--uow);
+  padding-left: calc(14px*var(--scale));
+}
+.qa-question strong { color: var(--uow-soft); }
+
+.qa-answer {
+  font-size: calc(16px*var(--scale));
+  color: var(--ink);
+  line-height: 1.55;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: calc(12px*var(--scale)) calc(16px*var(--scale));
+  border-left: 4px solid var(--uow-pale);
+}
+.beamer-video-slide {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Video ocupa todo el área bajo el topbar */
+.bv-bg {
+  position: absolute;
+  top: 26px; /* altura del topbar */
+  left: 0; right: 0; bottom: 40px; /* bottom = footbar height */
+  z-index: 0;
+}
+.bv-video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Velo oscuro semitransparente para legibilidad del texto */
+.bv-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0,22,65,0.78) 0%,
+    rgba(0,22,65,0.45) 60%,
+    rgba(0,0,0,0.25) 100%
+  );
+}
+
+/* Título flotante que reemplaza al frametitle (el frametitle original se oculta) */
+.beamer-video-slide .frametitle { display: none; }
+.bv-frametitle {
+  position: absolute;
+  top: 26px; left: 0; right: 0;
+  background: rgba(0,22,65,0.82);
+  color: #fff;
+  padding: calc(10px*var(--scale)) calc(56px*var(--scale));
+  font-size: calc(22px*var(--scale));
+  font-weight: 700;
+  line-height: 1.25;
+  z-index: 3;
+  letter-spacing: 0.01em;
+  border-bottom: 2px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(4px);
+}
+
+/* Área de preguntas overlay */
+.bv-overlay {
+  position: absolute;
+  top: calc(26px + calc(44px*var(--scale)));  /* topbar + bv-frametitle aprox */
+  left: 0; right: 0; bottom: 40px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: calc(20px*var(--scale)) calc(60px*var(--scale));
+  gap: calc(18px*var(--scale));
+}
+
+/* Cada bloque-pregunta */
+.bv-question {
+  display: flex;
+  flex-direction: column;
+  gap: calc(6px*var(--scale));
+  background: rgba(255,255,255,0.10);
+  border-left: 4px solid #fff;
+  border-radius: 0 8px 8px 0;
+  padding: calc(12px*var(--scale)) calc(20px*var(--scale));
+  backdrop-filter: blur(6px);
+  max-width: 70%;
+}
+.bv-badge {
+  font-size: calc(10px*var(--scale));
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.65);
+}
+.bv-text {
+  font-size: calc(20px*var(--scale));
+  color: #fff;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.bv-text strong { color: #ffd966; }
+
+/* La primera pregunta tiene el borde en color acento */
+.bv-q0 { border-left-color: #ffd966; }
+.bv-q1 { border-left-color: #a8d8ea; }
+.bv-q2 { border-left-color: #b5ead7; }
+
+/* Nota de contexto al final */
+.bv-note {
+  margin-top: calc(8px*var(--scale));
+  font-size: calc(13px*var(--scale));
+  color: rgba(255,255,255,0.80);
+  background: rgba(0,22,65,0.55);
+  border-radius: 6px;
+  padding: calc(8px*var(--scale)) calc(16px*var(--scale));
+  backdrop-filter: blur(4px);
+  max-width: 65%;
+  font-style: italic;
+  line-height: 1.4;
+}
+.bv-note strong { color: #ffd966; font-style: normal; }
+
+/* Los fragments dentro del overlay usan la misma animación base,
+   pero con translateY más sutil para verse bien sobre el video */
+.beamer-video-slide .fragment {
+  transform: translateY(12px);
+}
+
+/* ══════════════════════════════════════════════
+   TEMPORIZADOR GLOBAL (flota sobre el encabezado, cualquier slide)
+══════════════════════════════════════════════ */
+#timerBtn { font-size: 13px; }
+
+.dig-timer {
+  position: absolute;
+  top: 40px;
+  right: 30px;
+  left: auto;
+  z-index: 50;
+  display: none;
+  align-items: center;
+  gap: 14px;
+  background: rgba(6,14,32,.92);
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 16px;
+  padding: 8px 14px 8px 10px;
+  box-shadow: 0 8px 26px rgba(0,0,0,.45);
+  transform-origin: center center;
+  transition: top .5s cubic-bezier(.4,0,.2,1),
+              left .5s cubic-bezier(.4,0,.2,1),
+              right .5s cubic-bezier(.4,0,.2,1),
+              transform .5s cubic-bezier(.34,1.3,.4,1),
+              box-shadow .5s ease,
+              background .5s ease;
+}
+.dig-timer.visible { display: flex; animation: dtIn .26s cubic-bezier(.2,.9,.3,1.3); }
+@keyframes dtIn { from{opacity:0; transform:translateY(-6px) scale(.92);} to{opacity:1;transform:none;} }
+
+/* ── Al iniciar (running): se centra en la diapositiva y crece al triple ── */
+.dig-timer.running {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  transform: translate(-50%,-50%) scale(3);
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  background: rgba(6,14,32,.96);
+  animation: none;             /* evita conflicto con dtIn al centrarse */
+}
+
+/* aro + dígitos, tamaño fijo (no escala con la slide) */
+.dt-ring-wrap {
+  position: relative;
+  width: calc(58px*var(--scale));
+  height: calc(58px*var(--scale));
+  flex: 0 0 auto;
+}
+.dt-ring { position:absolute; inset:0; width:100%; height:100%; }
+.dt-ring circle { fill:none; stroke-width:7; }
+.dt-ring-bg { stroke: rgba(255,255,255,.18); }
+.dt-ring-fg {
+  stroke: #ff9f0a;
+  stroke-linecap: round;
+  stroke-dasharray: 339.29;      /* 2π·54 */
+  stroke-dashoffset: 0;
+  transform: rotate(-90deg);
+  transform-origin: 60px 60px;
+  transition: stroke-dashoffset .95s linear, stroke .3s;
+}
+.dt-clock {
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center; gap:0;
+}
+.dt-field {
+  width: calc(19px*var(--scale));
+  background: transparent; border: none; outline: none;
+  text-align: center;
+  font-family: ui-monospace,'SF Mono','Courier New',monospace;
+  font-size: calc(15px*var(--scale)); font-weight: 700;
+  color: #fff; caret-color: #ff9f0a;
+  padding: 0; border-radius: 4px;
+  transition: background .18s;
+  line-height: 1;
+}
+.dt-field:focus { background: rgba(255,159,10,.22); }
+.dt-field::selection { background: rgba(255,159,10,.4); }
+.dt-field::-webkit-outer-spin-button,
+.dt-field::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+.dt-colon {
+  font-family: ui-monospace,'SF Mono','Courier New',monospace;
+  font-size: calc(14px*var(--scale)); font-weight: 700; color:#fff;
+  transform: translateY(-1px);
+}
+.dig-timer.running .dt-colon { animation: dtColon 1s steps(1) infinite; }
+@keyframes dtColon { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+
+/* estados */
+.dig-timer.warning .dt-field { color:#ffe14d; }
+.dig-timer.warning .dt-ring-fg { stroke:#ffd60a; }
+.dig-timer.danger  .dt-field { color:#ff6b6b; }
+.dig-timer.danger  .dt-ring-fg { stroke:#ff453a; }
+.dig-timer.done .dt-field, .dig-timer.done .dt-colon { color:#ff6b6b; }
+
+/* al terminar el tiempo: se mantiene centrado y grande, y pulsa en rojo */
+.dig-timer.done {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  transform: translate(-50%,-50%) scale(3);
+  animation: dtDonePulse 0.7s ease-in-out infinite;
+}
+@keyframes dtDonePulse {
+  0%,100%{ box-shadow: 0 20px 60px rgba(0,0,0,.6), 0 0 0 0 rgba(255,69,58,.55); }
+  50%    { box-shadow: 0 20px 60px rgba(0,0,0,.6), 0 0 0 24px rgba(255,69,58,0); }
+}
+
+/* botones redondos pequeños */
+.dt-btns { display:flex; gap:8px; align-items:center; flex:0 0 auto; }
+.dt-btn {
+  width: calc(30px*var(--scale)); height: calc(30px*var(--scale));
+  border-radius: 50%; border: none; cursor: pointer;
+  font-size: calc(13px*var(--scale)); font-weight: 700;
+  display:flex; align-items:center; justify-content:center;
+  transition: filter .18s, transform .1s, background .18s;
+  padding: 0;
+}
+.dt-btn:active { transform: scale(.9); }
+.dt-reset { background: rgba(255,255,255,.16); color:#fff; }
+.dt-reset:hover { background: rgba(255,255,255,.3); }
+.dt-play {
+  background: rgba(48,209,88,.28); color:#5cf08a;
+  border: 1px solid rgba(48,209,88,.55);
+}
+.dt-play:hover { filter: brightness(1.15); }
+.dig-timer.running .dt-play {
+  background: rgba(255,159,10,.28); color:#ffc861;
+  border-color: rgba(255,159,10,.55);
+}
+
+/* ══════════════════════════════════════════════
+   SLIDE FINAL — idea creciendo hacia la ampolleta
+   Todo arranca solo al mostrarse la diapositiva.
+══════════════════════════════════════════════ */
+.finale-stage{
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:calc(6px*var(--scale));
+}
+.finale-svg{
+  width:min(560px, 62vw);
+  height:auto;
+  max-height:calc(300px*var(--scale));
+  overflow:visible;
+  display:block;
+}
+
+/* ejes y asíntota */
+.finale-svg .axis{ stroke:#c7ccd6; stroke-width:1.5; }
+.finale-svg .asymptote{
+  stroke:#9aa0a8; stroke-width:2; stroke-dasharray:5 7;
+  opacity:0;
+}
+.play .finale-svg .asymptote{ animation:asymFade .8s ease .3s forwards; }
+@keyframes asymFade{ to{ opacity:.7; } }
+
+/* la curva se dibuja sola de abajo hacia arriba */
+.finale-svg .growth-curve{
+  stroke-dasharray:640; stroke-dashoffset:640;
+  filter:drop-shadow(0 2px 4px rgba(0,22,65,.25));
+}
+.play .finale-svg .growth-curve{ animation:drawCurve 2.6s cubic-bezier(.5,0,.35,1) .4s forwards; }
+@keyframes drawCurve{ to{ stroke-dashoffset:0; } }
+
+/* chispa: se desvanece al llegar arriba */
+.finale-svg .spark{
+  opacity:0; filter:drop-shadow(0 0 6px #ffd451);
+}
+.play .finale-svg .spark{ animation:sparkLife 2.4s ease .5s forwards; }
+@keyframes sparkLife{
+  0%{opacity:0;} 8%{opacity:1;} 88%{opacity:1;} 100%{opacity:0;}
+}
+
+/* burbujas de ideas subiendo */
+.finale-svg .bub{ fill:#8fa6cf; opacity:0; }
+.play .finale-svg .b1{ animation:bubUp 2.6s ease .9s infinite; }
+.play .finale-svg .b2{ animation:bubUp 2.6s ease 1.4s infinite; }
+.play .finale-svg .b3{ animation:bubUp 2.6s ease 1.9s infinite; }
+.play .finale-svg .b4{ animation:bubUp 2.6s ease 2.3s infinite; }
+@keyframes bubUp{
+  0%{ opacity:0; transform:translateY(0) scale(.6); }
+  20%{ opacity:.9; }
+  100%{ opacity:0; transform:translateY(-46px) scale(1.1); }
+}
+
+/* ampolleta: aparece y luego se enciende */
+.finale-svg .bulb-glass{
+  fill:#eef1f6; stroke:#b8c0cf; stroke-width:2;
+}
+.play .finale-svg .bulb-glass{ animation:bulbOn .9s ease 2.7s forwards; }
+@keyframes bulbOn{
+  to{ fill:url(#glassGrad); stroke:#e9b83c; }
+}
+.finale-svg .bulb-filament{ stroke:#c8ccd4; stroke-width:2.5; stroke-linecap:round; }
+.play .finale-svg .bulb-filament{ animation:filamentOn .9s ease 2.7s forwards; }
+@keyframes filamentOn{ to{ stroke:#ff8c1a; } }
+
+.finale-svg .bulb-cap{ fill:#9aa0a8; }
+
+.finale-svg .bulb-halo{ opacity:0; transform-origin:360px 118px; }
+.play .finale-svg .bulb-halo{ animation:haloOn 1.4s ease 2.9s forwards; }
+@keyframes haloOn{
+  0%{ opacity:0; transform:scale(.4); }
+  60%{ opacity:.95; transform:scale(1.08); }
+  100%{ opacity:.8; transform:scale(1); }
+}
+
+.finale-svg .bulb-rays{ opacity:0; transform-origin:360px 70px; }
+.play .finale-svg .bulb-rays{ animation:raysOn .7s ease 3.1s forwards; }
+@keyframes raysOn{
+  0%{ opacity:0; transform:scale(.5); }
+  70%{ opacity:1; transform:scale(1.12); }
+  100%{ opacity:.9; transform:scale(1); }
+}
+
+/* leve pulso/flotación continua de la ampolleta ya encendida */
+.finale-svg .bulb{ transform-origin:360px 120px; }
+.play .finale-svg .bulb{ animation:bulbFloat 3.4s ease-in-out 3.4s infinite; }
+@keyframes bulbFloat{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-5px); }
+}
+
+/* mensaje: entra después de que la idea "se enciende" */
+.finale-msg{ opacity:0; transform:translateY(14px); }
+.play .finale-msg{ animation:msgIn .9s cubic-bezier(.2,.7,.3,1) 3.3s forwards; }
+.finale-msg2{ animation-delay:3.7s; }
+@keyframes msgIn{ to{ opacity:1; transform:translateY(0); } }
+
+@media (prefers-reduced-motion: reduce){
+  .finale-svg *{ animation:none !important; }
+  .finale-svg .growth-curve{ stroke-dashoffset:0; }
+  .finale-svg .asymptote{ opacity:.7; }
+  .finale-svg .bulb-glass{ fill:url(#glassGrad); stroke:#e9b83c; }
+  .finale-svg .bulb-filament{ stroke:#ff8c1a; }
+  .finale-svg .bulb-halo,.finale-svg .bulb-rays{ opacity:.85; }
+  .finale-msg{ opacity:1 !important; transform:none !important; }
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="hint" id="hint">Usa ← → para navegar · +/− agranda <em>esta</em> diapositiva · Ctrl+S guarda los tamaños en el archivo</div>
+<div class="viewport" id="viewport">
+  <div class="stage" id="stage">
+<style>
+.sim{ display:flex; gap:calc(14px*var(--scale)); height:100%; align-items:stretch;
+  min-height:0; overflow:auto; }
+/* El canvas mantiene una proporción estable (1000x560) y NUNCA se achica por
+   debajo de un mínimo legible; si el zoom de la slide es muy alto, el contenedor
+   hace scroll en vez de aplastar el dibujo. */
+.sim-stage{ flex:1 1 66%; position:relative; background:#f7f9fc;
+  border:2px solid var(--uow); border-radius:10px; overflow:hidden;
+  box-shadow:inset 0 2px 12px rgba(15,47,92,.08);
+  min-width:380px; min-height:250px; aspect-ratio:1000/560; }
+.sim-stage canvas{ width:100%; height:100%; display:block; }
+.sim-side{ flex:1 1 34%; display:flex; flex-direction:column; gap:calc(8px*var(--scale));
+  min-width:250px; min-height:0; }
+
+.sc-title{ background:var(--uow); color:#fff; border-radius:8px;
+  padding:calc(7px*var(--scale)) calc(12px*var(--scale));
+  font-weight:700; font-size:calc(14px*var(--scale)); line-height:1.25; }
+.sc-title.warm{ background:#f5a623; color:#1c1f24; }
+
+.sc-body{ flex:1 1 auto; background:#fff; border:1.5px solid #dbe2ec; border-radius:8px;
+  padding:calc(10px*var(--scale)) calc(13px*var(--scale));
+  font-size:calc(12.5px*var(--scale)); line-height:1.5; color:#1c1f24; overflow-y:auto; }
+.sc-body b{ color:var(--uow); }
+.sc-body .eq{ margin:calc(7px*var(--scale)) 0; text-align:center;
+  background:#eef3fa; border-radius:6px; padding:calc(6px*var(--scale)); }
+.sc-body ul{ margin:calc(5px*var(--scale)) 0; padding-left:0; }
+.sc-body ul li{ padding-left:16px; position:relative; margin:calc(4px*var(--scale)) 0; }
+.sc-body ul li::before{ content:""; position:absolute; left:0; top:7px;
+  width:6px; height:6px; border-radius:50%; background:#f5a623; }
+
+/* lectura de variables en vivo */
+.readout{ display:grid; grid-template-columns:1fr 1fr; gap:calc(5px*var(--scale));
+  background:#0f2f5c; border-radius:8px; padding:calc(8px*var(--scale)); }
+.ro{ background:rgba(255,255,255,.10); border-radius:5px;
+  padding:calc(4px*var(--scale)) calc(7px*var(--scale)); }
+.ro .k{ display:block; color:#9fb6d4; font-size:calc(9.5px*var(--scale));
+  text-transform:uppercase; letter-spacing:.07em; font-weight:700; }
+.ro .v{ display:block; color:#fff; font-size:calc(14px*var(--scale)); font-weight:700;
+  font-variant-numeric:tabular-nums; }
+.ro .v em{ color:#f5a623; font-style:normal; font-size:calc(11px*var(--scale)); }
+
+/* barra de escenas */
+.sc-steps{ display:flex; gap:5px; }
+.sc-steps span{ flex:1; height:5px; border-radius:3px; background:#dbe2ec; transition:background .3s; }
+.sc-steps span.on{ background:#f5a623; }
+
+.sim-hint{ text-align:center; font-size:calc(10.5px*var(--scale)); color:#7a8698;
+  font-style:italic; }
+
+/* Salvavidas: si aun así no cabe (zoom alto / pantalla chica), se puede hacer
+   scroll dentro de la diapositiva en vez de perder el dibujo. */
+.sim-slide .content{ overflow:auto; }
+.sim-slide .sc-body{ max-height:none; }
+</style>
+
+<style>
+/* ══ Estilos propios de la Sesión 01 de Química ══ */
+:root{ --uow:#0f2f5c; --uow-soft:#1c4e8f; --uow-pale:#6b86ad; }
+.cm-accent{ color:#f5a623; }
+
+
+
+/* ── Slide con HTML embebido ── */
+.embed-slide .content{ padding:calc(6px*var(--scale)); }
+.embed-wrap{
+  position:relative; width:100%; height:100%;
+  border:calc(1.6px*var(--scale)) solid var(--uow); border-radius:calc(10px*var(--scale));
+  overflow:hidden; background:#fff;
+}
+.embed-wrap iframe{ display:block; width:100%; height:100%; border:0; background:#fff; }
+.embed-fallback{
+  position:absolute; inset:0; display:none; flex-direction:column; align-items:center; justify-content:center;
+  gap:calc(8px*var(--scale)); text-align:center; padding:calc(20px*var(--scale)); background:#f7f9fc;
+}
+.embed-fallback.show{ display:flex; }
+.embed-fallback .t{ font-size:calc(20px*var(--scale)); font-weight:700; color:var(--uow); }
+.embed-fallback .d{ font-size:calc(14px*var(--scale)); color:#1c1f24; max-width:calc(560px*var(--scale)); line-height:1.5; }
+.embed-fallback code{ font-family:ui-monospace,Menlo,Consolas,monospace; background:#e9eef5; padding:0 calc(5px*var(--scale)); border-radius:calc(4px*var(--scale)); }
+
+/* ── Tabla periódica DEMRE ── */
+.ptw{ display:flex; justify-content:center; margin:calc(4px*var(--scale)) 0; }
+table.ptable{ border-collapse:collapse; table-layout:fixed; }
+table.ptable td{
+  border:calc(1.4px*var(--scale)) solid #111; width:calc(64px*var(--scale));
+  height:calc(58px*var(--scale)); text-align:center; vertical-align:middle;
+  padding:calc(2px*var(--scale)) 0; line-height:1.18; background:#fff;
+}
+table.ptable td.void{ border:none; background:transparent; }
+.ptable .z{ font-size:calc(13px*var(--scale)); color:#111; }
+.ptable .sym{ font-size:calc(19px*var(--scale)); font-weight:700; color:#0f2f5c; letter-spacing:.3px; }
+.ptable .ma{ font-size:calc(13px*var(--scale)); color:#111; }
+.ptable td.hdr{ border:none; background:transparent; text-align:left; }
+.pt-legend{ display:flex; align-items:center; gap:calc(8px*var(--scale)); font-size:calc(13.5px*var(--scale)); color:#1c1f24; white-space:nowrap; }
+.pt-legend .ar{ flex:1; height:0; border-top:calc(1.4px*var(--scale)) solid #111; position:relative; min-width:calc(70px*var(--scale)); }
+.pt-legend .ar::after{ content:""; position:absolute; right:0; top:calc(-4px*var(--scale)); border-left:calc(8px*var(--scale)) solid #111; border-top:calc(4.5px*var(--scale)) solid transparent; border-bottom:calc(4.5px*var(--scale)) solid transparent; }
+
+/* ── Bloques "observación": tarjetas ¿Qué es? que aparecen de a poco ── */
+.pause-grid{ display:grid; gap:calc(11px*var(--scale)); margin:calc(6px*var(--scale)) 0; }
+.pause-grid.g2{ grid-template-columns:1fr 1fr; }
+.pause-grid.g3{ grid-template-columns:1fr 1fr 1fr; }
+
+.pause{
+  position:relative; background:#fff;
+  border:1.5px solid #d7dfea; border-left:5px solid #f5a623;
+  border-radius:10px; padding:calc(9px*var(--scale)) calc(14px*var(--scale)) calc(11px*var(--scale));
+  box-shadow:0 2px 10px rgba(15,47,92,.07);
+}
+.pause::after{
+  content:"OBSERVACIÓN"; position:absolute; top:calc(-9px*var(--scale)); right:calc(12px*var(--scale));
+  background:#f5a623; color:#1c1f24; font-size:calc(9px*var(--scale)); font-weight:700;
+  letter-spacing:.12em; padding:2px 8px; border-radius:8px;
+}
+.pause .q{
+  font-weight:700; color:var(--uow); font-size:calc(14.5px*var(--scale));
+  line-height:1.25; margin-bottom:calc(5px*var(--scale));
+}
+.pause .q em{ color:#f5a623; font-style:normal; }
+.pause .a{ font-size:calc(13px*var(--scale)); line-height:1.5; color:#1c1f24; }
+.pause .a b{ color:var(--uow); }
+.pause .tag{
+  display:inline-block; margin-top:calc(5px*var(--scale)); font-size:calc(10.5px*var(--scale));
+  background:#eef3fa; color:var(--uow); border-radius:9px; padding:2px 9px; font-weight:700;
+}
+.pause.warm{ border-left-color:#127f7a; }
+.pause.warm::after{ background:#127f7a; color:#fff; }
+.pause.red{ border-left-color:#d1495b; }
+.pause.red::after{ background:#d1495b; color:#fff; }
+
+/* Tarjetas de OA */
+.oa-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:calc(10px*var(--scale)); margin-top:calc(10px*var(--scale)); }
+.oa{ border:2px solid var(--uow); border-radius:10px; overflow:hidden; background:#fff;
+  box-shadow:0 2px 10px rgba(15,47,92,.10); display:flex; flex-direction:column; }
+.oa h4{ margin:0; background:var(--uow); color:#fff; font-size:calc(13px*var(--scale));
+  padding:calc(6px*var(--scale)) calc(9px*var(--scale)); text-align:center; letter-spacing:.04em; }
+.oa.g h4{ background:#f5a623; color:#1c1f24; }
+.oa.t h4{ background:#127f7a; }
+.oa p{ margin:0; padding:calc(9px*var(--scale)) calc(10px*var(--scale)); font-size:calc(12px*var(--scale)); line-height:1.45; }
+
+/* Cuadro comparativo lado a lado */
+.vs{ display:flex; gap:calc(14px*var(--scale)); }
+.vs-col{ flex:1; border:2px solid var(--uow); border-radius:10px; overflow:hidden; background:#fff; }
+.vs-col h4{ margin:0; background:var(--uow); color:#fff; font-size:calc(14px*var(--scale));
+  padding:calc(6px*var(--scale)) calc(12px*var(--scale)); }
+.vs-col.warm h4{ background:#d1495b; }
+.vs-col ul{ margin:0; padding:calc(9px*var(--scale)) calc(12px*var(--scale)); }
+.vs-col ul li{ font-size:calc(12.5px*var(--scale)); margin:calc(5px*var(--scale)) 0; }
+
+/* Fila de método científico */
+.mc-row{ display:flex; align-items:stretch; justify-content:center; gap:calc(4px*var(--scale)); margin-top:calc(10px*var(--scale)); }
+.mc-node{ flex:1 1 0; background:#fff; border:1.5px solid #d7dfea; border-radius:10px;
+  padding:calc(8px*var(--scale)) calc(7px*var(--scale)); text-align:center;
+  box-shadow:0 2px 8px rgba(15,47,92,.08); }
+.mc-num{ display:inline-block; width:calc(22px*var(--scale)); height:calc(22px*var(--scale));
+  line-height:calc(22px*var(--scale)); border-radius:50%; background:var(--uow); color:#fff;
+  font-weight:700; font-size:calc(11.5px*var(--scale)); margin-bottom:calc(4px*var(--scale)); }
+.mc-ttl{ font-weight:700; color:var(--uow); font-size:calc(12.5px*var(--scale)); line-height:1.2; }
+.mc-dsc{ font-size:calc(11px*var(--scale)); color:#5a6472; line-height:1.4; margin-top:calc(3px*var(--scale)); }
+.mc-arr{ display:flex; align-items:center; color:#f5a623; font-weight:700; font-size:calc(15px*var(--scale)); }
+
+.badge{ display:inline-block; background:#eef2f8; color:var(--uow); border-radius:12px;
+  padding:2px 10px; font-size:calc(12px*var(--scale)); font-weight:700; margin-left:6px; }
+.content.dense table.data.tight{margin:6px 0;}
+.content.dense table.data.tight th,.content.dense table.data.tight td{padding:2px 6px;line-height:1.26;font-size:calc(12.8px*var(--scale));}
+.content.dense table.data.tight + .tabcap{margin:4px 0 6px;}
+.mini-note{ font-size:calc(12.5px*var(--scale)); color:#444; font-style:italic; text-align:center; margin-top:calc(8px*var(--scale)); }
+</style>
+
+<!-- ═══════════════════ PORTADA ═══════════════════ -->
+<section class="slide title-slide active" data-section="-1" style="--scale: 1.7;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">Sesión 01 de Química</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="content center">
+    <div class="title-box">
+      <h1>Sesión 01 de Química</h1>
+      <div class="subtitle"><strong>Clasificación de la materia, separación de mezclas, propiedades y estructura atómica</strong><br>Admisión 2027 · Módulo Común y Módulo Electivo<br>OA32 · OA33 · OA34 · OA35 · OA36</div>
+    </div>
+    <div class="t-author">Complemento Matemático</div>
+    <div class="t-institute"><br>Preparación PAES<br><strong>Ciencias · Eje de Química</strong></div>
+    <div class="t-date today-date"></div>
+    <div class="t-logos">
+      <img src="LogoCM.png" alt="Complemento Matemático" style="max-width:200px; max-height:130px;">
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TOC ═══════════════════ -->
+<section class="slide" data-section="0" style="--scale: 1.65;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">Agenda de la sesión</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="content">
+    <ul class="toc-list">
+      <li class="current"><span class="dot"></span>Objetivos específicos de la sesión</li>
+      <li class="shaded"><span class="dot"></span>OA32 · Química y clasificación de la materia</li>
+      <li class="shaded"><span class="dot"></span>OA33 · Separación de mezclas</li>
+      <li class="shaded"><span class="dot"></span>OA34 · Propiedades físicas y químicas</li>
+      <li class="shaded"><span class="dot"></span>OA35 · Modelos atómicos</li>
+      <li class="shaded"><span class="dot"></span>OA36 · Conceptos clave del átomo</li>
+      <li class="shaded"><span class="dot"></span>Método científico y habilidades</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════ 0 · OBJETIVOS ═══════════════════ -->
+<section class="slide" data-section="0" style="--scale: 1.35;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">Objetivos específicos</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">Objetivos específicos de la Sesión 01</div>
+  <div class="content dense">
+    <div class="tcb">
+      <div class="tcb-title">Objetivo general</div>
+      <div class="tcb-body">
+        <p><strong>Comprender</strong> la naturaleza de la materia y su estructura atómica, <strong>aplicando</strong> los criterios de clasificación, separación y las habilidades científicas exigidas por la PAES, con <strong>compromiso e interés</strong> por el propio aprendizaje.</p>
+      </div>
+    </div>
+    <div class="oa-grid">
+      <div class="oa"><h4>OA32</h4><p>Comprender qué estudia la <b>Química</b> y clasificar la materia en <b>sustancias puras</b> (elementos y compuestos) y <b>mezclas</b> (homogéneas y heterogéneas).</p></div>
+      <div class="oa"><h4>OA33</h4><p>Reconocer y aplicar los <b>procedimientos de separación de mezclas</b>, identificando la propiedad que aprovecha cada uno.</p></div>
+      <div class="oa g"><h4>OA34</h4><p>Distinguir <b>propiedades físicas y químicas</b> de la materia, y diferenciar los <b>cambios físicos</b> de los <b>cambios químicos</b>.</p></div>
+      <div class="oa"><h4>OA35</h4><p>Describir la <b>evolución de los modelos atómicos</b> (Dalton, Thomson, Rutherford, Bohr y actual), su aporte y sus <b>limitaciones</b>.</p></div>
+      <div class="oa t"><h4>OA36</h4><p>Manejar los <b>conceptos clave del átomo</b>: partículas, electrósfera, orbitales, Z, A, iones y lectura de la tabla periódica.</p></div>
+    </div>
+    <div class="eqtable" style="margin-top:14px;">
+      <div class="lbl fragment">Contenido</div><div class="fragment">Área temática "Estructura atómica" del temario oficial DEMRE, Admisión 2027.</div><div class="dom"></div>
+      <div class="lbl fragment">Habilidad</div><div class="fragment">Observar y plantear preguntas · Planificar y conducir · Procesar y analizar · Evaluar · Comunicar.</div><div class="dom"></div>
+      <div class="lbl fragment">Actitud</div><div class="fragment">Constancia, rigurosidad y responsabilidad frente al propio aprendizaje.</div><div class="dom"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 1 · OA32 ═══════════════════ -->
+<section class="slide" data-section="1" style="--scale: 1.65;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA32 · Clasificación de la materia</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="content">
+    <ul class="toc-list">
+      <li class="shaded"><span class="dot"></span>Objetivos específicos de la sesión</li>
+      <li class="current"><span class="dot"></span>OA32 · Química y clasificación de la materia</li>
+      <li class="shaded"><span class="dot"></span>OA33 · Separación de mezclas</li>
+      <li class="shaded"><span class="dot"></span>OA34 · Propiedades físicas y químicas</li>
+      <li class="shaded"><span class="dot"></span>OA35 · Modelos atómicos</li>
+      <li class="shaded"><span class="dot"></span>OA36 · Conceptos clave del átomo</li>
+      <li class="shaded"><span class="dot"></span>Método científico y habilidades</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 1.0 OBSERVACIÓN · conceptos base -->
+<section class="slide" data-section="1" style="--scale: 1.4;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA32 · Antes de empezar</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">Observación · Los tres conceptos que sostienen todo el eje</div>
+  <div class="content dense">
+    <div class="pause-grid g3">
+      <div class="pause fragment">
+        <div class="q">¿Qué es la <em>Química</em>?</div>
+        <div class="a">La ciencia que estudia la <b>composición, estructura y propiedades de la materia</b>, y los <b>cambios</b> que esta experimenta, incluyendo la energía involucrada.</div>
+        <span class="tag">estudia el "de qué está hecho"</span>
+      </div>
+      <div class="pause fragment">
+        <div class="q">¿Qué es la <em>materia</em>?</div>
+        <div class="a">Todo lo que tiene <b>masa</b> y ocupa un <b>volumen</b> en el espacio. Si no tiene masa ni volumen (la luz, el calor, una idea), <b>no es materia</b>.</div>
+        <span class="tag">masa + volumen</span>
+      </div>
+      <div class="pause fragment">
+        <div class="q">¿Qué es un <em>cuerpo</em>?</div>
+        <div class="a">Una <b>porción limitada de materia</b> con forma propia. El material es la sustancia (madera); el cuerpo es el objeto (una mesa).</div>
+        <span class="tag">cuidado: cuerpo ≠ sustancia</span>
+      </div>
+    </div>
+    <div class="pause-grid g3" style="margin-top:14px;">
+      <div class="pause warm fragment">
+        <div class="q">¿Qué es la <em>masa</em>?</div>
+        <div class="a">La <b>cantidad de materia</b> que posee un cuerpo. Es una <b>propiedad extensiva</b>, se mide en kg o g, y <b>no cambia</b> con el lugar.</div>
+        <span class="tag">masa ≠ peso</span>
+      </div>
+      <div class="pause warm fragment">
+        <div class="q">¿Qué es el <em>volumen</em>?</div>
+        <div class="a">El <b>espacio que ocupa</b> un cuerpo. Es <b>extensiva</b>, se mide en m³, L o mL. Recuerda: <b>1 mL = 1 cm³</b>.</div>
+        <span class="tag">1 L = 1000 cm³</span>
+      </div>
+      <div class="pause warm fragment">
+        <div class="q">¿Qué es la <em>densidad</em>?</div>
+        <div class="a">La relación entre masa y volumen: <b>ρ = m/V</b>. Es <b>intensiva</b>: no depende de cuánta materia haya, por eso <b>identifica sustancias</b>.</div>
+        <span class="tag">g/mL o kg/m³</span>
+      </div>
+    </div>
+    <p class="mini-note">Regla de oro PAES: si la propiedad depende de <strong>cuánto</strong> hay → extensiva. Si <strong>no</strong> depende → intensiva, y sirve para identificar.</p>
+  </div>
+</section>
+
+<!-- 1.1 OBSERVACIÓN · sustancia, mezcla, fase -->
+<section class="slide" data-section="1" style="--scale: 1.3;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA32 · Vocabulario clave</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">Observación · Sustancia, mezcla y fase</div>
+  <div class="content dense">
+    <div class="pause-grid g2">
+      <div class="pause fragment">
+        <div class="q">¿Qué son las <em>sustancias puras</em>?</div>
+        <div class="a">Materia con <b>composición fija y definida</b> y propiedades constantes (punto de fusión y ebullición <b>únicos</b>). Se dividen en <b>elementos</b> y <b>compuestos</b>.</div>
+        <span class="tag">composición fija</span>
+      </div>
+      <div class="pause fragment">
+        <div class="q">¿Qué son las <em>mezclas</em>?</div>
+        <div class="a">Unión <b>física</b> de dos o más sustancias en proporción <b>variable</b>. Cada componente <b>conserva sus propiedades</b> y se separa por métodos <b>físicos</b>.</div>
+        <span class="tag">composición variable</span>
+      </div>
+      <div class="pause warm fragment">
+        <div class="q">¿Qué es una <em>fase</em>?</div>
+        <div class="a">Cada porción <b>físicamente distinguible y homogénea</b> de un sistema. Agua con aceite = <b>2 fases</b>; agua salada = <b>1 fase</b>. Contar fases es contar "capas o zonas distintas".</div>
+        <span class="tag">fase ≠ estado</span>
+      </div>
+      <div class="pause warm fragment">
+        <div class="q">¿Qué es una <em>disolución</em>?</div>
+        <div class="a">Una mezcla <b>homogénea</b>. El componente en <b>menor</b> cantidad es el <b>soluto</b>; el de <b>mayor</b> cantidad (el que disuelve) es el <b>solvente</b>.</div>
+        <span class="tag">soluto + solvente</span>
+      </div>
+    </div>
+    <div class="tcb fragment" style="margin-top:12px;">
+      <div class="tcb-title">Trampa clásica de la PAES</div>
+      <div class="tcb-body">
+        <p>Agua líquida con hielo es <strong>una sola sustancia</strong> (H₂O), pero <strong>dos fases</strong> (sólida y líquida). <strong>Fase</strong> y <strong>sustancia</strong> no son lo mismo: pueden coexistir varias fases de la <em>misma</em> sustancia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 1.2 SIMULACIÓN clasificación -->
+<section class="slide sim-slide" data-sim="clasificacion" data-section="1" style="--scale: 1.05;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA32 · Clasificación de la materia</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">OA32 · Clasificación de la materia, en movimiento</div>
+  <div class="content" style="padding:14px 26px 8px;">
+    <div class="sim">
+      <div class="sim-stage"><canvas data-canvas="clasificacion"></canvas></div>
+      <div class="sim-side">
+        <div class="sc-title" data-sc-title>1 · Sustancia pura: elemento</div>
+        <div class="sc-body" data-sc-body></div>
+        <div class="readout" data-readout></div>
+        <div class="sc-steps" data-steps></div>
+        <div class="sim-hint">→ avanza de escena · 5 escenas</div>
+      </div>
+    </div>
+    <span class="fragment"></span><span class="fragment"></span><span class="fragment"></span><span class="fragment"></span>
+  </div>
+</section>
+
+<!-- 1.3 tabla resumen clasificación -->
+<section class="slide" data-section="1" style="--scale: 1.35;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA32 · Clasificación de la materia</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">OA32 · Las cuatro categorías, en una sola tabla</div>
+  <div class="content dense">
+    <table class="data">
+      <thead><tr><th>Categoría</th><th>Composición</th><th>Nº de fases</th><th>Se separa por</th><th>Ejemplos</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Elemento</strong></td><td>Un solo tipo de átomo</td><td>1</td><td>No se descompone</td><td>Fe, Cu, O₂, N₂, He, Au</td></tr>
+        <tr><td><strong>Compuesto</strong></td><td>≥2 elementos, proporción fija</td><td>1</td><td>Método <em>químico</em> (electrólisis, calor)</td><td>H₂O, CO₂, NaCl, C₆H₁₂O₆</td></tr>
+        <tr><td><strong>Mezcla homogénea</strong></td><td>≥2 sustancias, proporción variable</td><td>1</td><td>Método <em>físico</em> (destilación, cromatografía)</td><td>Aire, acero, agua salada, bronce</td></tr>
+        <tr><td><strong>Mezcla heterogénea</strong></td><td>≥2 sustancias, proporción variable</td><td>≥2</td><td>Método <em>físico</em> (filtración, decantación)</td><td>Granito, agua+aceite, arena+agua</td></tr>
+      </tbody>
+    </table>
+    <p class="tabcap">Las dos primeras filas son <strong>sustancias puras</strong>; las dos últimas, <strong>mezclas</strong>.</p>
+    <div class="tcb fragment">
+      <div class="tcb-title">Cómo responder rápido en la prueba (3 preguntas)</div>
+      <div class="tcb-body">
+        <ul>
+          <li class="check">¿La composición es <strong>fija</strong> o <strong>variable</strong>? → pura o mezcla.</li>
+          <li class="check">Si es pura: ¿<strong>un</strong> tipo de átomo o <strong>varios</strong> unidos químicamente? → elemento o compuesto.</li>
+          <li class="check">Si es mezcla: ¿<strong>una</strong> fase o <strong>varias</strong>? → homogénea o heterogénea.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 1.4 OBSERVACIÓN · átomo, molécula, mol -->
+<section class="slide" data-section="1" style="--scale: 1.3;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA32 · Unidades de la materia</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">Observación · Átomo, molécula, ion y mol</div>
+  <div class="content dense">
+    <div class="pause-grid g2">
+      <div class="pause fragment">
+        <div class="q">¿Qué es un <em>átomo</em>?</div>
+        <div class="a">La <b>unidad más pequeña</b> de un elemento que conserva sus propiedades químicas. Formado por <b>núcleo</b> (protones y neutrones) y <b>electrósfera</b> (electrones).</div>
+        <span class="tag">unidad del elemento</span>
+      </div>
+      <div class="pause fragment">
+        <div class="q">¿Qué son las <em>moléculas</em>?</div>
+        <div class="a">Agrupaciones de <b>dos o más átomos</b> unidos por enlaces <b>covalentes</b>, eléctricamente <b>neutras</b>. Pueden ser de un mismo elemento (O₂) o de varios (H₂O).</div>
+        <span class="tag">átomos enlazados</span>
+      </div>
+      <div class="pause warm fragment">
+        <div class="q">¿Qué son los <em>moles</em>?</div>
+        <div class="a">La <b>unidad de cantidad de sustancia</b> del SI. <b>1 mol = 6,022·10²³</b> partículas (número de <b>Avogadro</b>). Es la "docena del químico": una forma de contar lo incontable.</div>
+        <span class="tag">n = m / M</span>
+      </div>
+      <div class="pause warm fragment">
+        <div class="q">¿Qué es la <em>masa molar</em>?</div>
+        <div class="a">La masa de <b>un mol</b> de una sustancia, en <b>g/mol</b>. Numéricamente coincide con la masa atómica o molecular. Ej.: M(H₂O) = 18 g/mol.</div>
+        <span class="tag">puente masa ↔ partículas</span>
+      </div>
+    </div>
+    <div class="tcb fragment" style="margin-top:10px;">
+      <div class="tcb-title">La escala, para dimensionar</div>
+      <div class="tcb-body">
+        <p>Un vaso con 18 g de agua contiene <strong>1 mol</strong> de moléculas de H₂O, es decir <strong>6,022·10²³</strong> moléculas, y por tanto <strong>1,8·10²⁴</strong> átomos de hidrógeno. El mol existe porque los átomos son <em>demasiado</em> pequeños para contarlos de a uno.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 2 · OA33 ═══════════════════ -->
+<section class="slide" data-section="2" style="--scale: 1.65;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA33 · Separación de mezclas</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="content">
+    <ul class="toc-list">
+      <li class="shaded"><span class="dot"></span>Objetivos específicos de la sesión</li>
+      <li class="shaded"><span class="dot"></span>OA32 · Química y clasificación de la materia</li>
+      <li class="current"><span class="dot"></span>OA33 · Separación de mezclas</li>
+      <li class="shaded"><span class="dot"></span>OA34 · Propiedades físicas y químicas</li>
+      <li class="shaded"><span class="dot"></span>OA35 · Modelos atómicos</li>
+      <li class="shaded"><span class="dot"></span>OA36 · Conceptos clave del átomo</li>
+      <li class="shaded"><span class="dot"></span>Método científico y habilidades</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 2.1 SIMULACIÓN separación -->
+<section class="slide sim-slide" data-sim="separacion" data-section="2" style="--scale: 1.05;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA33 · Separación de mezclas</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">OA33 · Métodos de separación, en movimiento</div>
+  <div class="content" style="padding:14px 26px 8px;">
+    <div class="sim">
+      <div class="sim-stage"><canvas data-canvas="separacion"></canvas></div>
+      <div class="sim-side">
+        <div class="sc-title" data-sc-title>1 · Filtración</div>
+        <div class="sc-body" data-sc-body></div>
+        <div class="readout" data-readout></div>
+        <div class="sc-steps" data-steps></div>
+        <div class="sim-hint">→ avanza de escena · 5 escenas</div>
+      </div>
+    </div>
+    <span class="fragment"></span><span class="fragment"></span><span class="fragment"></span><span class="fragment"></span>
+  </div>
+</section>
+
+<!-- 2.15 OBSERVACIÓN · soluble, miscible -->
+<section class="slide" data-section="2" style="--scale: 1.14;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA33 · Las palabras clave del enunciado</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">Observación · Soluble, insoluble, miscible, inmiscible</div>
+  <div class="content dense">
+    <p class="mini-note" style="margin:0 0 6px;">Estas cuatro palabras son las que <strong>deciden el método</strong>. Casi ningún enunciado de la PAES dice "usa filtración": dice <em>insoluble</em> o <em>inmiscible</em>, y esperan que tú traduzcas.</p>
+    <div class="pause-grid g2">
+      <div class="pause fragment">
+        <div class="q">¿Qué significa <em>soluble</em>?</div>
+        <div class="a">Un <b>sólido</b> que <b>sí</b> se disuelve en un líquido y desaparece a la vista: forma una mezcla <b>homogénea</b>, una sola fase. La sal en agua es soluble. No lo puedes filtrar, porque las partículas ya son del tamaño de las moléculas del agua.</div>
+        <div class="tag">sal + agua → 1 fase → destilar o evaporar</div>
+      </div>
+      <div class="pause red fragment">
+        <div class="q">¿Qué significa <em>insoluble</em>?</div>
+        <div class="a">Un <b>sólido</b> que <b>no</b> se disuelve: queda en suspensión o se va al fondo. La mezcla es <b>heterogénea</b>, se ven dos fases. La arena en agua es insoluble. Como el sólido sigue entero, un papel de filtro lo atrapa.</div>
+        <div class="tag">arena + agua → 2 fases → filtrar</div>
+      </div>
+      <div class="pause warm fragment">
+        <div class="q">¿Qué significa <em>miscible</em>?</div>
+        <div class="a">Dos <b>líquidos</b> que se mezclan entre sí en cualquier proporción y forman <b>una sola fase</b>: no se ve la línea que los separa. Alcohol y agua son miscibles. Para separarlos necesitas la <b>diferencia de punto de ebullición</b>, no la densidad.</div>
+        <div class="tag">alcohol + agua → 1 fase → destilación</div>
+      </div>
+      <div class="pause warm fragment">
+        <div class="q">¿Qué significa <em>inmiscible</em>?</div>
+        <div class="a">Dos <b>líquidos</b> que <b>no</b> se mezclan: forman <b>dos capas</b> separadas por una interfase visible, y el menos denso queda arriba. Agua y aceite son inmiscibles. Basta con abrir una llave y dejar salir la capa de abajo.</div>
+        <div class="tag">agua + aceite → 2 fases → decantación</div>
+      </div>
+    </div>
+    <div class="tcb fragment">
+      <div class="tcb-title">La regla que ordena las cuatro palabras</div>
+      <div class="tcb-body">
+        <p><strong>Soluble / insoluble</strong> se usan para un <strong>sólido dentro de un líquido</strong>. <strong>Miscible / inmiscible</strong> se usan para <strong>dos líquidos entre sí</strong>. Usar "miscible" para un sólido es un error de vocabulario que la PAES castiga en las alternativas.</p>
+        <p style="margin-top:6px;">Y el atajo que nunca falla: si el enunciado dice que se forma <strong>una sola fase</strong> (soluble o miscible), necesitas un método <strong>térmico</strong> — destilación o evaporación. Si dice <strong>dos fases</strong> (insoluble o inmiscible), te sirve un método <strong>mecánico</strong> — filtración o decantación.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2.2 tabla de métodos -->
+<section class="slide" data-section="2" style="--scale: 0.98;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA33 · Separación de mezclas</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">OA33 · Qué método usar, según la propiedad</div>
+  <div class="content dense">
+    <table class="data tight">
+      <thead><tr><th>Método</th><th>Palabra clave</th><th>Propiedad que aprovecha</th><th>Aplicación real</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Filtración</strong></td><td><em>insoluble</em> · S–L</td><td>Tamaño de partícula</td><td>Plantas de agua potable: se retira arena y sedimento. También el café de filtro y la diálisis renal.</td></tr>
+        <tr><td><strong>Decantación</strong></td><td><em>inmiscible</em> · L–L</td><td>Diferencia de densidad</td><td>Derrames de petróleo: el crudo flota y se retira. También separar aceite del agua en la industria de alimentos.</td></tr>
+        <tr><td><strong>Tamización</strong></td><td>grano distinto · S–S</td><td>Tamaño de grano</td><td>Áridos en construcción: se clasifica grava, gravilla y arena. También cernir harina en panadería.</td></tr>
+        <tr><td><strong>Imantación</strong></td><td>ferromagnético · S–S</td><td>Atracción magnética</td><td>Reciclaje: electroimanes separan chatarra de hierro de la basura mezclada.</td></tr>
+        <tr><td><strong>Evaporación</strong></td><td><em>soluble</em> · quiero el sólido</td><td>Punto de ebullición</td><td>Salinas de Cáhuil y del Salar de Atacama: se evapora el agua y queda la sal o el litio.</td></tr>
+        <tr><td><strong>Destilación</strong></td><td><em>miscible</em> · quiero el líquido</td><td>Punto de ebullición</td><td>Refinerías de petróleo (torre de fraccionamiento), producción de pisco y aguardiente, plantas desalinizadoras.</td></tr>
+        <tr><td><strong>Cromatografía</strong></td><td>varios disueltos juntos</td><td>Afinidad fase móvil / estacionaria</td><td>Control antidopaje y análisis toxicológico; identificar pigmentos y aditivos en alimentos.</td></tr>
+        <tr><td><strong>Centrifugación</strong></td><td>suspensión que no sedimenta sola</td><td>Densidad + fuerza centrífuga</td><td>Laboratorio clínico: separar plasma de glóbulos rojos. También descremar la leche.</td></tr>
+        <tr><td><strong>Sublimación</strong></td><td>uno pasa directo a gas</td><td>Paso sólido → gas</td><td>Purificar yodo y naftalina; liofilizar alimentos y medicamentos (café instantáneo, vacunas).</td></tr>
+      </tbody>
+    </table>
+    <div class="tcb fragment">
+      <div class="tcb-title">Cómo se pregunta esto en la PAES</div>
+      <div class="tcb-body">
+        <p>Casi nunca te preguntan "¿qué es la filtración?". Te dan un <strong>caso</strong> y debes elegir el método, o al revés: te dan el método y debes decir <strong>qué propiedad</strong> se aprovechó. Entrena leyendo la palabra clave: <em>insoluble</em> → filtración; <em>inmiscible</em> → decantación; <em>disuelto</em> → destilación o evaporación.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 3 · OA34 ═══════════════════ -->
+<section class="slide" data-section="3" style="--scale: 1.65;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA34 · Propiedades y cambios</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="content">
+    <ul class="toc-list">
+      <li class="shaded"><span class="dot"></span>Objetivos específicos de la sesión</li>
+      <li class="shaded"><span class="dot"></span>OA32 · Química y clasificación de la materia</li>
+      <li class="shaded"><span class="dot"></span>OA33 · Separación de mezclas</li>
+      <li class="current"><span class="dot"></span>OA34 · Propiedades físicas y químicas</li>
+      <li class="shaded"><span class="dot"></span>OA35 · Modelos atómicos</li>
+      <li class="shaded"><span class="dot"></span>OA36 · Conceptos clave del átomo</li>
+      <li class="shaded"><span class="dot"></span>Método científico y habilidades</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3.0 PAUSA · cambios -->
+<section class="slide" data-section="3" style="--scale: 1.4;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA34 · Antes de comparar</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">Observación · Cambios físicos y cambios químicos</div>
+  <div class="content dense">
+    <div class="pause-grid g2">
+      <div class="pause fragment">
+        <div class="q">¿Qué son los <em>cambios físicos</em>?</div>
+        <div class="a">Transformaciones en las que cambia el <b>aspecto, forma o estado</b>, pero <b>NO la identidad química</b> de la sustancia. Suelen ser <b>reversibles</b>.</div>
+        <span class="tag">la sustancia sigue siendo la misma</span>
+      </div>
+      <div class="pause red fragment">
+        <div class="q">¿Qué son los <em>cambios químicos</em>?</div>
+        <div class="a">Transformaciones en las que la sustancia <b>se convierte en otra distinta</b>: se rompen y forman <b>enlaces</b>. Generalmente <b>irreversibles</b> por medios simples.</div>
+        <span class="tag">aparecen sustancias nuevas</span>
+      </div>
+      <div class="pause warm fragment">
+        <div class="q">¿Qué son los <em>cambios de estado</em>?</div>
+        <div class="a">Cambios <b>físicos</b> por variación de temperatura o presión: <b>fusión</b> (S→L), <b>solidificación</b> (L→S), <b>vaporización</b> (L→G), <b>condensación</b> (G→L), <b>sublimación</b> (S→G) y <b>sublimación inversa o deposición</b> (G→S).</div>
+        <span class="tag">todos son físicos</span>
+      </div>
+      <div class="pause warm fragment">
+        <div class="q">¿Cómo <em>detecto</em> un cambio químico?</div>
+        <div class="a">Señales típicas: <b>desprendimiento de gas</b>, formación de un <b>precipitado</b>, cambio de <b>color</b> permanente, emisión de <b>luz</b> o cambio térmico marcado (<b>exotérmico</b> / <b>endotérmico</b>).</div>
+        <span class="tag">evidencia experimental</span>
+      </div>
+    </div>
+    <p class="mini-note">La pregunta que resuelve todo: <strong>¿al final tengo la misma sustancia?</strong> Si sí → físico. Si no → químico.</p>
+  </div>
+</section>
+
+<!-- 3.1 TABLA COMPARATIVA GRANDE -->
+<section class="slide" data-section="3" style="--scale: 1.25;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA34 · Tabla comparativa</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">OA34 · Propiedades y cambios: físico vs. químico</div>
+  <div class="content dense">
+    <table class="data">
+      <thead>
+        <tr><th style="width:16%;">Criterio</th><th style="width:42%;">FÍSICO</th><th style="width:42%;">QUÍMICO</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Propiedad: definición</strong></td>
+          <td>Se observa o mide <strong>sin alterar</strong> la composición de la sustancia.</td>
+          <td>Solo se manifiesta <strong>al reaccionar</strong>, transformando la sustancia en otra.</td>
+        </tr>
+        <tr>
+          <td><strong>Propiedad: ejemplos</strong></td>
+          <td>Color, olor, dureza, densidad, solubilidad, conductividad, maleabilidad, ductilidad, brillo, punto de fusión y ebullición, estado físico.</td>
+          <td>Combustibilidad, oxidabilidad, acidez/basicidad, reactividad con agua o ácidos, poder oxidante o reductor, toxicidad, estabilidad térmica.</td>
+        </tr>
+        <tr>
+          <td><strong>Cambio: definición</strong></td>
+          <td>Varía forma, tamaño o estado; la <strong>identidad química se conserva</strong>.</td>
+          <td>Se rompen y forman enlaces; aparecen <strong>sustancias nuevas</strong>.</td>
+        </tr>
+        <tr>
+          <td><strong>Cambio: ejemplos</strong></td>
+          <td>Fundir hielo, hervir agua, disolver sal, moler una roca, cortar papel, doblar un alambre, dilatar un metal.</td>
+          <td>Combustión de la madera, oxidación del hierro, fermentación, fotosíntesis, digestión, cocinar un huevo, reacción ácido–base.</td>
+        </tr>
+        <tr>
+          <td><strong>Reversibilidad</strong></td>
+          <td>Generalmente <strong>reversible</strong> por medios físicos.</td>
+          <td>Generalmente <strong>irreversible</strong> por medios simples.</td>
+        </tr>
+        <tr>
+          <td><strong>Evidencia</strong></td>
+          <td>Cambia el aspecto o el estado; se puede volver atrás.</td>
+          <td>Gas, precipitado, color nuevo, luz, calor absorbido o liberado.</td>
+        </tr>
+        <tr>
+          <td><strong>Enlaces</strong></td>
+          <td><strong>No</strong> se rompen enlaces internos de la sustancia.</td>
+          <td><strong>Sí</strong> se rompen y se forman enlaces.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="tabcap">Esta tabla concentra prácticamente todas las preguntas de OA34 que aparecen en el Módulo Común.</p>
+  </div>
+</section>
+
+<!-- 3.2 intensivas vs extensivas + trampas -->
+<section class="slide" data-section="3" style="--scale: 1.4;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA34 · Intensivas y extensivas</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">OA34 · Propiedades intensivas vs. extensivas</div>
+  <div class="content dense">
+    <div class="vs">
+      <div class="vs-col">
+        <h4>Intensivas · NO dependen de la cantidad</h4>
+        <ul>
+          <li>Densidad, temperatura, punto de fusión y ebullición</li>
+          <li>Color, olor, sabor, brillo, dureza</li>
+          <li>Solubilidad, conductividad, índice de refracción</li>
+          <li><strong>Sirven para IDENTIFICAR una sustancia</strong></li>
+        </ul>
+      </div>
+      <div class="vs-col warm">
+        <h4>Extensivas · SÍ dependen de la cantidad</h4>
+        <ul>
+          <li>Masa, volumen, peso</li>
+          <li>Longitud, superficie</li>
+          <li>Energía total, capacidad calorífica</li>
+          <li><strong>NO sirven para identificar: solo dicen "cuánto hay"</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="tcb fragment" style="margin-top:12px;">
+      <div class="tcb-title">Tres trampas que sí aparecen en la prueba</div>
+      <div class="tcb-body">
+        <ul>
+          <li><strong>Disolver azúcar en agua es un cambio FÍSICO</strong>: el azúcar sigue siendo azúcar, solo está dispersa. Se recupera evaporando.</li>
+          <li><strong>Hervir agua es FÍSICO</strong> (H₂O sigue siendo H₂O), pero <strong>electrolizar agua es QUÍMICO</strong> (se obtiene H₂ y O₂).</li>
+          <li><strong>La densidad es intensiva</strong>: si corto un bloque de hierro por la mitad, la masa y el volumen se reducen, pero <span class="katex-inline">\(\rho = m/V\)</span> <strong>no cambia</strong>.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 4 · OA35 ═══════════════════ -->
+<section class="slide" data-section="4" style="--scale: 1.65;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA35 · Modelos atómicos</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="content">
+    <ul class="toc-list">
+      <li class="shaded"><span class="dot"></span>Objetivos específicos de la sesión</li>
+      <li class="shaded"><span class="dot"></span>OA32 · Química y clasificación de la materia</li>
+      <li class="shaded"><span class="dot"></span>OA33 · Separación de mezclas</li>
+      <li class="shaded"><span class="dot"></span>OA34 · Propiedades físicas y químicas</li>
+      <li class="current"><span class="dot"></span>OA35 · Modelos atómicos</li>
+      <li class="shaded"><span class="dot"></span>OA36 · Conceptos clave del átomo</li>
+      <li class="shaded"><span class="dot"></span>Método científico y habilidades</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4.1 SIMULACIÓN modelos -->
+<section class="slide sim-slide" data-sim="modelos" data-section="4" style="--scale: 1.05;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA35 · Modelos atómicos</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">OA35 · La historia del átomo, en movimiento</div>
+  <div class="content" style="padding:14px 26px 8px;">
+    <div class="sim">
+      <div class="sim-stage"><canvas data-canvas="modelos"></canvas></div>
+      <div class="sim-side">
+        <div class="sc-title" data-sc-title>1 · Dalton (1803)</div>
+        <div class="sc-body" data-sc-body></div>
+        <div class="readout" data-readout></div>
+        <div class="sc-steps" data-steps></div>
+        <div class="sim-hint">→ avanza de modelo · 5 escenas</div>
+      </div>
+    </div>
+    <span class="fragment"></span><span class="fragment"></span><span class="fragment"></span><span class="fragment"></span>
+  </div>
+</section>
+
+<!-- 4.2 tabla histórica -->
+<section class="slide" data-section="4" style="--scale: 1.22;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA35 · Modelos atómicos</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">OA35 · Aporte y limitación de cada modelo</div>
+  <div class="content dense">
+    <table class="data tight">
+      <thead><tr><th>Modelo</th><th>Año</th><th>Evidencia / experimento</th><th>Aporte central</th><th>Limitación que lo hace caer</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Demócrito</strong></td><td>≈400 a.C.</td>
+          <td>Razonamiento filosófico, sin experimento</td>
+          <td>Idea de <em>átomo</em>: partícula indivisible</td>
+          <td>No es ciencia experimental: no se puede contrastar</td>
+        </tr>
+        <tr>
+          <td><strong>Dalton</strong><br>Esfera maciza</td><td>1803</td>
+          <td>Leyes ponderales (conservación, proporciones definidas y múltiples)</td>
+          <td>Primer modelo <strong>científico</strong>: átomos indivisibles, idénticos por elemento</td>
+          <td>No explica la electricidad ni las partículas subatómicas; ignora los <strong>isótopos</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Thomson</strong><br>Budín de pasas</td><td>1904</td>
+          <td>Tubo de rayos catódicos (descubre el <strong>electrón</strong>, 1897)</td>
+          <td>El átomo <strong>es divisible</strong>: masa positiva con electrones incrustados; átomo neutro</td>
+          <td>No explica las desviaciones de la lámina de oro: no hay <strong>núcleo</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Rutherford</strong><br>Modelo nuclear</td><td>1911</td>
+          <td>Bombardeo de lámina de oro con partículas α</td>
+          <td>Existe un <strong>núcleo</strong> pequeño, denso y positivo; el átomo es casi todo <strong>vacío</strong></td>
+          <td>Un electrón acelerado radiaría energía y <strong>caería al núcleo</strong>; no explica los espectros</td>
+        </tr>
+        <tr>
+          <td><strong>Bohr</strong><br>Niveles cuantizados</td><td>1913</td>
+          <td>Espectro de emisión del hidrógeno (líneas discretas)</td>
+          <td>Órbitas de <strong>energía cuantizada</strong>; los saltos electrónicos emiten o absorben fotones</td>
+          <td>Solo funciona para el <strong>hidrógeno</strong>; falla en átomos con más electrones</td>
+        </tr>
+        <tr>
+          <td><strong>Actual</strong><br>Mecano-cuántico</td><td>1926→</td>
+          <td>Dualidad de De Broglie, ecuación de Schrödinger, incertidumbre de Heisenberg</td>
+          <td><strong>Orbitales</strong>: regiones de <strong>probabilidad</strong>; el electrón es onda y partícula</td>
+          <td>Modelo vigente: matemáticamente complejo, no "visualizable" de forma simple</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="tabcap">Cada modelo <strong>no borra</strong> al anterior: lo corrige donde la evidencia nueva lo contradice. Esa es la lógica del método científico.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ 5 · OA36 ═══════════════════ -->
+<section class="slide" data-section="5" style="--scale: 1.65;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA36 · Conceptos del átomo</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="content">
+    <ul class="toc-list">
+      <li class="shaded"><span class="dot"></span>Objetivos específicos de la sesión</li>
+      <li class="shaded"><span class="dot"></span>OA32 · Química y clasificación de la materia</li>
+      <li class="shaded"><span class="dot"></span>OA33 · Separación de mezclas</li>
+      <li class="shaded"><span class="dot"></span>OA34 · Propiedades físicas y químicas</li>
+      <li class="shaded"><span class="dot"></span>OA35 · Modelos atómicos</li>
+      <li class="current"><span class="dot"></span>OA36 · Conceptos clave del átomo</li>
+      <li class="shaded"><span class="dot"></span>Método científico y habilidades</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 5.0 PAUSA · partículas -->
+<section class="slide" data-section="5" style="--scale: 1.4;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA36 · Vocabulario del átomo</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">Observación · Las piezas del átomo</div>
+  <div class="content dense">
+    <div class="pause-grid g3">
+      <div class="pause fragment">
+        <div class="q">¿Qué es un <em>protón</em>?</div>
+        <div class="a">Partícula del <b>núcleo</b>, carga <b>+1</b>, masa ≈ 1 uma. Su cantidad es el <b>número atómico Z</b> y <b>define al elemento</b>: si cambia Z, cambia el elemento.</div>
+        <span class="tag">define el elemento</span>
+      </div>
+      <div class="pause fragment">
+        <div class="q">¿Qué es un <em>neutrón</em>?</div>
+        <div class="a">Partícula del <b>núcleo</b>, carga <b>0</b>, masa ≈ 1 uma. Aporta <b>estabilidad</b> nuclear y explica la existencia de los <b>isótopos</b>.</div>
+        <span class="tag">sin carga</span>
+      </div>
+      <div class="pause fragment">
+        <div class="q">¿Qué es un <em>electrón</em>?</div>
+        <div class="a">Partícula de la <b>electrósfera</b>, carga <b>−1</b>, masa ≈ 1/1836 uma (despreciable). Responsable del <b>enlace químico</b> y de casi todas las propiedades químicas.</div>
+        <span class="tag">hace la química</span>
+      </div>
+      <div class="pause warm fragment">
+        <div class="q">¿Qué es la <em>electrósfera</em>?</div>
+        <div class="a">La <b>región externa al núcleo</b> donde se encuentran los electrones, organizada en <b>niveles</b> (n = 1…7) y <b>subniveles</b> (s, p, d, f). Ocupa casi todo el <b>volumen</b> del átomo.</div>
+        <span class="tag">corteza electrónica</span>
+      </div>
+      <div class="pause warm fragment">
+        <div class="q">¿Qué son los <em>orbitales</em>?</div>
+        <div class="a">Regiones del espacio donde la <b>probabilidad</b> de encontrar un electrón es alta (≈90 %). Cada orbital admite un <b>máximo de 2 electrones</b>. Formas: <b>s</b> esférico, <b>p</b> lobular, <b>d</b> y <b>f</b> complejas.</div>
+        <span class="tag">orbital ≠ órbita</span>
+      </div>
+      <div class="pause warm fragment">
+        <div class="q">¿Qué es un <em>ion</em>?</div>
+        <div class="a">Átomo o grupo de átomos con <b>carga eléctrica</b> por haber ganado o perdido <b>electrones</b>. <b>Catión</b>: perdió e⁻, carga <b>+</b>. <b>Anión</b>: ganó e⁻, carga <b>−</b>.</div>
+        <span class="tag">nunca cambian los protones</span>
+      </div>
+    </div>
+    <p class="mini-note"><strong>Átomo neutro:</strong> nº de electrones = nº de protones = Z. Cualquier desbalance produce un <strong>ion</strong>.</p>
+  </div>
+</section>
+
+<!-- 5.1 SIMULACIÓN átomo -->
+<section class="slide sim-slide" data-sim="atomo" data-section="5" style="--scale: 1.05;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA36 · Estructura del átomo</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">OA36 · Partículas, Z, A e iones, en movimiento</div>
+  <div class="content" style="padding:14px 26px 8px;">
+    <div class="sim">
+      <div class="sim-stage"><canvas data-canvas="atomo"></canvas></div>
+      <div class="sim-side">
+        <div class="sc-title" data-sc-title>1 · Las tres partículas</div>
+        <div class="sc-body" data-sc-body></div>
+        <div class="readout" data-readout></div>
+        <div class="sc-steps" data-steps></div>
+        <div class="sim-hint">→ avanza de escena · 5 escenas</div>
+      </div>
+    </div>
+    <span class="fragment"></span><span class="fragment"></span><span class="fragment"></span><span class="fragment"></span>
+  </div>
+</section>
+
+<!-- 5.2 fórmulas y casos resueltos -->
+<section class="slide" data-section="5" style="--scale: 1.28;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA36 · Cálculo de partículas</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">OA36 · Las tres fórmulas que resuelven la pregunta</div>
+  <div class="content dense">
+    <div class="tcb">
+      <div class="tcb-title">Relaciones fundamentales</div>
+      <div class="tcb-body">
+        <div class="eqtable">
+          <div class="lbl">Número atómico</div><div><span class="katex-inline">\(Z = \text{n}^\circ \text{ de protones}\)</span> — identifica el elemento, nunca cambia</div><div class="dom">entero</div>
+          <div class="lbl">Número másico</div><div><span class="katex-inline">\(A = Z + N\)</span> — protones más neutrones</div><div class="dom">entero</div>
+          <div class="lbl">Neutrones</div><div><span class="katex-inline">\(N = A - Z\)</span></div><div class="dom">entero</div>
+          <div class="lbl">Electrones</div><div><span class="katex-inline">\(e^- = Z - \text{carga}\)</span> — en el átomo neutro, <span class="katex-inline">\(e^- = Z\)</span></div><div class="dom"></div>
+        </div>
+      </div>
+    </div>
+    <table class="data">
+      <thead><tr><th>Especie</th><th>Z</th><th>A</th><th>Protones</th><th>Neutrones</th><th>Electrones</th><th>Carga</th></tr></thead>
+      <tbody>
+        <tr><td><span class="katex-inline">\(^{23}_{11}\mathrm{Na}\)</span></td><td>11</td><td>23</td><td>11</td><td>12</td><td>11</td><td>0 · neutro</td></tr>
+        <tr><td><span class="katex-inline">\(^{23}_{11}\mathrm{Na}^{+}\)</span></td><td>11</td><td>23</td><td>11</td><td>12</td><td><strong>10</strong></td><td><strong>+1</strong> · catión</td></tr>
+        <tr><td><span class="katex-inline">\(^{35}_{17}\mathrm{Cl}^{-}\)</span></td><td>17</td><td>35</td><td>17</td><td>18</td><td><strong>18</strong></td><td><strong>−1</strong> · anión</td></tr>
+        <tr><td><span class="katex-inline">\(^{16}_{8}\mathrm{O}^{2-}\)</span></td><td>8</td><td>16</td><td>8</td><td>8</td><td><strong>10</strong></td><td><strong>−2</strong> · anión</td></tr>
+        <tr><td><span class="katex-inline">\(^{40}_{20}\mathrm{Ca}^{2+}\)</span></td><td>20</td><td>40</td><td>20</td><td>20</td><td><strong>18</strong></td><td><strong>+2</strong> · catión</td></tr>
+      </tbody>
+    </table>
+    <p class="tabcap" style="margin:4px 0 6px;">Na⁺, O²⁻ y Ca²⁺ tienen <strong>10, 10 y 18 electrones</strong> → especies <strong>isoelectrónicas</strong> con gases nobles.</p>
+  </div>
+</section>
+
+<!-- 5.3 errores frecuentes -->
+<section class="slide" data-section="5" style="--scale: 1.12;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">OA36 · Errores frecuentes</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">OA36 · Los errores que cuestan puntos</div>
+  <div class="content dense">
+    <div class="tcb fragment">
+      <div class="tcb-title">1 · Tocar los protones</div>
+      <div class="tcb-body"><p>Restar la carga a los <strong>protones</strong>. Los protones <strong>nunca</strong> cambian en un ion: solo se ganan o pierden <strong>electrones</strong>. Si cambiara Z, ya no sería el mismo elemento.</p></div>
+    </div>
+    <div class="tcb fragment">
+      <div class="tcb-title">2 · Confundir A con la masa atómica</div>
+      <div class="tcb-body"><p><strong>A</strong> es un <strong>entero</strong> y corresponde a <em>un</em> átomo concreto. La <strong>masa atómica</strong> de la tabla es <strong>decimal</strong>: es el promedio ponderado de todos los isótopos según su abundancia.</p></div>
+    </div>
+    <div class="tcb fragment">
+      <div class="tcb-title">3 · Creer que un ion cambia de masa apreciablemente</div>
+      <div class="tcb-body"><p>El electrón tiene una masa de ≈<strong>1/1836 uma</strong>. Ganar o perder uno modifica la carga de forma decisiva, pero la masa prácticamente no cambia.</p></div>
+    </div>
+    <div class="tcb fragment">
+      <div class="tcb-title">4 · Confundir orbital con órbita</div>
+      <div class="tcb-body"><p>La <strong>órbita</strong> es la trayectoria definida del modelo de <strong>Bohr</strong>. El <strong>orbital</strong> es una región de <strong>probabilidad</strong> del modelo actual. Solo el segundo es correcto hoy.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ 6 · MÉTODO CIENTÍFICO ═══════════════════ -->
+<section class="slide" data-section="6" style="--scale: 1.65;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">Método científico</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="content">
+    <ul class="toc-list">
+      <li class="shaded"><span class="dot"></span>Objetivos específicos de la sesión</li>
+      <li class="shaded"><span class="dot"></span>OA32 · Química y clasificación de la materia</li>
+      <li class="shaded"><span class="dot"></span>OA33 · Separación de mezclas</li>
+      <li class="shaded"><span class="dot"></span>OA34 · Propiedades físicas y químicas</li>
+      <li class="shaded"><span class="dot"></span>OA35 · Modelos atómicos</li>
+      <li class="shaded"><span class="dot"></span>OA36 · Conceptos clave del átomo</li>
+      <li class="current"><span class="dot"></span>Método científico y habilidades</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 6.1 etapas -->
+<section class="slide" data-section="6" style="--scale: 1.4;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">Método científico</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">Método científico · las etapas, en orden</div>
+  <div class="content dense">
+    <div class="mc-row">
+      <div class="mc-node fragment"><span class="mc-num">1</span><div class="mc-ttl">Observación</div><div class="mc-dsc">Registrar un hecho o fenómeno usando los sentidos o instrumentos, sin interpretarlo.</div></div>
+      <div class="mc-arr fragment">›</div>
+      <div class="mc-node fragment"><span class="mc-num">2</span><div class="mc-ttl">Problema o pregunta</div><div class="mc-dsc">Formular una pregunta <b>investigable</b>: se responde con evidencia, no con opinión.</div></div>
+      <div class="mc-arr fragment">›</div>
+      <div class="mc-node fragment"><span class="mc-num">3</span><div class="mc-ttl">Hipótesis</div><div class="mc-dsc">Respuesta tentativa, <b>contrastable</b> y <b>refutable</b>, que relaciona variables.</div></div>
+      <div class="mc-arr fragment">›</div>
+      <div class="mc-node fragment"><span class="mc-num">4</span><div class="mc-ttl">Experimentación</div><div class="mc-dsc">Diseño controlado: se manipula la VI, se mide la VD y se controlan las demás.</div></div>
+      <div class="mc-arr fragment">›</div>
+      <div class="mc-node fragment"><span class="mc-num">5</span><div class="mc-ttl">Análisis</div><div class="mc-dsc">Procesar los datos en tablas y gráficos; buscar patrones y tendencias.</div></div>
+      <div class="mc-arr fragment">›</div>
+      <div class="mc-node fragment"><span class="mc-num">6</span><div class="mc-ttl">Conclusión</div><div class="mc-dsc">Aceptar o rechazar la hipótesis <b>según la evidencia</b>, y comunicar el resultado.</div></div>
+    </div>
+    <div class="tcb fragment" style="margin-top:16px;">
+      <div class="tcb-title">Las variables (esto se pregunta casi siempre)</div>
+      <div class="tcb-body">
+        <div class="eqtable">
+          <div class="lbl">Independiente (VI)</div><div>La que el investigador <strong>manipula</strong> a propósito. Es la <em>causa</em> supuesta. Va en el eje <strong>X</strong>.</div><div class="dom"></div>
+          <div class="lbl">Dependiente (VD)</div><div>La que se <strong>mide</strong> como respuesta. Es el <em>efecto</em>. Va en el eje <strong>Y</strong>.</div><div class="dom"></div>
+          <div class="lbl">Controladas</div><div>Las que se mantienen <strong>constantes</strong> para que la comparación sea válida.</div><div class="dom"></div>
+          <div class="lbl">Grupo control</div><div>Muestra que <strong>no</strong> recibe el tratamiento; sirve de referencia para comparar.</div><div class="dom"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6.2 definiciones -->
+<section class="slide" data-section="6" style="--scale: 1.1;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">Método científico</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">Método científico · definiciones que la PAES sí distingue</div>
+  <div class="content dense">
+    <table class="data tight">
+      <thead><tr><th style="width:18%;">Concepto</th><th style="width:44%;">Definición</th><th style="width:38%;">Cómo reconocerlo / ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Observación</strong></td><td>Registro directo de un hecho mediante los sentidos o instrumentos, <em>sin</em> interpretación.</td><td>"El líquido cambió de incoloro a azul."</td></tr>
+        <tr><td><strong>Inferencia</strong></td><td><strong>Interpretación</strong> de una observación a partir de conocimiento previo. Va más allá de lo visto.</td><td>"Cambió de color, <em>entonces</em> ocurrió una reacción química."</td></tr>
+        <tr><td><strong>Predicción</strong></td><td>Anticipación de un resultado <strong>antes</strong> de realizar el experimento.</td><td>"Si aumento la temperatura, el sólido se disolverá más rápido."</td></tr>
+        <tr><td><strong>Hipótesis</strong></td><td>Respuesta <strong>tentativa</strong> y <strong>contrastable</strong> a un problema; relaciona VI y VD. Debe poder ser <strong>refutada</strong>.</td><td>Formato: "Si… entonces…". No es una pregunta ni una certeza.</td></tr>
+        <tr><td><strong>Teoría</strong></td><td>Explicación <strong>amplia y bien respaldada</strong> de un conjunto de fenómenos, sostenida por mucha evidencia. <strong>Explica el porqué.</strong></td><td>Teoría atómica · teoría cinético-molecular · teoría de la evolución.</td></tr>
+        <tr><td><strong>Ley</strong></td><td><strong>Descripción</strong> de una regularidad constante de la naturaleza, a menudo <strong>matemática</strong>. <strong>Describe el qué</strong>, no el porqué.</td><td>Ley de conservación de la masa · ley de Ohm · leyes ponderales.</td></tr>
+        <tr><td><strong>Modelo</strong></td><td><strong>Representación simplificada</strong> de un sistema real, útil para explicar y predecir. Tiene <strong>límites de validez</strong>.</td><td>Modelo de Bohr: útil, pero solo válido para el hidrógeno.</td></tr>
+        <tr><td><strong>Conclusión</strong></td><td>Juicio final que <strong>acepta o rechaza</strong> la hipótesis <strong>basándose en los resultados</strong> obtenidos.</td><td>Debe referirse a la evidencia, no a la opinión del autor.</td></tr>
+        <tr><td><strong>Evidencia</strong></td><td>Conjunto de <strong>datos</strong> obtenidos que apoyan o contradicen la hipótesis.</td><td>Tablas, mediciones, gráficos, registros repetidos.</td></tr>
+        <tr><td><strong>Replicabilidad</strong></td><td>Posibilidad de <strong>repetir</strong> el experimento y obtener resultados equivalentes.</td><td>Sin ella, la conclusión pierde validez.</td></tr>
+      </tbody>
+    </table>
+    <div class="tcb fragment">
+      <div class="tcb-title">La confusión número uno</div>
+      <div class="tcb-body">
+        <p>Una <strong>teoría no se "asciende" a ley</strong> con el tiempo: son cosas distintas. La <strong>ley describe</strong> una regularidad ("la masa se conserva"); la <strong>teoría explica</strong> por qué ocurre ("porque los átomos se reordenan sin crearse ni destruirse"). Ninguna es "más segura" que la otra.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6.3 cierre de síntesis -->
+<section class="slide" data-section="6" style="--scale: 1.4;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">Síntesis</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">Síntesis · lo que te debes llevar de la Sesión 01</div>
+  <div class="content dense">
+    <div class="oa-grid">
+      <div class="oa"><h4>OA32</h4><p>Fija o variable → pura o mezcla. Un tipo de átomo o varios → elemento o compuesto. Una o varias fases → homogénea o heterogénea.</p></div>
+      <div class="oa"><h4>OA33</h4><p>Cada método explota una <b>propiedad física</b>: tamaño, densidad, punto de ebullición, magnetismo o afinidad. Ninguno cambia la identidad química.</p></div>
+      <div class="oa g"><h4>OA34</h4><p>La pregunta que resuelve todo: <b>¿sigue siendo la misma sustancia?</b> Sí → físico. No → químico. Intensiva identifica; extensiva solo cuantifica.</p></div>
+      <div class="oa"><h4>OA35</h4><p>Dalton → Thomson → Rutherford → Bohr → cuántico. Cada uno resuelve la limitación del anterior gracias a <b>nueva evidencia</b>.</p></div>
+      <div class="oa t"><h4>OA36</h4><p><b>Z</b> define el elemento, <b>A = Z + N</b>, y los iones solo ganan o pierden <b>electrones</b>. Los protones jamás cambian.</p></div>
+    </div>
+    <div class="tcb fragment" style="margin-top:16px;">
+      <div class="tcb-title">Para la próxima sesión</div>
+      <div class="tcb-body">
+        <ul>
+          <li class="check">Repasar la <strong>tabla comparativa</strong> físico–químico: es la de mayor rendimiento por minuto de estudio.</li>
+          <li class="check">Practicar cálculo de <strong>p⁺, n⁰ y e⁻</strong> con iones, hasta hacerlo en menos de 30 segundos.</li>
+          <li class="check">Memorizar <strong>aporte y limitación</strong> de cada modelo atómico: se pregunta casi textual.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TABLA PERIÓDICA ═══════════════════ -->
+<section class="slide" data-section="6" style="--scale: 1.06;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">Anexo · Tabla periódica</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="frametitle">Anexo · La tabla periódica que entrega el DEMRE</div>
+  <div class="content dense">
+    <p class="mini-note" style="margin:0 0 calc(6px*var(--scale));">Esta es la única tabla que te dan en la prueba: <strong>20 elementos</strong>, del hidrógeno al calcio. No trae grupos, ni períodos, ni electronegatividad. Con estos dos números tienes que resolver todo.</p>
+    <div class="ptw"><table class="ptable"><tr><td><div class="z">1</div><div class="sym">H</div><div class="ma">1,0</div></td><td class="hdr" colspan="6"><div class="pt-legend"><span>Número atómico</span><span class="ar"></span></div><div class="pt-legend" style="margin-top:calc(7px*var(--scale));"><span>Masa atómica</span><span class="ar"></span></div></td><td><div class="z">2</div><div class="sym">He</div><div class="ma">4,0</div></td></tr><tr><td><div class="z">3</div><div class="sym">Li</div><div class="ma">6,9</div></td><td><div class="z">4</div><div class="sym">Be</div><div class="ma">9,0</div></td><td><div class="z">5</div><div class="sym">B</div><div class="ma">10,8</div></td><td><div class="z">6</div><div class="sym">C</div><div class="ma">12,0</div></td><td><div class="z">7</div><div class="sym">N</div><div class="ma">14,0</div></td><td><div class="z">8</div><div class="sym">O</div><div class="ma">16,0</div></td><td><div class="z">9</div><div class="sym">F</div><div class="ma">19,0</div></td><td><div class="z">10</div><div class="sym">Ne</div><div class="ma">20,2</div></td></tr><tr><td><div class="z">11</div><div class="sym">Na</div><div class="ma">23,0</div></td><td><div class="z">12</div><div class="sym">Mg</div><div class="ma">24,3</div></td><td><div class="z">13</div><div class="sym">Al</div><div class="ma">27,0</div></td><td><div class="z">14</div><div class="sym">Si</div><div class="ma">28,1</div></td><td><div class="z">15</div><div class="sym">P</div><div class="ma">31,0</div></td><td><div class="z">16</div><div class="sym">S</div><div class="ma">32,0</div></td><td><div class="z">17</div><div class="sym">Cl</div><div class="ma">35,5</div></td><td><div class="z">18</div><div class="sym">Ar</div><div class="ma">39,9</div></td></tr><tr><td><div class="z">19</div><div class="sym">K</div><div class="ma">39,1</div></td><td><div class="z">20</div><div class="sym">Ca</div><div class="ma">40,0</div></td><td class="void" colspan="6"></td></tr></table></div>
+    <div class="tcb fragment">
+      <div class="tcb-title">Cómo se lee y qué te permite calcular</div>
+      <div class="tcb-body">
+        <p>Arriba va el <strong>número atómico Z</strong>: es un entero, corresponde a los <strong>protones</strong> e identifica al elemento. Abajo va la <strong>masa atómica</strong>: es decimal, porque es el <strong>promedio ponderado</strong> de los isótopos según su abundancia.</p>
+        <p style="margin-top:calc(5px*var(--scale));">Para obtener el <strong>número másico A</strong> de un átomo, <strong>redondea</strong> la masa atómica al entero más cercano. Con eso calculas los neutrones: <strong>N = A − Z</strong>. Ejemplo con el sodio: masa 23,0 → A = 23, y como Z = 11, entonces N = 23 − 11 = <strong>12 neutrones</strong>.</p>
+        <p style="margin-top:calc(5px*var(--scale));"><strong>Ojo con el cloro:</strong> su masa aparece como 35,5 justamente porque es un promedio entre ³⁵Cl y ³⁷Cl. Ahí el redondeo no sirve: si el enunciado no te da el isótopo, se trabaja con <strong>A = 35</strong>, que es el más abundante.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FINAL ═══════════════════ -->
+<section class="slide final-slide" data-section="6" style="--scale: 1.7;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">Complemento Matemático</span> <span class="topbar-right">Admisión 2027</span></div>
+  <div class="content center">
+    <div class="calligra">¡A trabajar!</div>
+    <img src="LogoCM.png" alt="Complemento Matemático" style="max-height:200px; margin-top:10px;">
+    <p style="margin-top:12px;"><strong>Complemento Matemático</strong> · Sesión 01 de Química</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ EMBED · DUDA/placas.html ═══════════════════ -->
+<section class="slide embed-slide" data-section="6" data-embed="DUDA/placas.html" style="--scale: 1;">
+  <div class="topbar"><span class="topbar-left">Preparación PAES · Ciencias</span> <span class="topbar-center">Recurso interactivo</span> <span class="topbar-right">Complemento Matemático</span></div>
+  <div class="content">
+    <div class="embed-wrap">
+      <iframe data-embed-src="DUDA/placas.html" title="Placas" allow="fullscreen; autoplay"></iframe>
+      <div class="embed-fallback">
+        <div class="t">No se encontró el recurso</div>
+        <div class="d">Esta diapositiva carga el archivo <code>DUDA/placas.html</code>. Debe existir una carpeta <code>DUDA</code> junto a este <code>index.html</code>, con <code>placas.html</code> dentro. Si abriste la presentación con doble clic, algunos navegadores bloquean el iframe local: sirve la carpeta con un servidor (por ejemplo <code>python3 -m http.server</code>) y ábrela desde <code>localhost</code>.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <div class="footbar global" id="globalFootbar">
+    <div class="fb-author"> <strong>Complemento Matemático</strong> </div>
+    <div class="fb-title">Sesión 01 de Química · PAES Ciencias</div>
+    <div class="fb-date">
+      <div class="fb-controls">
+        <button id="prevBtn" title="Anterior (←)">‹</button>
+        <button id="timerBtn" title="Temporizador (T)">◔</button>
+        <button id="saveBtn" title="Guardar copia del index.html con los tamaños actuales (Ctrl+S)">⬇</button>
+        <button id="fsBtn" title="Pantalla completa (F)">⤢</button>
+        <button id="nextBtn" title="Siguiente (→)">›</button>
+      </div>
+      <span class="fb-page" id="globalPage"></span>
+      <span class="today-date" id="globalDate"></span>
+    </div>
+  </div>
+
+  <!-- ═══════════ TEMPORIZADOR GLOBAL (flota sobre el encabezado en CUALQUIER slide) ═══════════ -->
+  <div id="digTimer" class="dig-timer">
+    <div class="dt-ring-wrap">
+      <svg class="dt-ring" viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="dt-ring-bg" cx="60" cy="60" r="54"></circle>
+        <circle class="dt-ring-fg" id="dtRing" cx="60" cy="60" r="54"></circle>
+      </svg>
+      <div class="dt-clock">
+        <input class="dt-field" id="dtMin" inputmode="numeric" maxlength="2" value="01" aria-label="minutos">
+        <span class="dt-colon">:</span>
+        <input class="dt-field" id="dtSec" inputmode="numeric" maxlength="2" value="00" aria-label="segundos">
+      </div>
+    </div>
+    <div class="dt-btns">
+      <button class="dt-btn dt-reset" id="dtReset" title="Reiniciar">↺</button>
+      <button class="dt-btn dt-play" id="dtPlay" title="Iniciar / Pausar">▶</button>
+    </div>
+  </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var idx = slides.findIndex(function(s){return s.classList.contains('active');});
+  if(idx < 0){ idx = 0; }
+
+  // ---- pristine snapshot, taken before ANY runtime mutation (KaTeX rendering,
+  // class toggling, the stage-fit transform, etc). Per-slide zoom changes are
+  // mirrored onto this clone too, so "export" can write back clean source HTML
+  // (original \(...\) LaTeX, no frozen runtime state) with just the size tweaks
+  // baked in as a style="--scale:N" attribute on each slide. ----
+  var pristineDoc = document.documentElement.cloneNode(true);
+  var pristineSlides = Array.prototype.slice.call(pristineDoc.querySelectorAll('.slide'));
+
+  // ---- resume where you left off: while editing the HTML you'd otherwise have to
+  // click "next" all the way back to your slide after every reload. The URL hash
+  // (#7) and localStorage both remember the last slide; the hash wins if present,
+  // since it survives copy/paste, bookmarking, and manual F5 refreshes too. ----
+  function readHashSlide(){
+    var n = parseInt(location.hash.replace('#',''), 10);
+    if(!isNaN(n) && n>=1 && n<=total) return n-1;
+    return null;
+  }
+  function readStoredSlide(){
+    try {
+      var s = parseInt(localStorage.getItem('uow_pres_slide'), 10);
+      if(!isNaN(s) && s>=0 && s<total) return s;
+    } catch(e){}
+    return null;
+  }
+  var resume = readHashSlide();
+  if(resume === null) resume = readStoredSlide();
+  if(resume !== null) idx = resume;
+
+  var stage = document.getElementById('stage');
+  var viewport = document.getElementById('viewport');
+  var progress = document.getElementById('progress');
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var fsBtn = document.getElementById('fsBtn');
+  var saveBtn = document.getElementById('saveBtn');
+  var hint = document.getElementById('hint');
+  var globalDate = document.getElementById('globalDate');
+  var globalPage = document.getElementById('globalPage');
+
+  // the author/title/date footer is identical on every slide, so it lives once
+  // in the markup (#globalFootbar) instead of being repeated on every section; only
+  // the "N / total" page counter actually changes, and that's updated here on navigation.
+  function fillFooter(){
+    var dateStr = new Date().toLocaleDateString('es-ES', {day:'numeric', month:'long', year:'numeric'});
+    document.querySelectorAll('.today-date').forEach(function(el){ el.textContent = dateStr; });
+  }
+
+  // ---- per-slide independent zoom -------------------------------------------------
+  // Each slide section carries its own --scale custom property (inline
+  // style). CSS already reads var(--scale) everywhere (font-size, image max-height,
+  // etc.), so setting it on one slide element only ever affects that slide — slides
+  // left untouched simply inherit the :root default of 1. No global flag involved.
+  var SCALE_MIN = 0.6, SCALE_MAX = 2.0, SCALE_STEP = 0.1;
+  var SCALE_KEY = 'uow_pres_slide_scales';
+
+  function loadScaleMap(){
+    try {
+      var raw = localStorage.getItem(SCALE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch(e){ return {}; }
+  }
+  function saveScaleMap(map){
+    try { localStorage.setItem(SCALE_KEY, JSON.stringify(map)); } catch(e){}
+  }
+  function getScale(slideEl){
+    var v = parseFloat(slideEl.style.getPropertyValue('--scale'));
+    return isNaN(v) ? 1 : v;
+  }
+  function setScale(i, value){
+    value = Math.max(SCALE_MIN, Math.min(SCALE_MAX, +value.toFixed(2)));
+    slides[i].style.setProperty('--scale', value);
+    pristineSlides[i].style.setProperty('--scale', value);
+    var map = loadScaleMap();
+    if(value === 1){ delete map[i]; } else { map[i] = value; }
+    saveScaleMap(map);
+    updateZoomDisplay();
+  }
+  function scaleUp(){ setScale(idx, getScale(slides[idx]) + SCALE_STEP); }
+  function scaleDown(){ setScale(idx, getScale(slides[idx]) - SCALE_STEP); }
+
+  // Restore any scales saved from a previous session that haven't been exported
+  // into the file yet. A value already baked into the HTML (inline style coming
+  // straight from the source file) always wins over a leftover localStorage entry.
+  (function restoreSavedScales(){
+    var map = loadScaleMap();
+    Object.keys(map).forEach(function(key){
+      var i = parseInt(key, 10);
+      if(isNaN(i) || i<0 || i>=total) return;
+      if(slides[i].style.getPropertyValue('--scale')) return; // file already sets it
+      slides[i].style.setProperty('--scale', map[i]);
+      pristineSlides[i].style.setProperty('--scale', map[i]);
+    });
+  })();
+
+  function updateZoomDisplay(){
+    var pct = Math.round(getScale(slides[idx]) * 100);
+    globalPage.textContent = (idx+1) + ' / ' + total + (pct !== 100 ? '  \u00b7  ' + pct + '%' : '');
+  }
+
+  // ---- export: download a copy of this same file with the per-slide sizes baked in ----
+  function exportHTML(){
+    pristineSlides.forEach(function(s, i){ s.classList.toggle('active', i === idx); });
+    var html = '<!DOCTYPE html>\n' + pristineDoc.outerHTML;
+    var blob = new Blob([html], {type:'text/html'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'index.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  }
+  saveBtn.addEventListener('click', exportHTML);
+
+  // ---- fragments: reveal pieces of a slide one at a time ---------------------------
+  // Two opt-in modes, same visual style, pick whichever fits each slide:
+  //   class="fragment"       -> click-driven. Each press of next/prev (clicker,
+  //                              arrow keys, swipe, the on-screen buttons) reveals
+  //                              or hides one more piece, like a PowerPoint "appear"
+  //                              build, before the deck actually changes slide.
+  //   class="fragment-auto"  -> time-driven. Reveals on its own, staggered, the
+  //                              moment you land on the slide — no clicks needed.
+  //                              Optional data-delay="600" (ms) per element to tune
+  //                              its own timing; otherwise a sensible default stagger.
+  // Both can be mixed on the same slide if needed.
+  var fragRevealed = {}; // slideIndex -> how many .fragment elements are currently shown
+
+  function getFragments(slideEl){
+    return Array.prototype.slice.call(slideEl.querySelectorAll('.fragment'));
+  }
+  function applyFragmentVisibility(i){
+    var frags = getFragments(slides[i]);
+    var n = fragRevealed[i] || 0;
+    frags.forEach(function(el, j){ el.classList.toggle('visible', j < n); });
+    // Sync QA panels for slides that use the qa-slide pattern
+    syncQAPanels(slides[i], n);
+  }
+
+  // For .qa-slide: show only the panel whose data-qa == n, hide all others.
+  // Panel 0 has no .fragment (always in DOM), panels 1-N do.
+  function syncQAPanels(slideEl, n){
+    var panels = Array.prototype.slice.call(slideEl.querySelectorAll('.qa-panel'));
+    if(!panels.length) return;
+    panels.forEach(function(p){
+      var qa = parseInt(p.getAttribute('data-qa'), 10);
+      var show = (qa === n);
+      p.style.opacity = show ? '1' : '0';
+      p.style.pointerEvents = show ? 'auto' : 'none';
+    });
+  }
+  function setRevealed(i, n){
+    fragRevealed[i] = n;
+    applyFragmentVisibility(i);
+    // avisar a las simulaciones en qué paso va la diapositiva
+    slides[i].dispatchEvent(new CustomEvent('slide:step', {detail:{step:n}}));
+  }
+
+  var autoTimers = [];
+  function clearAutoTimers(){
+    autoTimers.forEach(clearTimeout);
+    autoTimers = [];
+  }
+  function playAutoFragments(slideEl){
+    clearAutoTimers();
+    var els = Array.prototype.slice.call(slideEl.querySelectorAll('.fragment-auto'));
+    els.forEach(function(el){ el.classList.remove('visible'); });
+    els.forEach(function(el, i){
+      var delay = parseInt(el.getAttribute('data-delay'), 10);
+      if(isNaN(delay)) delay = 160 + i*220;
+      autoTimers.push(setTimeout(function(){ el.classList.add('visible'); }, delay));
+    });
+  }
+
+  var lastIdx = -1;
+
+  // ---- videos con autoplay+loop: se reproducen solo mientras su diapositiva
+  // está activa; al salir de la diapositiva se pausan y se rebobinan, para
+  // que la próxima vez que se entre vuelvan a arrancar desde el inicio.
+  function manageAutoplayVideos(activeIdx){
+    slides.forEach(function(s, i){
+      var vids = s.querySelectorAll('video.autoplay-loop-video');
+      vids.forEach(function(v){
+        if(i === activeIdx){
+          v.currentTime = 0;
+          var p = v.play();
+          if(p && p.catch) p.catch(function(){});
+        } else {
+          v.pause();
+          v.currentTime = 0;
+        }
+      });
+    });
+  }
+
+  // El slide final tiene animaciones CSS que deben (re)arrancar cada vez que se
+  // entra a él. Se controlan con la clase .play: se quita, se fuerza un reflow y
+  // se vuelve a añadir sólo en la diapositiva activa, reiniciando el timeline.
+  function manageFinaleAnimation(activeIdx){
+    slides.forEach(function(s, i){
+      if(!s.classList.contains('finale-slide')) return;
+      s.classList.remove('play');
+      if(i === activeIdx){
+        void s.offsetWidth; // reflow: reinicia las animaciones
+        s.classList.add('play');
+      }
+    });
+  }
+
+  function update(){
+    var changed = idx !== lastIdx;
+    slides.forEach(function(s, i){ s.classList.toggle('active', i === idx); });
+    progress.style.width = ((idx+1)/total*100) + '%';
+    updateZoomDisplay();
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = idx === total-1;
+    try { history.replaceState(null, '', '#' + (idx+1)); } catch(e){}
+    try { localStorage.setItem('uow_pres_slide', idx); } catch(e){}
+    if(changed){
+      playAutoFragments(slides[idx]);
+      manageAutoplayVideos(idx);
+      manageFinaleAnimation(idx);
+      // ---- ciclo de vida para las simulaciones (slide:enter / slide:leave) ----
+      if(lastIdx >= 0 && slides[lastIdx]){
+        slides[lastIdx].dispatchEvent(new CustomEvent('slide:leave', {bubbles:false}));
+      }
+      slides[idx].dispatchEvent(new CustomEvent('slide:enter', {bubbles:false}));
+      lastIdx = idx;
+    }
+  }
+
+  // Al aterrizar en una slide "ya construida" se muestran todos sus fragmentos.
+  // Excepción: las simulaciones, donde el nº de fragmento ES el nº de escena y
+  // deben partir siempre en la escena 1.
+  function builtCount(i){
+    return slides[i].classList.contains('sim-slide') ? 0 : getFragments(slides[i]).length;
+  }
+  function goTo(i){
+    if(i < 0) i = 0;
+    if(i > total-1) i = total-1;
+    idx = i;
+    setRevealed(idx, builtCount(idx));
+    update();
+  }
+  function next(){
+    var frags = getFragments(slides[idx]);
+    var n = fragRevealed[idx] || 0;
+    if(n < frags.length){ setRevealed(idx, n + 1); return; }
+    if(idx < total - 1){
+      idx = idx + 1;
+      setRevealed(idx, 0); // arriving forward -> build it up one click at a time
+      update();
+    }
+  }
+  function prev(){
+    var n = fragRevealed[idx] || 0;
+    if(n > 0){ setRevealed(idx, n - 1); return; }
+    if(idx > 0){
+      idx = idx - 1;
+      setRevealed(idx, builtCount(idx)); // arriving backward -> already fully built
+      update();
+    }
+  }
+
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+
+  window.addEventListener('hashchange', function(){
+    var h = readHashSlide();
+    if(h !== null && h !== idx){ goTo(h); }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey)){ e.preventDefault(); exportHTML(); return; }
+    if(e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); next(); }
+    else if(e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); prev(); }
+    else if(e.key === 'Home'){ e.preventDefault(); goTo(0); }
+    else if(e.key === 'End'){ e.preventDefault(); goTo(total-1); }
+    else if(e.key === 'f' || e.key === 'F'){ toggleFullscreen(); }
+    else if(e.key === '+' || e.key === '='){ scaleUp(); }
+    else if(e.key === '-' || e.key === '_'){ scaleDown(); }
+    else if((e.key === 't' || e.key === 'T') && !e.ctrlKey && !e.metaKey){
+      // no dispares si estás escribiendo en el propio input del timer
+      if(document.activeElement && document.activeElement.classList.contains('dt-field')) return;
+      e.preventDefault(); if(window.__toggleTimer) window.__toggleTimer();
+    }
+  });
+
+  var touchStartX = null;
+  viewport.addEventListener('touchstart', function(e){ touchStartX = e.changedTouches[0].clientX; }, {passive:true});
+  viewport.addEventListener('touchend', function(e){
+    if(touchStartX === null) return;
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(dx) > 50){ dx < 0 ? next() : prev(); }
+    touchStartX = null;
+  }, {passive:true});
+
+  function toggleFullscreen(){
+    if(!document.fullscreenElement){
+      (stage.requestFullscreen || stage.webkitRequestFullscreen || function(){}).call(stage);
+    } else {
+      (document.exitFullscreen || document.webkitExitFullscreen || function(){}).call(document);
+    }
+  }
+  fsBtn.addEventListener('click', toggleFullscreen);
+
+  function fitStage(){
+    var vw = viewport.clientWidth, vh = viewport.clientHeight;
+    var fitScale = Math.min(vw/1280, vh/720) * 0.94;
+    stage.style.transform = 'scale(' + fitScale + ')';
+  }
+  window.addEventListener('resize', fitStage);
+  document.addEventListener('fullscreenchange', fitStage);
+  fitStage();
+
+  fillFooter();
+  // Las diapositivas de simulación deben empezar en la escena 1 (no reveladas del
+  // todo), o arrancarían directo en la última escena.
+  setRevealed(idx, builtCount(idx));
+  update();
+
+  if(window.renderMathInElement){
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "\\[", right: "\\]", display: true},
+        {left: "\\(", right: "\\)", display: false}
+      ],
+      throwOnError: false
+    });
+  }
+
+  setTimeout(function(){ hint.classList.add('show'); }, 400);
+  setTimeout(function(){ hint.classList.remove('show'); }, 3800);
+
+  // ════════════════════════════════════════════════════════════════
+  //  TEMPORIZADOR (anclado en la banda azul del encabezado, a la derecha)
+  //   · Botón ◔ del footbar (o tecla "T") lo muestra/oculta.
+  //   · Aparece solo en la diapositiva de Preguntas de Activación.
+  //   · Se ESCRIBE el tiempo en los campos MM : SS.
+  //   · ▶/⏸ inicia-pausa, ↺ reinicia. Aro de progreso + alerta al llegar a 0.
+  // ════════════════════════════════════════════════════════════════
+  (function initDigitalTimer(){
+    var box   = document.getElementById('digTimer');
+    if(!box) return;
+    var btn   = document.getElementById('timerBtn');
+    var minEl = document.getElementById('dtMin');
+    var secEl = document.getElementById('dtSec');
+    var playB = document.getElementById('dtPlay');
+    var resetB= document.getElementById('dtReset');
+    var ring  = document.getElementById('dtRing');
+
+    var CIRC = 2 * Math.PI * 54;
+    ring.style.strokeDasharray = CIRC.toFixed(2);
+
+    var totalSec = 60, remaining = 60, running = false, tickId = null;
+
+    function pad(n){ n = Math.max(0, n|0); return (n<10?'0':'')+n; }
+    function writeFields(sec){ minEl.value = pad(Math.floor(sec/60)); secEl.value = pad(sec%60); }
+    function readFields(){
+      var m = parseInt(minEl.value,10); if(isNaN(m)) m=0;
+      var s = parseInt(secEl.value,10); if(isNaN(s)) s=0;
+      m = Math.min(99, Math.max(0, m));
+      s = Math.min(59, Math.max(0, s));
+      totalSec = m*60 + s; if(totalSec < 1) totalSec = 1;
+      remaining = totalSec; writeFields(remaining);
+    }
+    function setState(){
+      box.classList.remove('running','warning','danger','done');
+      if(remaining <= 0){ box.classList.add('done','danger'); return; }
+      if(running) box.classList.add('running');
+      if(remaining <= 5) box.classList.add('danger');
+      else if(remaining <= 10) box.classList.add('warning');
+    }
+    function paintRing(){
+      var frac = totalSec>0 ? remaining/totalSec : 0;
+      ring.style.strokeDashoffset = (CIRC*(1-frac)).toFixed(2);
+    }
+    function paint(){ writeFields(remaining); paintRing(); setState(); }
+
+    function beep(){
+      try {
+        var ac = new (window.AudioContext||window.webkitAudioContext)();
+        [0,0.28,0.56].forEach(function(t){
+          var o=ac.createOscillator(), g=ac.createGain();
+          o.connect(g); g.connect(ac.destination);
+          o.type='sine'; o.frequency.value=880;
+          g.gain.setValueAtTime(.0001, ac.currentTime+t);
+          g.gain.exponentialRampToValueAtTime(.3, ac.currentTime+t+0.02);
+          g.gain.exponentialRampToValueAtTime(.0001, ac.currentTime+t+0.22);
+          o.start(ac.currentTime+t); o.stop(ac.currentTime+t+0.24);
+        });
+      } catch(e){}
+    }
+    function stopTick(){ if(tickId){ clearInterval(tickId); tickId=null; } running=false; }
+    function tick(){
+      remaining--;
+      if(remaining <= 0){ remaining=0; paint(); stopTick(); box.classList.add('done'); beep(); playB.textContent='▶'; return; }
+      paint();
+    }
+    function play(){
+      if(running){ stopTick(); playB.textContent='▶'; setState(); return; }
+      if(remaining <= 0) readFields();
+      if(remaining <= 0) return;
+      running = true; playB.textContent='⏸'; setState();
+      tickId = setInterval(tick, 1000);
+    }
+    function reset(){
+      stopTick(); readFields();
+      box.classList.remove('done'); playB.textContent='▶'; paint();
+    }
+
+    // edición de campos
+    [minEl, secEl].forEach(function(el){
+      el.addEventListener('focus', function(){ if(running){ stopTick(); playB.textContent='▶'; setState(); } el.select(); });
+      el.addEventListener('input', function(){ el.value = el.value.replace(/[^0-9]/g,'').slice(0,2); });
+      el.addEventListener('blur', function(){ readFields(); paint(); });
+      el.addEventListener('keydown', function(e){
+        e.stopPropagation(); // no cambiar de diapositiva mientras se escribe
+        if(e.key === 'Enter'){ el.blur(); play(); e.preventDefault(); }
+        else if(e.key === 'ArrowUp' || e.key === 'ArrowDown'){
+          e.preventDefault();
+          var v = parseInt(el.value,10); if(isNaN(v)) v=0;
+          v += (e.key==='ArrowUp'?1:-1);
+          var max = (el===secEl?59:99);
+          if(v<0) v=max; if(v>max) v=0;
+          el.value = pad(v); readFields(); paint();
+        }
+      });
+    });
+
+    playB.addEventListener('click', play);
+    resetB.addEventListener('click', reset);
+
+    function show(){ box.classList.add('visible'); readFields(); paint(); }
+    function hide(){ stopTick(); box.classList.remove('visible'); playB.textContent='▶'; }
+    function toggle(){ box.classList.contains('visible') ? hide() : show(); }
+
+    btn.addEventListener('click', toggle);
+    window.__toggleTimer = toggle;
+
+    paint();
+  })();
+})();
+
+</script>
+<script>
+/* ════════════════════════════════════════════════════════════════
+   MOTOR DE SIMULACIONES · QUÍMICA
+   Sets: clasificacion · separacion · modelos · atomo
+   Cada escena = {title, warm, html, readout(t), draw(g,t,W,H)}
+   El paso de escena lo entrega el sistema de fragmentos (slide:step).
+════════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+var NAVY='#0f2f5c', BLUE='#1c4e8f', GOLD='#f5a623', RED='#d1495b',
+    TEAL='#127f7a', GREY='#8a97a8', INK='#1c1f24', PALE='#dbe2ec',
+    VIOL='#7b5ea7', GREEN='#2e8b57';
+
+function line(g,x1,y1,x2,y2,c,w,dash){
+  g.save(); g.strokeStyle=c||NAVY; g.lineWidth=w||2;
+  if(dash) g.setLineDash(dash);
+  g.beginPath(); g.moveTo(x1,y1); g.lineTo(x2,y2); g.stroke(); g.restore();
+}
+function arrow(g,x1,y1,x2,y2,c,w,head){
+  c=c||NAVY; w=w||2.5; head=head||9;
+  var a=Math.atan2(y2-y1,x2-x1);
+  line(g,x1,y1,x2,y2,c,w);
+  g.save(); g.fillStyle=c; g.beginPath();
+  g.moveTo(x2,y2);
+  g.lineTo(x2-head*Math.cos(a-0.42), y2-head*Math.sin(a-0.42));
+  g.lineTo(x2-head*Math.cos(a+0.42), y2-head*Math.sin(a+0.42));
+  g.closePath(); g.fill(); g.restore();
+}
+function txt(g,s,x,y,c,size,align,bold,italic){
+  g.save();
+  g.fillStyle=c||INK;
+  g.font=(italic?'italic ':'')+(bold?'700 ':'400 ')+(size||13)+'px "Source Serif 4",Georgia,serif';
+  g.textAlign=align||'left'; g.textBaseline='middle';
+  g.fillText(s,x,y); g.restore();
+}
+function chip(g,s,x,y,bg,fg,size){
+  size=size||12;
+  g.save();
+  g.font='700 '+size+'px "Source Serif 4",Georgia,serif';
+  var w=g.measureText(s).width+16, h=size+12;
+  g.fillStyle=bg||NAVY;
+  if(g.roundRect){ g.beginPath(); g.roundRect(x-w/2,y-h/2,w,h,7); g.fill(); }
+  else g.fillRect(x-w/2,y-h/2,w,h);
+  g.fillStyle=fg||'#fff'; g.textAlign='center'; g.textBaseline='middle';
+  g.fillText(s,x,y); g.restore();
+}
+function dot(g,x,y,r,c){ g.save(); g.fillStyle=c||NAVY; g.beginPath(); g.arc(x,y,r,0,7); g.fill(); g.restore(); }
+function ring(g,x,y,r,c,w,dash){
+  g.save(); g.strokeStyle=c||NAVY; g.lineWidth=w||2;
+  if(dash) g.setLineDash(dash);
+  g.beginPath(); g.arc(x,y,r,0,7); g.stroke(); g.restore();
+}
+function panel(g,x,y,w,h,fill,stroke,r){
+  g.save(); g.fillStyle=fill||'#fff'; g.strokeStyle=stroke||PALE; g.lineWidth=1.6;
+  if(g.roundRect){ g.beginPath(); g.roundRect(x,y,w,h,r===undefined?9:r); g.fill(); g.stroke(); }
+  else { g.fillRect(x,y,w,h); g.strokeRect(x,y,w,h); }
+  g.restore();
+}
+function grid(g,x,y,w,h,step){
+  g.save(); g.strokeStyle='#e6ecf3'; g.lineWidth=1;
+  for(var i=x; i<=x+w+0.5; i+=step){ g.beginPath(); g.moveTo(i,y); g.lineTo(i,y+h); g.stroke(); }
+  for(var j=y; j<=y+h+0.5; j+=step){ g.beginPath(); g.moveTo(x,j); g.lineTo(x+w,j); g.stroke(); }
+  g.restore();
+}
+// vaso de precipitado genérico
+function beaker(g,x,y,w,h,liq,liqCol,label){
+  g.save();
+  g.strokeStyle=NAVY; g.lineWidth=3; g.lineJoin='round';
+  g.beginPath(); g.moveTo(x,y); g.lineTo(x,y+h); g.lineTo(x+w,y+h); g.lineTo(x+w,y); g.stroke();
+  if(liq>0){
+    var lh=h*liq;
+    g.fillStyle=liqCol||'#bcd6f0';
+    g.fillRect(x+2,y+h-lh,w-4,lh-2);
+    g.strokeStyle=liqCol||'#8fb8e0'; g.lineWidth=2;
+    g.beginPath(); g.moveTo(x+2,y+h-lh); g.lineTo(x+w-2,y+h-lh); g.stroke();
+  }
+  g.restore();
+  if(label) txt(g,label,x+w/2,y+h+18,NAVY,12,'center',true);
+}
+// partícula pseudo-aleatoria estable
+function rnd(i){ var s=Math.sin(i*127.1+i*i*0.317)*43758.5453; return s-Math.floor(s); }
+
+// ══════════════════════════════════════════════════════════════
+//  SET 1 · CLASIFICACIÓN DE LA MATERIA  (OA32)
+// ══════════════════════════════════════════════════════════════
+var CLASIF=[
+
+{ title:'1 · Sustancia pura: elemento', html:
+  '<b>Elemento</b>: sustancia pura formada por <b>un solo tipo de átomo</b>.'+
+  '<ul><li>No se descompone en algo más simple por métodos químicos.</li>'+
+  '<li>Ej.: Fe, Cu, O₂, N₂, He, Au.</li>'+
+  '<li>Ojo: O₂ es <b>molécula</b>, pero sigue siendo <b>elemento</b> (un solo tipo de átomo).</li></ul>'+
+  '<div class="eq">1 tipo de átomo → elemento</div>',
+  readout:function(){ return [['Tipos de átomo','1'],['Composición','fija'],['Separable por','—'],['Clase','sustancia pura']]; },
+  draw:function(g,t,W,H){
+    var bx=W*0.10, by=H*0.16, bw=W*0.36, bh=H*0.62;
+    panel(g,bx,by,bw,bh,'#f4f8fd',NAVY);
+    txt(g,'Elemento monoatómico (He)',bx+bw/2,by-16,NAVY,14,'center',true);
+    for(var i=0;i<16;i++){
+      var px=bx+22+ (bw-44)*rnd(i*3+1), py=by+22+(bh-44)*rnd(i*7+2);
+      px+=6*Math.sin(t*1.1+i); py+=6*Math.cos(t*0.9+i*1.7);
+      dot(g,px,py,11,TEAL);
+    }
+    var cx=W*0.56, cw=W*0.36;
+    panel(g,cx,by,cw,bh,'#fdf7ec',GOLD);
+    txt(g,'Elemento diatómico (O₂)',cx+cw/2,by-16,GOLD,14,'center',true);
+    for(var j=0;j<10;j++){
+      var qx=cx+34+(cw-68)*rnd(j*5+3), qy=by+30+(bh-60)*rnd(j*11+4);
+      qx+=5*Math.sin(t*0.8+j*2); qy+=5*Math.cos(t*1.2+j);
+      var a=t*0.6+j;
+      dot(g,qx-9*Math.cos(a),qy-9*Math.sin(a),10,RED);
+      dot(g,qx+9*Math.cos(a),qy+9*Math.sin(a),10,RED);
+      line(g,qx-9*Math.cos(a),qy-9*Math.sin(a),qx+9*Math.cos(a),qy+9*Math.sin(a),RED,3);
+    }
+    txt(g,'En ambos casos hay UN SOLO tipo de átomo → los dos son elementos',W/2,H*0.90,INK,13,'center',false,true);
+  }
+},
+
+{ title:'2 · Sustancia pura: compuesto', html:
+  '<b>Compuesto</b>: sustancia pura formada por <b>dos o más elementos distintos</b> unidos químicamente en una <b>proporción fija</b>.'+
+  '<ul><li>Se descompone SOLO por métodos <b>químicos</b> (electrólisis, calor, etc.).</li>'+
+  '<li>Ej.: H₂O, CO₂, NaCl, C₆H₁₂O₆.</li>'+
+  '<li>Sus propiedades NO son las de sus elementos: H₂ y O₂ son gases, H₂O es líquida.</li></ul>'+
+  '<div class="eq">2H₂ + O₂ → 2H₂O</div>',
+  readout:function(){ return [['Tipos de átomo','≥ 2'],['Proporción','fija'],['Separable por','método químico'],['Clase','sustancia pura']]; },
+  draw:function(g,t,W,H){
+    var by=H*0.20, bh=H*0.52;
+    panel(g,W*0.08,by,W*0.84,bh,'#f4f8fd',NAVY);
+    txt(g,'Agua (H₂O) — proporción fija 2 : 1',W/2,by-18,NAVY,15,'center',true);
+    for(var i=0;i<9;i++){
+      var mx=W*0.14+(W*0.72)*rnd(i*13+5), my=by+40+(bh-80)*rnd(i*17+6);
+      mx+=7*Math.sin(t*0.9+i*1.3); my+=7*Math.cos(t*1.05+i);
+      var a=t*0.5+i*0.8;
+      var h1x=mx+22*Math.cos(a-0.9), h1y=my+22*Math.sin(a-0.9);
+      var h2x=mx+22*Math.cos(a+0.9), h2y=my+22*Math.sin(a+0.9);
+      line(g,mx,my,h1x,h1y,GREY,3); line(g,mx,my,h2x,h2y,GREY,3);
+      dot(g,mx,my,14,RED); dot(g,h1x,h1y,8,BLUE); dot(g,h2x,h2y,8,BLUE);
+    }
+    dot(g,W*0.16,H*0.86,12,RED);  txt(g,'O (oxígeno)',W*0.19,H*0.86,INK,13,'left',true);
+    dot(g,W*0.40,H*0.86,8,BLUE);  txt(g,'H (hidrógeno)',W*0.43,H*0.86,INK,13,'left',true);
+    txt(g,'Siempre 2 H por cada 1 O. Cambiar la proporción = otra sustancia.',W*0.66,H*0.86,INK,12,'left',false,true);
+  }
+},
+
+{ title:'3 · Mezcla homogénea (disolución)', html:
+  '<b>Mezcla</b>: dos o más sustancias unidas <b>físicamente</b>, en proporción <b>variable</b>.'+
+  '<ul><li><b>Homogénea</b>: <b>una sola fase</b> visible; no distingues los componentes ni con microscopio óptico.</li>'+
+  '<li>Se llama también <b>disolución</b>: soluto + solvente.</li>'+
+  '<li>Ej.: agua salada, aire, acero, bebida gaseosa, alcohol de farmacia.</li></ul>'+
+  '<div class="eq">Nº de fases = 1</div>',
+  readout:function(){ return [['Fases','1'],['Proporción','variable'],['Separable por','método físico'],['Clase','mezcla homogénea']]; },
+  draw:function(g,t,W,H){
+    var bx=W*0.30, by=H*0.14, bw=W*0.40, bh=H*0.64;
+    var grd=g.createLinearGradient(0,by,0,by+bh);
+    grd.addColorStop(0,'#cfe2f6'); grd.addColorStop(1,'#a9caee');
+    beaker(g,bx,by,bw,bh,0.82,grd,'Agua + sal disuelta');
+    for(var i=0;i<60;i++){
+      var px=bx+8+(bw-16)*rnd(i*3+9), py=by+bh*0.19+(bh*0.78)*rnd(i*7+11);
+      px+=4*Math.sin(t*1.4+i); py+=4*Math.cos(t*1.1+i*2);
+      dot(g,px,py,2.6,i%2?'#2b6cb0':'#7b5ea7');
+    }
+    txt(g,'Una sola fase: se ve uniforme en toda su extensión',W/2,H*0.92,INK,13,'center',false,true);
+    chip(g,'1 FASE',W*0.83,H*0.30,TEAL,'#fff',15);
+  }
+},
+
+{ title:'4 · Mezcla heterogénea', html:
+  '<b>Heterogénea</b>: se distinguen <b>dos o más fases</b> a simple vista o con lupa/microscopio.'+
+  '<ul><li>Composición <b>no uniforme</b>: distintas zonas, distintas propiedades.</li>'+
+  '<li>Ej.: agua con aceite, granito, ensalada, arena con limaduras de hierro.</li>'+
+  '<li>Casos especiales: <b>suspensión</b> (sedimenta) y <b>coloide</b> (efecto Tyndall: dispersa la luz).</li></ul>'+
+  '<div class="eq">Nº de fases ≥ 2</div>',
+  readout:function(){ return [['Fases','≥ 2'],['Proporción','variable'],['Separable por','método físico'],['Clase','mezcla heterogénea']]; },
+  draw:function(g,t,W,H){
+    var bx=W*0.12, by=H*0.14, bw=W*0.32, bh=H*0.62;
+    beaker(g,bx,by,bw,bh,0.80,'#bcd6f0','Agua + aceite');
+    g.save(); g.fillStyle='#f2c14e';
+    g.fillRect(bx+2,by+bh*0.20,bw-4,bh*0.26); g.restore();
+    line(g,bx+2,by+bh*0.46,bx+bw-2,by+bh*0.46,'#c99a2e',2.5);
+    txt(g,'aceite (fase 1)',bx+bw+10,by+bh*0.32,'#a67c1a',12,'left',true);
+    txt(g,'agua (fase 2)',bx+bw+10,by+bh*0.68,BLUE,12,'left',true);
+    var cx=W*0.62, cw=W*0.30;
+    beaker(g,cx,by,cw,bh,0.80,'#dfe8f2','Suspensión: sedimenta');
+    for(var i=0;i<40;i++){
+      var s=(Math.min(t,6)/6);
+      var y0=by+bh*0.24+(bh*0.5)*rnd(i*5+2);
+      var y1=by+bh*0.86-14*rnd(i*3+7);
+      var py=y0+(y1-y0)*s;
+      dot(g,cx+10+(cw-20)*rnd(i*11+3),py,3.4,'#8a5a2b');
+    }
+    txt(g,'Se distinguen fases → heterogénea',W/2,H*0.92,INK,13,'center',false,true);
+  }
+},
+
+{ title:'5 · Mapa completo de la materia', html:
+  '<b>Ruta de decisión para la PAES.</b>'+
+  '<ul><li>¿Composición <b>fija</b>? → sustancia pura. ¿<b>Variable</b>? → mezcla.</li>'+
+  '<li>Pura: ¿1 tipo de átomo? <b>elemento</b>; ¿≥2 unidos químicamente? <b>compuesto</b>.</li>'+
+  '<li>Mezcla: ¿1 fase? <b>homogénea</b>; ¿≥2 fases? <b>heterogénea</b>.</li></ul>'+
+  '<div class="eq">fija → pura · variable → mezcla</div>',
+  readout:function(){ return [['Pregunta 1','¿composición fija?'],['Pregunta 2','¿1 tipo de átomo?'],['Pregunta 3','¿cuántas fases?'],['Resultado','4 categorías']]; },
+  draw:function(g,t,W,H){
+    var yTop=H*0.10;
+    chip(g,'MATERIA',W*0.50,yTop,NAVY,'#fff',18);
+    var y2=H*0.34;
+    arrow(g,W*0.47,yTop+16,W*0.26,y2-16,NAVY,2.4);
+    arrow(g,W*0.53,yTop+16,W*0.74,y2-16,NAVY,2.4);
+    txt(g,'composición fija',W*0.31,H*0.22,NAVY,12,'right',true);
+    txt(g,'composición variable',W*0.69,H*0.22,NAVY,12,'left',true);
+    chip(g,'SUSTANCIA PURA',W*0.26,y2,TEAL,'#fff',15);
+    chip(g,'MEZCLA',W*0.74,y2,GOLD,INK,15);
+    var y3=H*0.62;
+    arrow(g,W*0.22,y2+16,W*0.12,y3-18,TEAL,2.2);
+    arrow(g,W*0.30,y2+16,W*0.40,y3-18,TEAL,2.2);
+    arrow(g,W*0.70,y2+16,W*0.60,y3-18,GOLD,2.2);
+    arrow(g,W*0.78,y2+16,W*0.88,y3-18,GOLD,2.2);
+    var pulse=0.5+0.5*Math.sin(t*2);
+    chip(g,'ELEMENTO',W*0.12,y3,TEAL,'#fff',14);
+    chip(g,'COMPUESTO',W*0.40,y3,TEAL,'#fff',14);
+    chip(g,'HOMOGÉNEA',W*0.60,y3,GOLD,INK,14);
+    chip(g,'HETEROGÉNEA',W*0.88,y3,GOLD,INK,14);
+    txt(g,'Fe, O₂, He, Au',W*0.12,y3+30,INK,12,'center');
+    txt(g,'H₂O, CO₂, NaCl',W*0.40,y3+30,INK,12,'center');
+    txt(g,'aire, acero, salmuera',W*0.60,y3+30,INK,12,'center');
+    txt(g,'granito, agua+aceite',W*0.88,y3+30,INK,12,'center');
+    g.save(); g.globalAlpha=0.25+0.35*pulse;
+    line(g,W*0.05,H*0.72,W*0.95,H*0.72,GREY,1.5,[5,6]); g.restore();
+    txt(g,'Toda mezcla se separa por métodos FÍSICOS · todo compuesto solo por métodos QUÍMICOS',W/2,H*0.82,NAVY,13,'center',true);
+  }
+}
+];
+
+// ══════════════════════════════════════════════════════════════
+//  SET 2 · SEPARACIÓN DE MEZCLAS  (OA33)
+// ══════════════════════════════════════════════════════════════
+var SEPAR=[
+
+{ title:'1 · Filtración', html:
+  '<b>Separa un sólido insoluble de un líquido.</b>'+
+  '<ul><li>Propiedad que aprovecha: <b>tamaño de partícula</b>.</li>'+
+  '<li>Mezcla: <b>heterogénea</b> sólido–líquido.</li>'+
+  '<li>Queda en el papel: <b>residuo</b>. Pasa: <b>filtrado</b>.</li>'+
+  '<li>Ej.: arena en agua, café de filtro.</li></ul>'+
+  '<div class="eq">PAES: "insoluble" → filtración</div>',
+  readout:function(t){ return [['Propiedad','tamaño de partícula'],['Mezcla','heterogénea S–L'],['Retiene','sólido insoluble'],['Progreso',Math.min(100,Math.round(t*22))+' <em>%</em>']]; },
+  draw:function(g,t,W,H){
+    var fx=W*0.42, fy=H*0.16;
+    // embudo
+    g.save(); g.strokeStyle=NAVY; g.lineWidth=3; g.beginPath();
+    g.moveTo(fx-90,fy); g.lineTo(fx+90,fy); g.lineTo(fx+12,fy+110);
+    g.lineTo(fx+12,fy+165); g.lineTo(fx-12,fy+165); g.lineTo(fx-12,fy+110);
+    g.closePath(); g.stroke(); g.restore();
+    // papel filtro
+    g.save(); g.fillStyle='#f0efe6'; g.beginPath();
+    g.moveTo(fx-82,fy+6); g.lineTo(fx+82,fy+6); g.lineTo(fx+8,fy+104); g.lineTo(fx-8,fy+104);
+    g.closePath(); g.fill(); g.restore();
+    txt(g,'papel filtro',fx+96,fy+30,GREY,12,'left',true,true);
+    // sólido retenido crece
+    var acc=Math.min(1,t/4.5);
+    g.save(); g.fillStyle='#8a5a2b'; g.globalAlpha=0.9; g.beginPath();
+    g.moveTo(fx-8-56*acc,fy+96-42*acc); g.lineTo(fx+8+56*acc,fy+96-42*acc);
+    g.lineTo(fx+8,fy+100); g.lineTo(fx-8,fy+100); g.closePath(); g.fill(); g.restore();
+    txt(g,'residuo (arena)',fx-100,fy+70,'#8a5a2b',12,'right',true);
+    // gotas
+    for(var i=0;i<7;i++){
+      var ph=(t*1.7+i*0.42)%1;
+      var y=fy+168+ph*(H*0.62-(fy+168));
+      dot(g,fx,y,4.5,'#6aa6e0');
+    }
+    var lvl=0.12+0.42*Math.min(1,t/5.5);
+    beaker(g,fx-70,H*0.60,140,H*0.28,lvl,'#bcd6f0','filtrado (agua limpia)');
+    txt(g,'Mezcla inicial: agua + arena (heterogénea)',W*0.06,H*0.14,INK,13,'left',true);
+    txt(g,'Nada cambia químicamente: es un cambio FÍSICO',W*0.94,H*0.92,NAVY,12,'right',false,true);
+  }
+},
+
+{ title:'2 · Decantación', html:
+  '<b>Separa por diferencia de densidad</b>, dejando reposar.'+
+  '<ul><li>Líquidos <b>inmiscibles</b> (agua–aceite) → <b>embudo de decantación</b>.</li>'+
+  '<li>Sólido que sedimenta → se vierte el líquido sobrenadante.</li>'+
+  '<li>El más <b>denso</b> queda abajo.</li></ul>'+
+  '<div class="eq">ρ = m / V</div>'+
+  'PAES: "inmiscibles" o "sedimenta" → decantación.',
+  readout:function(t){ return [['Propiedad','densidad'],['Mezcla','heterogénea L–L o S–L'],['ρ aceite','≈ 0,92 <em>g/mL</em>'],['ρ agua','1,00 <em>g/mL</em>']]; },
+  draw:function(g,t,W,H){
+    var cx=W*0.36, top=H*0.12;
+    // pera de decantación
+    g.save(); g.strokeStyle=NAVY; g.lineWidth=3; g.beginPath();
+    g.moveTo(cx-70,top); g.lineTo(cx-70,top+130);
+    g.quadraticCurveTo(cx-70,top+205,cx,top+215);
+    g.quadraticCurveTo(cx+70,top+205,cx+70,top+130);
+    g.lineTo(cx+70,top); g.stroke();
+    g.beginPath(); g.moveTo(cx-7,top+215); g.lineTo(cx-7,top+270);
+    g.lineTo(cx+7,top+270); g.lineTo(cx+7,top+215); g.stroke();
+    g.restore();
+    // llave
+    dot(g,cx,top+238,11,RED);
+    txt(g,'llave de paso',cx+22,top+238,RED,12,'left',true);
+    // fases
+    g.save();
+    g.fillStyle='#f2c14e'; g.fillRect(cx-67,top+34,134,72);
+    g.fillStyle='#a9caee'; g.beginPath();
+    g.moveTo(cx-67,top+106); g.lineTo(cx+67,top+106); g.lineTo(cx+67,top+130);
+    g.quadraticCurveTo(cx+67,top+200,cx,top+210);
+    g.quadraticCurveTo(cx-67,top+200,cx-67,top+130); g.closePath(); g.fill();
+    g.restore();
+    line(g,cx-67,top+106,cx+67,top+106,'#c99a2e',2.5);
+    txt(g,'aceite · MENOS denso · arriba',cx+84,top+66,'#a67c1a',13,'left',true);
+    txt(g,'agua · MÁS densa · abajo',cx+84,top+165,BLUE,13,'left',true);
+    // vaso recibiendo agua
+    var open=t>3;
+    if(open){ for(var i=0;i<5;i++){ var ph=(t*1.9+i*0.4)%1; dot(g,cx,top+272+ph*90,4.5,'#6aa6e0'); } }
+    beaker(g,cx-52,H*0.72,104,H*0.20,open?Math.min(0.7,(t-3)*0.2):0.02,'#bcd6f0','agua recuperada');
+    txt(g,'Se abre la llave y sale primero el líquido MÁS denso',W*0.97,H*0.92,NAVY,12,'right',false,true);
+  }
+},
+
+{ title:'3 · Destilación simple', html:
+  '<b>Separa un líquido de un sólido disuelto</b>, o dos líquidos con <b>puntos de ebullición</b> muy distintos.'+
+  '<ul><li>Propiedad: <b>temperatura de ebullición</b>.</li>'+
+  '<li>Mezcla: <b>homogénea</b> (¡acá filtrar NO sirve!).</li>'+
+  '<li>El vapor sube, se <b>condensa</b> en el refrigerante y se recoge: <b>destilado</b>.</li>'+
+  '<li>Ej.: agua salada → agua pura + sal en el balón.</li></ul>'+
+  '<div class="eq">T ebullición H₂O = 100 °C</div>',
+  readout:function(t){
+    var T=Math.min(100,20+t*22);
+    return [['Propiedad','punto de ebullición'],['Mezcla','homogénea'],['T balón',T.toFixed(0)+' <em>°C</em>'],['Estado',T>=100?'destilando':'calentando']];
+  },
+  draw:function(g,t,W,H){
+    var T=Math.min(100,20+t*22), boil=T>=100;
+    var bx=W*0.14, by=H*0.42;
+    // balón
+    g.save(); g.strokeStyle=NAVY; g.lineWidth=3;
+    g.beginPath(); g.arc(bx,by+60,58,0,7); g.stroke();
+    g.beginPath(); g.moveTo(bx-13,by+8); g.lineTo(bx-13,by-40); g.moveTo(bx+13,by+8); g.lineTo(bx+13,by-40); g.stroke();
+    g.restore();
+    g.save(); g.fillStyle='#c9dcf3'; g.beginPath(); g.arc(bx,by+72,50,0,7); g.fill(); g.restore();
+    if(boil){ for(var i=0;i<10;i++){ var ph=(t*1.6+i*0.3)%1; dot(g,bx-32+64*rnd(i+1),by+96-ph*54,3+2*rnd(i*3),'#ffffff'); } }
+    // mechero
+    g.save(); g.fillStyle='#8a97a8'; g.fillRect(bx-10,by+150,20,26); g.restore();
+    for(var f=0;f<3;f++){
+      var fh=26+9*Math.sin(t*7+f*2);
+      g.save(); g.fillStyle=f===1?'#ff9f0a':'#ffd166'; g.beginPath();
+      g.moveTo(bx-9+f*9,by+150); g.quadraticCurveTo(bx-4+f*9,by+150-fh,bx+f*9-4.5,by+150-fh);
+      g.quadraticCurveTo(bx+f*9,by+150-fh*0.4,bx+f*9,by+150); g.closePath(); g.fill(); g.restore();
+    }
+    txt(g,'mezcla: agua + sal',bx,by+190,INK,12,'center',true);
+    // termómetro
+    line(g,bx,by-40,bx,by-105,GREY,4);
+    dot(g,bx,by-105,8,RED);
+    chip(g,T.toFixed(0)+' °C',bx+52,by-96,boil?RED:NAVY,'#fff',14);
+    // refrigerante inclinado
+    g.save(); g.translate(bx+13,by-30); g.rotate(0.42);
+    g.strokeStyle=NAVY; g.lineWidth=3; g.strokeRect(0,-16,300,32);
+    g.strokeStyle='#7fb3e8'; g.lineWidth=2;
+    for(var k=0;k<9;k++){ g.beginPath(); g.arc(20+k*32,0,14,0,7); g.stroke(); }
+    if(boil){ g.fillStyle='#dceaf8'; g.globalAlpha=0.75;
+      for(var v=0;v<8;v++){ var p=(t*0.9+v*0.13)%1; g.beginPath(); g.arc(p*300,0,5,0,7); g.fill(); } }
+    g.restore();
+    txt(g,'refrigerante: el vapor se CONDENSA',W*0.56,H*0.20,BLUE,13,'center',true);
+    // recolección
+    var dx=W*0.80;
+    if(boil){ for(var d=0;d<5;d++){ var pd=(t*1.5+d*0.4)%1; dot(g,dx,H*0.52+pd*(H*0.20),4.5,'#6aa6e0'); } }
+    beaker(g,dx-52,H*0.70,104,H*0.22,boil?Math.min(0.7,(t-3.6)*0.16):0.02,'#bcd6f0','destilado: agua pura');
+    txt(g,'La sal NO se evapora: queda en el balón',W*0.06,H*0.94,NAVY,12,'left',false,true);
+  }
+},
+
+{ title:'4 · Cromatografía en papel', html:
+  '<b>Separa componentes de una mezcla por diferente afinidad</b> entre dos fases.'+
+  '<ul><li><b>Fase móvil</b>: el solvente que asciende. <b>Fase estacionaria</b>: el papel.</li>'+
+  '<li>El componente más <b>afín al solvente</b> y menos retenido sube <b>más alto</b>.</li>'+
+  '<li>Ej.: separar los pigmentos de una tinta o de la clorofila.</li></ul>'+
+  '<div class="eq">Rf = distancia soluto / distancia solvente</div>',
+  readout:function(t){
+    var f=Math.min(1,t/7);
+    return [['Fase móvil','solvente'],['Fase estacionaria','papel'],['Frente solv.',(f*100).toFixed(0)+' <em>%</em>'],['Separa','pigmentos']];
+  },
+  draw:function(g,t,W,H){
+    var px=W*0.34, pw=W*0.20, ptop=H*0.10, pbot=H*0.84;
+    panel(g,W*0.24,H*0.62,W*0.40,H*0.26,'#eaf2fb',NAVY);
+    txt(g,'cuba con solvente',W*0.44,H*0.92,NAVY,12,'center',true);
+    panel(g,px,ptop,pw,pbot-ptop,'#fcfbf5','#d8d4c4',4);
+    txt(g,'papel',px+pw/2,ptop-14,GREY,12,'center',true,true);
+    var f=Math.min(1,t/7);
+    var base=pbot-H*0.20;
+    // frente del solvente
+    var front=base-f*(base-ptop-20);
+    g.save(); g.fillStyle='rgba(120,170,220,.18)'; g.fillRect(px+2,front,pw-4,base-front); g.restore();
+    line(g,px+2,front,px+pw-2,front,'#6aa6e0',2,[5,4]);
+    txt(g,'frente del solvente',px+pw+10,front,'#3b7dc4',12,'left',true);
+    // manchas: distintos Rf
+    var cols=[['#d1495b',0.85],['#f5a623',0.60],['#2e8b57',0.35],['#1c4e8f',0.18]];
+    cols.forEach(function(c,i){
+      var d=f*(base-ptop-20)*c[1];
+      var y=base-d;
+      g.save(); g.globalAlpha=0.85; g.fillStyle=c[0];
+      g.beginPath(); g.ellipse(px+pw/2,y,pw*0.28,9,0,0,7); g.fill(); g.restore();
+      if(f>0.25) txt(g,'Rf ≈ '+c[1].toFixed(2),px-10,y,c[0],12,'right',true);
+    });
+    line(g,px,base,px+pw,base,GREY,1.5,[4,4]);
+    txt(g,'línea de siembra',px-10,base+16,GREY,11,'right',false,true);
+    txt(g,'Una sola gota de tinta "negra" contiene varios pigmentos',W*0.98,H*0.10,INK,13,'right',false,true);
+  }
+},
+
+{ title:'5 · Otros métodos que sí salen en PAES', html:
+  '<b>Reconocer la propiedad es la clave de la pregunta.</b>'+
+  '<ul><li><b>Tamización</b>: sólidos de distinto tamaño (arena y piedras).</li>'+
+  '<li><b>Imantación</b>: uno de los componentes es <b>ferromagnético</b> (Fe, Ni, Co).</li>'+
+  '<li><b>Evaporación</b>: recuperar el <b>soluto</b>; el solvente se pierde.</li>'+
+  '<li><b>Centrifugación</b>: densidad + fuerza centrífuga (sangre, leche).</li>'+
+  '<li><b>Sublimación</b>: un componente pasa de sólido a gas (yodo, naftalina).</li></ul>',
+  readout:function(){ return [['Tamización','tamaño'],['Imantación','magnetismo'],['Evaporación','p. ebullición'],['Centrifugación','densidad']]; },
+  draw:function(g,t,W,H){
+    // imantación animada
+    var mx=W*0.24, my=H*0.34;
+    txt(g,'IMANTACIÓN',mx,H*0.10,NAVY,15,'center',true);
+    panel(g,mx-110,my-40,220,120,'#f7f9fc',PALE);
+    for(var i=0;i<22;i++){
+      var sx=mx-98+196*rnd(i*3+1), sy=my+58-14*rnd(i*7+2);
+      dot(g,sx,sy,4,'#c9a227');
+    }
+    var pull=Math.min(1,(t%6)/3);
+    g.save(); g.fillStyle=RED; g.fillRect(mx-34,my-92,34,26);
+    g.fillStyle='#3b6ea5'; g.fillRect(mx,my-92,34,26); g.restore();
+    txt(g,'imán',mx+44,my-79,INK,12,'left',true);
+    for(var k=0;k<10;k++){
+      var x0=mx-90+180*rnd(k*5+3), y0=my+56;
+      var y1=my-62;
+      dot(g,x0+(mx-x0)*pull, y0+(y1-y0)*pull, 4.5, GREY);
+    }
+    txt(g,'solo el hierro es atraído',mx,my+92,INK,12,'center',false,true);
+    // centrifugación
+    var cx=W*0.72, cy=H*0.40;
+    txt(g,'CENTRIFUGACIÓN',cx,H*0.10,NAVY,15,'center',true);
+    ring(g,cx,cy,96,PALE,3);
+    var a=t*3.4;
+    for(var j=0;j<2;j++){
+      var an=a+j*Math.PI;
+      var tx=cx+70*Math.cos(an), ty=cy+70*Math.sin(an);
+      g.save(); g.translate(tx,ty); g.rotate(an+Math.PI/2);
+      g.fillStyle='#fff'; g.strokeStyle=NAVY; g.lineWidth=2;
+      g.beginPath(); g.rect(-11,-32,22,64); g.fill(); g.stroke();
+      var sep=Math.min(1,t/4);
+      g.fillStyle='#d1495b'; g.fillRect(-9,32-26*sep-2,18,26*sep);
+      g.fillStyle='#f6e7a1'; g.fillRect(-9,-30,18,26*sep);
+      g.restore();
+    }
+    dot(g,cx,cy,10,NAVY);
+    txt(g,'lo más denso se va al fondo',cx,cy+120,INK,12,'center',false,true);
+    txt(g,'Todos son métodos FÍSICOS: no cambian la identidad química de nada',W/2,H*0.94,NAVY,13,'center',true);
+  }
+}
+];
+
+// ══════════════════════════════════════════════════════════════
+//  SET 3 · MODELOS ATÓMICOS  (OA35)
+// ══════════════════════════════════════════════════════════════
+var MODELOS=[
+
+{ title:'1 · Dalton (1803) · esfera indivisible', html:
+  '<b>Primer modelo con base experimental</b>, apoyado en las leyes ponderales.'+
+  '<ul><li>El átomo es una <b>esfera maciza, indivisible e indestructible</b>.</li>'+
+  '<li>Átomos de un mismo elemento son <b>idénticos</b> en masa y propiedades.</li>'+
+  '<li>Los compuestos se forman en <b>proporciones numéricas sencillas</b>.</li></ul>'+
+  '<b>Limitación:</b> no explica la electricidad ni la existencia de partículas subatómicas; hoy sabemos que el átomo <b>sí</b> es divisible y que existen <b>isótopos</b>.',
+  readout:function(){ return [['Año','1803'],['Aporte','átomo indivisible'],['Partículas','ninguna'],['Cae con','el electrón (1897)']]; },
+  draw:function(g,t,W,H){
+    var cx=W*0.5, cy=H*0.46, r=105+4*Math.sin(t*1.4);
+    var grd=g.createRadialGradient(cx-30,cy-30,10,cx,cy,r);
+    grd.addColorStop(0,'#5b86c4'); grd.addColorStop(1,'#0f2f5c');
+    g.save(); g.fillStyle=grd; g.beginPath(); g.arc(cx,cy,r,0,7); g.fill(); g.restore();
+    txt(g,'esfera maciza',cx,cy,'#fff',16,'center',true);
+    txt(g,'Dalton · 1803',cx,H*0.14,NAVY,20,'center',true);
+    txt(g,'sin estructura interna · sin carga',cx,H*0.76,INK,14,'center',false,true);
+    chip(g,'LIMITACIÓN: no explica fenómenos eléctricos',cx,H*0.88,RED,'#fff',14);
+  }
+},
+
+{ title:'2 · Thomson (1904) · budín de pasas', html:
+  'Tras descubrir el <b>electrón</b> en los rayos catódicos (1897):'+
+  '<ul><li>El átomo es una <b>esfera de carga positiva</b> con electrones <b>incrustados</b>.</li>'+
+  '<li>El conjunto es <b>eléctricamente neutro</b>.</li>'+
+  '<li>Primer modelo con <b>partículas subatómicas</b>.</li></ul>'+
+  '<b>Limitación:</b> no explica el experimento de la lámina de oro (las desviaciones grandes) ni la existencia del <b>núcleo</b>.',
+  readout:function(){ return [['Año','1904'],['Aporte','el electrón'],['Carga total','neutra'],['Cae con','lámina de oro']]; },
+  draw:function(g,t,W,H){
+    var cx=W*0.5, cy=H*0.46, r=118;
+    g.save(); g.fillStyle='rgba(209,73,91,.22)'; g.strokeStyle=RED; g.lineWidth=3;
+    g.beginPath(); g.arc(cx,cy,r,0,7); g.fill(); g.stroke(); g.restore();
+    for(var i=0;i<14;i++){
+      var ang=i*0.9+t*0.15, rad=r*0.28+r*0.6*rnd(i*7+3);
+      var ex=cx+rad*Math.cos(ang)+5*Math.sin(t*2+i);
+      var ey=cy+rad*Math.sin(ang)+5*Math.cos(t*1.7+i);
+      dot(g,ex,ey,9,NAVY);
+      txt(g,'–',ex,ey-0.5,'#fff',13,'center',true);
+    }
+    txt(g,'Thomson · 1904',cx,H*0.13,NAVY,20,'center',true);
+    txt(g,'masa positiva difusa (+) con electrones (–) incrustados',cx,H*0.80,INK,14,'center',false,true);
+    chip(g,'LIMITACIÓN: sin núcleo, no explica Rutherford',cx,H*0.90,RED,'#fff',14);
+  }
+},
+
+{ title:'3 · Rutherford (1911) · modelo nuclear', html:
+  '<b>Experimento de la lámina de oro:</b> se bombardea con partículas α.'+
+  '<ul><li>La mayoría <b>pasa sin desviarse</b> → el átomo es casi todo <b>vacío</b>.</li>'+
+  '<li>Unas pocas se desvían y <b>rebotan</b> → hay un <b>núcleo</b> pequeño, denso y <b>positivo</b>.</li>'+
+  '<li>Los electrones giran alrededor: <b>corteza</b> o electrósfera.</li></ul>'+
+  '<b>Limitación:</b> según la física clásica, un electrón acelerado <b>radiaría energía y caería</b> al núcleo → el átomo sería inestable. Tampoco explica los espectros.',
+  readout:function(t){ return [['Año','1911'],['Aporte','el núcleo'],['Volumen','casi todo vacío'],['Desviadas','≈ 1 de cada 8000']]; },
+  draw:function(g,t,W,H){
+    var fy=H*0.50;
+    // lámina
+    g.save(); g.fillStyle='#e8c65a'; g.fillRect(W*0.54,H*0.12,16,H*0.76); g.restore();
+    txt(g,'lámina de oro',W*0.62,H*0.94,'#a67c1a',13,'center',true);
+    // núcleos
+    for(var n=0;n<5;n++){ dot(g,W*0.62,H*0.16+n*H*0.17,7,RED); }
+    // fuente
+    chip(g,'fuente α',W*0.10,fy,NAVY,'#fff',13);
+    // trayectorias
+    var paths=[
+      {y:H*0.22,def:0.0},{y:H*0.33,def:0.0},{y:H*0.44,def:0.0},
+      {y:H*0.50,def:-0.55},{y:H*0.66,def:0.0},{y:H*0.77,def:0.0}
+    ];
+    paths.forEach(function(p,i){
+      var ph=((t*0.55+i*0.18)%1);
+      var x=W*0.16+ph*(W*0.80);
+      var y=p.y;
+      var hitX=W*0.62;
+      if(p.def!==0 && x>hitX){
+        var over=(x-hitX)/(W*0.30);
+        y=p.y+p.def*over*H*0.42;
+        x=hitX+over*W*0.24;
+      }
+      g.save(); g.globalAlpha=0.35; line(g,W*0.16,p.y,Math.min(x,hitX),p.y,GOLD,2,[4,5]); g.restore();
+      if(p.def!==0){ g.save(); g.globalAlpha=0.35;
+        line(g,hitX,p.y,hitX+W*0.24,p.y+p.def*H*0.42,RED,2,[4,5]); g.restore(); }
+      dot(g,x,y,6,p.def!==0?RED:GOLD);
+    });
+    // rebote grande
+    var rb=(t*0.5)%1;
+    dot(g,W*0.62-rb*W*0.40, fy-H*0.02-rb*H*0.10, 6, RED);
+    txt(g,'Rutherford · 1911',W*0.30,H*0.10,NAVY,19,'center',true);
+    txt(g,'pasan de largo → vacío',W*0.30,H*0.86,GOLD,13,'center',true);
+    txt(g,'rebotan → núcleo (+)',W*0.88,H*0.86,RED,13,'center',true);
+  }
+},
+
+{ title:'4 · Bohr (1913) · niveles cuantizados', html:
+  'Corrige a Rutherford usando la <b>cuantización</b> de la energía.'+
+  '<ul><li>El electrón gira solo en <b>órbitas permitidas</b> de energía definida (niveles n = 1, 2, 3…).</li>'+
+  '<li>En su órbita <b>no emite energía</b>: el átomo es estable.</li>'+
+  '<li>Al <b>saltar</b> de nivel absorbe (sube) o emite (baja) un <b>fotón</b> → explica los <b>espectros de líneas</b> del H.</li></ul>'+
+  '<b>Limitación:</b> solo funciona bien para el <b>hidrógeno</b>; falla en átomos polielectrónicos.',
+  readout:function(t){
+    var ph=(t*0.55)%2;
+    return [['Año','1913'],['Aporte','niveles de energía'],['Transición',ph<1?'absorbe (n1→n3)':'emite (n3→n1)'],['Válido en','hidrógeno']];
+  },
+  draw:function(g,t,W,H){
+    var cx=W*0.42, cy=H*0.50;
+    var radios=[62,104,146,186];
+    radios.forEach(function(r,i){ ring(g,cx,cy,r,i===0?NAVY:PALE,i===0?2.5:2,[5,6]);
+      txt(g,'n='+(i+1),cx+r+6,cy-8,GREY,12,'left',true); });
+    dot(g,cx,cy,20,RED); txt(g,'+',cx,cy,'#fff',18,'center',true);
+    // electrones en órbitas
+    [1,2,3].forEach(function(k){
+      for(var m=0;m<k+1;m++){
+        var a=t*(1.4-k*0.28)+m*(2*Math.PI/(k+1));
+        dot(g,cx+radios[k]*Math.cos(a),cy+radios[k]*Math.sin(a),8,NAVY);
+      }
+    });
+    // salto cuántico
+    var cyc=(t*0.55)%2, up=cyc<1, p=cyc%1;
+    var r0=up?radios[0]:radios[2], r1=up?radios[2]:radios[0];
+    var rr=r0+(r1-r0)*p, aa=t*1.6;
+    var ex=cx+rr*Math.cos(aa), ey=cy+rr*Math.sin(aa);
+    dot(g,ex,ey,10,GOLD);
+    // fotón
+    g.save(); g.strokeStyle=up?BLUE:GOLD; g.lineWidth=2.5; g.beginPath();
+    var x0=W*0.78, y0=H*0.30;
+    for(var s=0;s<70;s++){
+      var xx=x0+s*2.6, yy=y0+9*Math.sin(s*0.45+t*8);
+      s===0?g.moveTo(xx,yy):g.lineTo(xx,yy);
+    }
+    g.stroke(); g.restore();
+    chip(g,up?'ABSORBE fotón (sube)':'EMITE fotón (baja)',W*0.80,H*0.20,up?BLUE:GOLD,up?'#fff':INK,14);
+    txt(g,'Bohr · 1913',W*0.42,H*0.08,NAVY,19,'center',true);
+    txt(g,'ΔE = E_final − E_inicial = h·f',W*0.80,H*0.44,NAVY,15,'center',true);
+    txt(g,'Cada salto = una línea del espectro',W*0.80,H*0.56,INK,13,'center',false,true);
+  }
+},
+
+{ title:'5 · Modelo actual · nube / orbitales', html:
+  '<b>Modelo mecano-cuántico</b> (Schrödinger, Heisenberg, De Broglie).'+
+  '<ul><li>No hay órbitas: hay <b>orbitales</b>, regiones donde la <b>probabilidad</b> de hallar al electrón es alta (≈90 %).</li>'+
+  '<li><b>Principio de incertidumbre</b>: no se pueden conocer con exactitud posición y velocidad a la vez.</li>'+
+  '<li>El electrón tiene comportamiento de <b>onda y partícula</b> (dualidad).</li>'+
+  '<li>Formas: <b>s</b> esférico, <b>p</b> lobular, <b>d</b> y <b>f</b> más complejos.</li></ul>',
+  readout:function(){ return [['Modelo','mecano-cuántico'],['Ubicación','probabilidad'],['Orbital s','esférico'],['Orbital p','2 lóbulos']]; },
+  draw:function(g,t,W,H){
+    // nube
+    var cx=W*0.27, cy=H*0.48;
+    for(var i=0;i<420;i++){
+      var a=rnd(i*3+1)*Math.PI*2, rr=Math.pow(rnd(i*7+2),0.55)*112;
+      var x=cx+rr*Math.cos(a)+3*Math.sin(t*2+i), y=cy+rr*Math.sin(a)+3*Math.cos(t*1.6+i);
+      g.save(); g.globalAlpha=0.10+0.55*(1-rr/112); g.fillStyle=NAVY;
+      g.beginPath(); g.arc(x,y,1.9,0,7); g.fill(); g.restore();
+    }
+    dot(g,cx,cy,13,RED);
+    txt(g,'Orbital s (esférico)',cx,H*0.84,NAVY,14,'center',true);
+    // orbital p
+    var px=W*0.68, py=H*0.48;
+    var rot=t*0.5;
+    for(var k=0;k<2;k++){
+      g.save(); g.translate(px,py); g.rotate(rot);
+      g.globalAlpha=0.55; g.fillStyle=k?GOLD:BLUE;
+      g.beginPath(); g.ellipse(0,(k?1:-1)*62,42,60,0,0,7); g.fill();
+      g.restore();
+    }
+    dot(g,px,py,11,RED);
+    txt(g,'Orbital p (dos lóbulos)',px,H*0.84,NAVY,14,'center',true);
+    txt(g,'Modelo actual · nube de probabilidad',W/2,H*0.09,NAVY,19,'center',true);
+    txt(g,'La densidad de puntos = probabilidad de encontrar al electrón',W/2,H*0.94,INK,13,'center',false,true);
+  }
+}
+];
+
+// ══════════════════════════════════════════════════════════════
+//  SET 4 · CONCEPTOS DEL ÁTOMO  (OA36)
+// ══════════════════════════════════════════════════════════════
+var ATOMO=[
+
+{ title:'1 · Las tres partículas', html:
+  '<div class="eq">núcleo = protones + neutrones</div>'+
+  '<ul><li><b>Protón (p⁺)</b>: carga +1, masa ≈ 1 uma, en el <b>núcleo</b>. Define el elemento.</li>'+
+  '<li><b>Neutrón (n⁰)</b>: sin carga, masa ≈ 1 uma, en el <b>núcleo</b>. Da estabilidad e isótopos.</li>'+
+  '<li><b>Electrón (e⁻)</b>: carga −1, masa ≈ 1/1836 uma, en la <b>electrósfera</b>.</li></ul>'+
+  'Casi toda la <b>masa</b> está en el núcleo; casi todo el <b>volumen</b> es electrósfera.',
+  readout:function(){ return [['Protón','+1 · 1 uma'],['Neutrón','0 · 1 uma'],['Electrón','−1 · ~0 uma'],['Masa','en el núcleo']]; },
+  draw:function(g,t,W,H){
+    var cx=W*0.38, cy=H*0.48;
+    ring(g,cx,cy,180,PALE,2,[6,7]);
+    ring(g,cx,cy,120,PALE,2,[6,7]);
+    txt(g,'ELECTRÓSFERA',cx,cy-198,GREY,13,'center',true);
+    // núcleo
+    for(var i=0;i<8;i++){
+      var a=i*0.9+t*0.6, r=17*rnd(i*5+1)+8;
+      var nx=cx+r*Math.cos(a), ny=cy+r*Math.sin(a);
+      dot(g,nx,ny,15,i%2?RED:GREY);
+      txt(g,i%2?'p⁺':'n⁰',nx,ny,'#fff',11,'center',true);
+    }
+    ring(g,cx,cy,34,RED,2,[3,3]);
+    txt(g,'NÚCLEO',cx,cy+56,RED,13,'center',true);
+    // electrones
+    [120,180].forEach(function(r,k){
+      for(var m=0;m<(k?4:2);m++){
+        var a=t*(1.2-k*0.4)+m*(2*Math.PI/(k?4:2));
+        var ex=cx+r*Math.cos(a), ey=cy+r*Math.sin(a);
+        dot(g,ex,ey,10,NAVY); txt(g,'e⁻',ex,ey,'#fff',9,'center',true);
+      }
+    });
+    // tabla lateral
+    var tx=W*0.66;
+    panel(g,tx,H*0.20,W*0.30,H*0.56,'#f7f9fc',NAVY);
+    txt(g,'Partícula',tx+16,H*0.27,NAVY,14,'left',true);
+    txt(g,'Carga',tx+W*0.16,H*0.27,NAVY,14,'left',true);
+    txt(g,'Masa',tx+W*0.24,H*0.27,NAVY,14,'left',true);
+    line(g,tx+10,H*0.30,tx+W*0.30-10,H*0.30,PALE,1.5);
+    var rows=[['Protón','+1','1'],['Neutrón','0','1'],['Electrón','−1','1/1836']];
+    rows.forEach(function(r,i){
+      var y=H*(0.37+i*0.11);
+      txt(g,r[0],tx+16,y,INK,14,'left',true);
+      txt(g,r[1],tx+W*0.16,y,i===0?RED:(i===2?NAVY:GREY),14,'left',true);
+      txt(g,r[2],tx+W*0.24,y,INK,14,'left');
+    });
+    txt(g,'m(e⁻) es despreciable',tx+W*0.15,H*0.71,INK,12,'center',false,true);
+  }
+},
+
+{ title:'2 · Número atómico y número másico', html:
+  '<div class="eq">Z = nº de protones · A = Z + N</div>'+
+  '<ul><li><b>Z</b> (número atómico): protones. <b>Identifica al elemento</b>, siempre.</li>'+
+  '<li><b>A</b> (número másico): protones + neutrones. Es un <b>entero</b>.</li>'+
+  '<li><b>N</b> = A − Z (neutrones).</li>'+
+  '<li>Átomo <b>neutro</b>: nº e⁻ = nº p⁺ = Z.</li></ul>'+
+  'Notación: <b>ᴬ<sub>Z</sub>X</b> — arriba A, abajo Z.',
+  readout:function(){ return [['Símbolo','Na'],['Z','11 <em>p⁺</em>'],['A','23'],['N = A − Z','12 <em>n⁰</em>']]; },
+  draw:function(g,t,W,H){
+    var cx=W*0.34, cy=H*0.50;
+    // rotulos arriba, sin salirse del borde izquierdo
+    txt(g,'A = número másico',20,cy-176,RED,15,'left',true);
+    txt(g,'Z = número atómico',20,cy-146,BLUE,15,'left',true);
+    panel(g,cx-130,cy-130,260,260,'#f7f9fc',NAVY,14);
+    txt(g,'23',cx-88,cy-84,RED,42,'center',true);
+    txt(g,'11',cx-88,cy-20,BLUE,32,'center',true);
+    txt(g,'Na',cx+34,cy-50,NAVY,68,'center',true);
+    txt(g,'Sodio',cx,cy+66,INK,20,'center',true);
+    txt(g,'masa: 22,99 u',cx,cy+100,GREY,15,'center');
+    var pulse=0.5+0.5*Math.sin(t*2.2);
+    g.save(); g.globalAlpha=0.4+0.6*pulse;
+    arrow(g,150,cy-170,cx-112,cy-94,RED,2.6);
+    arrow(g,150,cy-140,cx-112,cy-28,BLUE,2.6); g.restore();
+    // desglose
+    var rx=W*0.72;
+    panel(g,rx-160,H*0.16,320,H*0.64,'#fff',PALE);
+    txt(g,'Para el ²³₁₁Na neutro',rx,H*0.23,NAVY,17,'center',true);
+    var items=[['protones (Z)','11',RED],['neutrones (A − Z)','23 − 11 = 12',GREY],['electrones (= Z)','11',NAVY],['carga total','0 → neutro',TEAL]];
+    items.forEach(function(it,i){
+      var y=H*(0.34+i*0.11);
+      txt(g,it[0],rx-140,y,INK,15,'left');
+      txt(g,it[1],rx+140,y,it[2],15,'right',true);
+      line(g,rx-140,y+16,rx+140,y+16,'#eef2f7',1.2);
+    });
+  }
+},
+
+{ title:'3 · Iones: catión y anión', html:
+  'Un átomo <b>cargado</b> es un <b>ion</b>: ganó o perdió <b>electrones</b> (nunca protones).'+
+  '<ul><li><b>Catión (+)</b>: <b>pierde</b> electrones → e⁻ &lt; p⁺. Ej.: Na⁺, Ca²⁺, Al³⁺.</li>'+
+  '<li><b>Anión (−)</b>: <b>gana</b> electrones → e⁻ &gt; p⁺. Ej.: Cl⁻, O²⁻, S²⁻.</li></ul>'+
+  '<div class="eq">nº e⁻ = Z − carga</div>'+
+  'Truco PAES: la carga <b>ya te dice</b> cuántos electrones sobran o faltan.',
+  readout:function(t){
+    var ph=Math.floor((t/4)%3);
+    var d=[['neutro','11','11','0'],['catión Na⁺','11','10','+1'],['anión Cl⁻','17','18','−1']][ph];
+    return [['Especie',d[0]],['Protones',d[1]],['Electrones',d[2]],['Carga',d[3]]];
+  },
+  draw:function(g,t,W,H){
+    var ph=Math.floor((t/4)%3);
+    var cfg=[
+      {tit:'Átomo NEUTRO (Na)', p:11, e:11, col:TEAL, lab:'e⁻ = p⁺ → carga 0'},
+      {tit:'CATIÓN (Na⁺)', p:11, e:10, col:RED, lab:'perdió 1 e⁻ → carga +1'},
+      {tit:'ANIÓN (Cl⁻)', p:17, e:18, col:BLUE, lab:'ganó 1 e⁻ → carga −1'}
+    ][ph];
+    var cx=W*0.36, cy=H*0.48;
+    ring(g,cx,cy,160,PALE,2,[6,7]);
+    dot(g,cx,cy,42,RED);
+    txt(g,cfg.p+' p⁺',cx,cy,'#fff',18,'center',true);
+    var n=Math.min(cfg.e,14);
+    for(var i=0;i<n;i++){
+      var a=t*0.9+i*(2*Math.PI/n);
+      dot(g,cx+160*Math.cos(a),cy+160*Math.sin(a),9,NAVY);
+    }
+    // el electrón que entra/sale
+    if(ph===1){
+      var p1=(t%4)/4;
+      dot(g,cx+160+p1*W*0.30, cy-160-p1*H*0.18, 9, RED);
+      arrow(g,cx+180,cy-172,cx+W*0.30,cy-H*0.20,RED,2.4);
+      txt(g,'sale 1 e⁻',cx+W*0.31,cy-H*0.21,RED,15,'left',true);
+    }
+    if(ph===2){
+      var p2=1-(t%4)/4;
+      dot(g,cx+160+p2*W*0.30, cy-160-p2*H*0.18, 9, BLUE);
+      arrow(g,cx+W*0.30,cy-H*0.20,cx+180,cy-172,BLUE,2.4);
+      txt(g,'entra 1 e⁻',cx+W*0.31,cy-H*0.21,BLUE,15,'left',true);
+    }
+    chip(g,cfg.tit,W*0.36,H*0.10,cfg.col,'#fff',18);
+    txt(g,cfg.lab,W*0.36,H*0.92,cfg.col,15,'center',true);
+    // resumen lateral
+    var rx=W*0.82;
+    panel(g,rx-130,H*0.26,260,H*0.44,'#f7f9fc',PALE);
+    txt(g,'Regla',rx,H*0.32,NAVY,16,'center',true);
+    txt(g,'pierde e⁻ → catión (+)',rx,H*0.42,RED,14,'center',true);
+    txt(g,'gana e⁻ → anión (−)',rx,H*0.52,BLUE,14,'center',true);
+    txt(g,'Z nunca cambia',rx,H*0.62,INK,14,'center',false,true);
+  }
+},
+
+{ title:'4 · Isótopos', html:
+  '<b>Isótopos</b>: átomos del <b>mismo elemento</b> (igual <b>Z</b>) con <b>distinto número de neutrones</b> (distinto <b>A</b>).'+
+  '<ul><li>Mismas propiedades <b>químicas</b>, distinta <b>masa</b>.</li>'+
+  '<li>Por eso la masa atómica de la tabla es <b>decimal</b>: es un <b>promedio ponderado</b> según la abundancia.</li>'+
+  '<li>Ej.: ¹H, ²H (deuterio), ³H (tritio) · ¹²C, ¹³C, ¹⁴C.</li></ul>'+
+  '<div class="eq">mismo Z · distinto A</div>',
+  readout:function(){ return [['Común','Z'],['Distinto','N y A'],['Química','idéntica'],['Masa tabla','promedio ponderado']]; },
+  draw:function(g,t,W,H){
+    var iso=[
+      {n:'protio ¹H', p:1, nn:0, x:0.20},
+      {n:'deuterio ²H', p:1, nn:1, x:0.50},
+      {n:'tritio ³H', p:1, nn:2, x:0.80}
+    ];
+    iso.forEach(function(o,k){
+      var cx=W*o.x, cy=H*0.46;
+      ring(g,cx,cy,86,PALE,2,[5,6]);
+      // núcleo
+      var tot=o.p+o.nn;
+      for(var i=0;i<tot;i++){
+        var a=i*(2*Math.PI/Math.max(tot,1))+t*0.5;
+        var r=tot>1?15:0;
+        dot(g,cx+r*Math.cos(a),cy+r*Math.sin(a),15,i<o.p?RED:GREY);
+        txt(g,i<o.p?'p':'n',cx+r*Math.cos(a),cy+r*Math.sin(a),'#fff',11,'center',true);
+      }
+      var ea=t*1.3+k;
+      dot(g,cx+86*Math.cos(ea),cy+86*Math.sin(ea),9,NAVY);
+      txt(g,o.n,cx,H*0.74,NAVY,16,'center',true);
+      txt(g,'Z = 1 · A = '+(o.p+o.nn),cx,H*0.80,INK,14,'center');
+    });
+    txt(g,'Los tres son HIDRÓGENO: mismo Z = 1',W/2,H*0.10,NAVY,19,'center',true);
+    txt(g,'Cambia el número de neutrones → cambia A → cambia la masa',W/2,H*0.92,INK,14,'center',false,true);
+  }
+},
+
+{ title:'5 · Leer la tabla periódica', html:
+  '<b>Cómo se lee una casilla</b> en la PAES:'+
+  '<ul><li>Arriba: <b>número atómico Z</b> (entero, ordena la tabla).</li>'+
+  '<li>Centro: <b>símbolo</b> del elemento.</li>'+
+  '<li>Abajo: <b>masa atómica</b> (decimal, promedio de isótopos).</li></ul>'+
+  '<b>Ojo:</b> A (número másico) es un entero de UN átomo; la masa atómica de la tabla es un <b>promedio decimal</b>. Para estimar A se <b>redondea</b> la masa atómica.'+
+  '<div class="eq">A ≈ redondeo(masa atómica)</div>',
+  readout:function(){ return [['Z','entero · ordena'],['Masa atómica','decimal · promedio'],['A','entero · un átomo'],['Grupo/Periodo','columna/fila']]; },
+  draw:function(g,t,W,H){
+    var cx=W*0.30, cy=H*0.46, s=150;
+    panel(g,cx-s,cy-s,2*s,2*s,'#fff',NAVY,12);
+    txt(g,'17',cx,cy-s+40,BLUE,40,'center',true);
+    txt(g,'Cl',cx,cy+6,NAVY,84,'center',true);
+    txt(g,'35,45',cx,cy+s-58,RED,32,'center',true);
+    txt(g,'Cloro',cx,cy+s-20,GREY,18,'center',true);
+    var pulse=0.4+0.6*(0.5+0.5*Math.sin(t*2));
+    g.save(); g.globalAlpha=pulse;
+    arrow(g,cx+s+70,cy-s+40,cx+s+12,cy-s+40,BLUE,2.6);
+    arrow(g,cx+s+70,cy+s-58,cx+s+12,cy+s-58,RED,2.6);
+    g.restore();
+    txt(g,'Z = 17 protones',cx+s+80,cy-s+40,BLUE,16,'left',true);
+    txt(g,'masa atómica (promedio)',cx+s+80,cy+s-58,RED,16,'left',true);
+    var rx=W*0.76;
+    panel(g,rx-160,H*0.16,320,H*0.42,'#f7f9fc',PALE);
+    txt(g,'Cl neutro',rx,H*0.23,NAVY,17,'center',true);
+    var rows=[['protones','17'],['electrones','17'],['A ≈ redondeo(35,45)','35'],['neutrones ≈ 35 − 17','18']];
+    rows.forEach(function(r,i){
+      var y=H*(0.31+i*0.07);
+      txt(g,r[0],rx-140,y,INK,14,'left');
+      txt(g,r[1],rx+140,y,NAVY,14,'right',true);
+    });
+    txt(g,'Si fuera Cl⁻ : 18 electrones (ganó 1)',rx,H*0.66,BLUE,15,'center',true);
+    txt(g,'Grupo = columna (electrones de valencia) · Periodo = fila (niveles)',W/2,H*0.94,INK,14,'center',false,true);
+  }
+}
+];
+
+// ══════════════════════════════════════════════════════════════
+//  RUNTIME
+// ══════════════════════════════════════════════════════════════
+var SETS={ clasificacion:CLASIF, separacion:SEPAR, modelos:MODELOS, atomo:ATOMO };
+var VW=1000, VH=560;
+
+document.querySelectorAll('.sim-slide').forEach(function(slide){
+  var key=slide.getAttribute('data-sim');
+  var scenes=SETS[key];
+  if(!scenes) return;
+
+  var cv=slide.querySelector('canvas');
+  var g=cv.getContext('2d');
+  var elTitle=slide.querySelector('[data-sc-title]');
+  var elBody=slide.querySelector('[data-sc-body]');
+  var elRead=slide.querySelector('[data-readout]');
+  var elSteps=slide.querySelector('[data-steps]');
+
+  elSteps.innerHTML='';
+  scenes.forEach(function(){ elSteps.appendChild(document.createElement('span')); });
+
+  var step=0, raf=null, t0=0, running=false;
+
+  function fit(){
+    var cw=cv.clientWidth, ch=cv.clientHeight;
+    var dpr=window.devicePixelRatio||1;
+    if(cw<2||ch<2) return false;
+    var w=Math.round(cw*dpr), h=Math.round(ch*dpr);
+    if(cv.width!==w||cv.height!==h){ cv.width=w; cv.height=h; }
+    g.setTransform(dpr,0,0,dpr,0,0);
+    return true;
+  }
+
+  function paintPanel(){
+    var s=scenes[step];
+    elTitle.textContent=s.title;
+    elTitle.classList.toggle('warm', !!s.warm);
+    elBody.innerHTML=s.html;
+    Array.prototype.forEach.call(elSteps.children,function(sp,i){
+      sp.classList.toggle('on', i<=step);
+    });
+  }
+
+  function frame(ts){
+    if(!running) return;
+    if(!t0) t0=ts;
+    var t=(ts-t0)/1000;
+    if(!fit()){ raf=requestAnimationFrame(frame); return; }
+    var cw=cv.clientWidth, ch=cv.clientHeight;
+    var dpr=window.devicePixelRatio||1;
+    var sc=Math.min(cw/VW, ch/VH);
+    var ox=(cw-VW*sc)/2, oy=(ch-VH*sc)/2;
+    g.setTransform(dpr,0,0,dpr,0,0);
+    g.clearRect(0,0,cw,ch);
+    g.save();
+    g.setTransform(dpr*sc,0,0,dpr*sc, dpr*ox, dpr*oy);
+    var s=scenes[step];
+    try{ s.draw(g,t,VW,VH); }catch(e){}
+    g.restore();
+    if(s.readout){
+      var rows=s.readout(t);
+      var html='';
+      rows.forEach(function(r){
+        html+='<div class="ro"><span class="k">'+r[0]+'</span><span class="v">'+r[1]+'</span></div>';
+      });
+      elRead.innerHTML=html;
+    }
+    raf=requestAnimationFrame(frame);
+  }
+
+  function start(){
+    if(running) return;
+    running=true; t0=0;
+    if(!fit()){ running=false; return setTimeout(start,60); }
+    paintPanel();
+    raf=requestAnimationFrame(frame);
+  }
+  function stop(){ running=false; if(raf) cancelAnimationFrame(raf); raf=null; }
+
+  slide.addEventListener('slide:enter',function(){ step=0; start(); });
+  slide.addEventListener('slide:leave', stop);
+  slide.addEventListener('slide:step',function(e){
+    var n=e.detail.step|0;
+    step=Math.max(0, Math.min(scenes.length-1, n));
+    t0=0;
+    paintPanel();
+  });
+
+  window.addEventListener('resize',function(){ if(running) fit(); });
+  if(slide.classList.contains('active')) setTimeout(start,80);
+});
+
+})();
+</script>
+
+<script>
+(function(){
+  // Carga el iframe solo al entrar a la diapositiva, y muestra aviso si el recurso no existe.
+  document.querySelectorAll('.embed-slide').forEach(function(sec){
+    var fr=sec.querySelector('iframe[data-embed-src]');
+    var fb=sec.querySelector('.embed-fallback');
+    if(!fr) return;
+    var src=fr.getAttribute('data-embed-src'), loaded=false;
+    function fail(){ if(fb){ fb.classList.add('show'); } }
+    function go(){ fr.src=src; }
+    function load(){
+      if(loaded) return; loaded=true;
+      // Un 404 devuelve una pagina de error y el iframe dispara "load" igual,
+      // asi que verificamos el recurso antes de incrustarlo.
+      if(location.protocol==='file:'){ go(); return; }
+      fetch(src,{method:'HEAD'}).then(function(r){ if(r.ok){ go(); } else { fail(); } })
+        .catch(function(){ fail(); });
+    }
+    sec.addEventListener('slide:enter',load);
+    if(sec.classList.contains('active')) load();
+  });
+})();
+</script>
+</body></html>
